@@ -1,0 +1,575 @@
+<!-- ========================================
+     INDUSTRIA RCS CARBONIO - WORDPRESS
+     Incolla questo codice nell'Editor HTML
+     ======================================== -->
+
+<!-- NOTA: I font sono caricati dal tema (fonts locali GDPR compliant) -->
+
+<style>
+        :root {
+            --bg-page: #101010;
+            --bg-card: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --accent-color: #fdff00;
+        }
+
+        body.light-mode {
+            --bg-page: #f8f9fa;
+            --bg-card: #f8f9fa;
+            --text-primary: #1a1a1a;
+            --text-secondary: #58585d;
+            --accent-color: #0099ff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        /* HERO - full width bg, contenuto allineato a sinistra */
+        .rcs-industria-hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding: 80px 0 60px;
+        }
+
+        .rcs-industria-hero-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+        }
+
+        body:not(.light-mode) .rcs-industria-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 40%, transparent 70%);
+            z-index: 1;
+        }
+
+        body.light-mode .rcs-industria-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 40%, transparent 70%);
+            z-index: 1;
+        }
+
+        /* Contenuto hero allineato a SINISTRA */
+        .rcs-industria-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 0 110px;
+            width: 100%;
+            text-align: left;
+        }
+
+        .rcs-industria-hero-title {
+            font-family: 'Teko', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ffffff;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        .rcs-industria-highlight { 
+            color: var(--accent-color); 
+        }
+
+        .rcs-industria-hero-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin-bottom: 35px;
+        }
+
+        /* SECTIONS - tutto allineato a SINISTRA */
+        .cards-section {
+            padding: 6rem 0;
+            background: var(--bg-card);
+        }
+
+        .rcs-industria-container {
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 0 110px;
+            width: 100%;
+        }
+
+        /* Section header - ALLINEATO A SINISTRA */
+        .rcs-industria-section-header {
+            text-align: left;
+            margin-bottom: 4rem;
+        }
+
+        .rcs-industria-section-header h2 {
+            font-family: 'Teko', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            line-height: 1.1;
+        }
+
+        .rcs-industria-section-header p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .rcs-industria-card {
+            position: relative;
+            min-height: 350px;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+        }
+
+        body.light-mode .rcs-industria-card {
+            background: linear-gradient(135deg, #e8e8e8 0%, #d0d0d0 100%);
+        }
+
+        .rcs-industria-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .rcs-industria-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 60%);
+            z-index: 0;
+        }
+
+        body.light-mode .rcs-industria-card::before {
+            background: linear-gradient(to top, rgba(224, 229, 236, 0.95) 0%, transparent 60%);
+        }
+
+        /* Contenuto card allineato a SINISTRA */
+        .rcs-industria-card-content {
+            position: relative;
+            z-index: 1;
+            text-align: left;
+        }
+
+        .rcs-industria-card h3 {
+            font-family: 'Teko', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            transition: color 0.3s ease;
+            line-height: 1.2;
+        }
+
+        body.light-mode .rcs-industria-card h3 {
+            color: var(--text-primary);
+        }
+
+        .rcs-industria-card:hover h3 {
+            color: var(--accent-color);
+        }
+
+        .rcs-industria-card p {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.6;
+        }
+
+        body.light-mode .rcs-industria-card p {
+            color: var(--text-primary);
+        }
+
+        /* BENEFITS */
+        .rcs-industria-benefits {
+            padding: 6rem 0;
+            background: var(--bg-page);
+        }
+
+        body.light-mode .rcs-industria-benefits {
+            background: #f8f9fa;
+        }
+
+        .rcs-industria-benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .rcs-industria-benefit-card {
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            background: linear-gradient(145deg, #222222 0%, #1c1c1c 100%);
+            box-shadow: 
+                10px 10px 20px rgba(0, 0, 0, 0.9),
+                -10px -10px 20px rgba(60, 60, 60, 0.1);
+            transition: all 0.4s ease;
+            text-align: left;
+        }
+
+        body.light-mode .rcs-industria-benefit-card {
+            background: linear-gradient(145deg, #f0f0f0 0%, #e8e8e8 100%);
+            box-shadow: 
+                10px 10px 20px #a3b1c6,
+                -10px -10px 20px #ffffff;
+        }
+
+        .rcs-industria-benefit-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .rcs-industria-benefit-icon {
+            width: 5rem;
+            height: 5rem;
+            border-radius: 50%;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            box-shadow: 
+                inset 8px 8px 16px rgba(0, 0, 0, 0.9),
+                inset -8px -8px 16px rgba(60, 60, 60, 0.15);
+        }
+
+        body.light-mode .rcs-industria-benefit-icon {
+            background: #e8e8e8;
+            box-shadow: 
+                inset 8px 8px 16px #a3b1c6,
+                inset -8px -8px 16px #ffffff;
+        }
+
+        .rcs-industria-benefit-icon svg {
+            width: 2.5rem;
+            height: 2.5rem;
+            stroke: var(--text-secondary);
+            fill: none;
+            stroke-width: 2;
+            transition: all 0.4s ease;
+        }
+
+        .rcs-industria-benefit-card:hover .rcs-industria-benefit-icon svg {
+            stroke: var(--accent-color);
+        }
+
+        .rcs-industria-benefit-card h3 {
+            font-family: 'Teko', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+            line-height: 1.2;
+        }
+
+        .rcs-industria-benefit-card:hover h3 {
+            color: var(--accent-color);
+        }
+
+        .rcs-industria-benefit-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* SPECIFICHE */
+        .rcs-industria-specs-section {
+            padding: 6rem 0;
+            background: var(--bg-card);
+        }
+
+        .rcs-industria-specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .rcs-industria-spec-card {
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            background: linear-gradient(145deg, #222222 0%, #1c1c1c 100%);
+            box-shadow: 
+                10px 10px 20px rgba(0, 0, 0, 0.9),
+                -10px -10px 20px rgba(60, 60, 60, 0.1);
+            text-align: left;
+        }
+
+        body.light-mode .rcs-industria-spec-card {
+            background: linear-gradient(145deg, #f0f0f0 0%, #e8e8e8 100%);
+            box-shadow: 
+                10px 10px 20px #a3b1c6,
+                -10px -10px 20px #ffffff;
+        }
+
+        .rcs-industria-spec-card h3 {
+            font-family: 'Teko', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .rcs-industria-spec-card ul {
+            list-style: none;
+        }
+
+        .rcs-industria-spec-card li {
+            padding: 0.75rem 0;
+            color: var(--text-secondary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.light-mode .rcs-industria-spec-card li {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .rcs-industria-spec-card li:last-child {
+            border-bottom: none;
+        }
+
+        /* CTA */
+        .cta {
+            padding: 6rem 0;
+            background: var(--bg-page);
+        }
+
+        body.light-mode .cta {
+            background: #f8f9fa;
+        }
+
+        .cta h2 {
+            font-family: 'Teko', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            line-height: 1.1;
+        }
+
+        .cta p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+        }
+
+        .rcs-industria-btn-primary {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--accent-color);
+            color: #000;
+            font-family: 'Teko', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .rcs-industria-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(253, 255, 0, 0.4);
+        }
+
+        body.light-mode .rcs-industria-btn-primary {
+            box-shadow: 0 4px 12px rgba(0, 153, 255, 0.2);
+        }
+
+        body.light-mode .rcs-industria-btn-primary:hover {
+            box-shadow: 0 10px 30px rgba(0, 153, 255, 0.4);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .rcs-industria-hero-content, .rcs-industria-container {
+                padding: 0 60px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .rcs-industria-hero-content, .rcs-industria-container {
+                padding: 0 30px;
+            }
+            
+            .rcs-industria-hero {
+                min-height: auto;
+                padding: 100px 0 60px;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .rcs-industria-card {
+                min-height: 300px;
+            }
+            
+            .rcs-industria-benefits-grid,
+            .rcs-industria-specs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <!-- HERO -->
+    <section class="rcs-industria-hero">
+        <div class="rcs-industria-hero-bg"><div class="rcs-industria-hero-overlay"></div></div>
+        <div class="rcs-industria-hero-content">
+            <h1 class="rcs-industria-hero-title">Componenti in Carbonio per<br><span class="rcs-industria-highlight">Industria 4.0</span></h1>
+            <p class="rcs-industria-hero-description">Nel settore industriale moderno, precisione e affidabilità sono fondamentali. I nostri componenti in fibra di carbonio — rulli industriali, tubi per bracci robotici, cilindri di precisione — garantiscono prestazioni superiori in ambienti produttivi ad alta intensità, riducendo pesi, inerzie e usura.</p>
+        </div>
+    </section>
+
+    <!-- APPLICAZIONI CARDS -->
+    <section class="cards-section">
+        <div class="rcs-industria-container">
+            <div class="rcs-industria-section-header">
+                <h2>Soluzioni <span class="rcs-industria-highlight">su misura</span> per ogni esigenza</h2>
+                <p>Dalla robotica alla stampa industriale, forniamo componenti tecnici certificati.</p>
+            </div>
+            <div class="cards-grid">
+                <div class="rcs-industria-card">
+                    <div class="rcs-industria-card-content">
+                        <h3>Rulli<br>Industriali</h3>
+                        <p>Rulli in carbonio per macchine di stampaggio, laminazione, coating e processi continui. Leggerezza estrema e resistenza chimica per cicli produttivi 24/7.</p>
+                    </div>
+                </div>
+                <div class="rcs-industria-card">
+                    <div class="rcs-industria-card-content">
+                        <h3>Bracci<br>Robotici</h3>
+                        <p>Tubi strutturali per robot industriali e manipolatori automatici. Riduzione dell'inerzia per maggiore velocità e precisione nei movimenti ripetitivi.</p>
+                    </div>
+                </div>
+                <div class="rcs-industria-card">
+                    <div class="rcs-industria-card-content">
+                        <h3>Cilindri di<br>Precisione</h3>
+                        <p>Componenti cilindrici ad alta tolleranza per attuatori, guide lineari e sistemi di movimentazione. Leggerezza senza compromessi strutturali.</p>
+                    </div>
+                </div>
+                <div class="rcs-industria-card">
+                    <div class="rcs-industria-card-content">
+                        <h3>Componenti<br>Custom</h3>
+                        <p>Progettazione e produzione di particolari tecnici su disegno cliente per macchinari industriali, linee produttive e automazione avanzata.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BENEFITS -->
+    <section class="rcs-industria-benefits">
+        <div class="rcs-industria-container">
+            <div class="rcs-industria-section-header">
+                <h2>Vantaggi <span class="rcs-industria-highlight">misurabili</span></h2>
+                <p>Perché la fibra di carbonio ottimizza i processi industriali.</p>
+            </div>
+            <div class="rcs-industria-benefits-grid">
+                <div class="rcs-industria-benefit-card">
+                    <div class="rcs-industria-benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
+                    <h3>Riduzione<br>Peso Macchina</h3>
+                    <p>Fino al 70% più leggeri dell'acciaio, per ridurre consumi energetici, inerzie e stress meccanici sui sistemi di movimentazione.</p>
+                </div>
+                <div class="rcs-industria-benefit-card">
+                    <div class="rcs-industria-benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                    </div>
+                    <h3>Maggiore<br>Velocità Ciclo</h3>
+                    <p>Componenti più leggeri permettono accelerazioni maggiori e tempi di ciclo ridotti, aumentando la produttività oraria.</p>
+                </div>
+                <div class="rcs-industria-benefit-card">
+                    <div class="rcs-industria-benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20m0-20a4 4 0 0 1 4 4v12a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/></svg>
+                    </div>
+                    <h3>Resistenza<br>Chimica</h3>
+                    <p>Inerzia a solventi, acidi, oli e agenti aggressivi. Ideale per ambienti produttivi con sostanze corrosive.</p>
+                </div>
+                <div class="rcs-industria-benefit-card">
+                    <div class="rcs-industria-benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <h3>Durata<br>Operativa</h3>
+                    <p>Resistenza alla fatica superiore ai metalli tradizionali. Minore usura, meno fermi macchina, costi di manutenzione ridotti.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SPECIFICHE TECNICHE -->
+    <section class="rcs-industria-specs-section">
+        <div class="rcs-industria-container">
+            <div class="rcs-industria-section-header">
+                <h2>Specifiche <span class="rcs-industria-highlight">tecniche</span></h2>
+                <p>Dati tecnici e capacità produttive per il settore industriale.</p>
+            </div>
+            <div class="rcs-industria-specs-grid">
+                <div class="rcs-industria-spec-card">
+                    <h3>Dimensioni<br>Disponibili</h3>
+                    <ul>
+                        <li>Diametri: da 8mm a 300mm</li>
+                        <li>Spessori: da 1mm a 10mm</li>
+                        <li>Lunghezze: fino a 6 metri</li>
+                        <li>Profili: tondi, ovali, rettangolari</li>
+                    </ul>
+                </div>
+                <div class="rcs-industria-spec-card">
+                    <h3>Lavorazioni<br>Meccaniche</h3>
+                    <ul>
+                        <li>Taglio di precisione CNC</li>
+                        <li>Forature e filettature</li>
+                        <li>Fresature e scanalature</li>
+                        <li>Bilanciatura dinamica rulli</li>
+                    </ul>
+                </div>
+                <div class="rcs-industria-spec-card">
+                    <h3>Certificazioni<br>e Qualità</h3>
+                    <ul>
+                        <li>Test di resistenza meccanica</li>
+                        <li>Controllo dimensionale 100%</li>
+                        <li>Documentazione tecnica completa</li>
+                        <li>Supporto ingegneristico pre/post vendita</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="rcs-industria-container">
+            <h2>Ottimizza la tua <span class="rcs-industria-highlight">produzione</span></h2>
+            <p>Contattaci per una consulenza tecnica e scopri come i nostri componenti in carbonio possono migliorare l'efficienza dei tuoi macchinari industriali.</p>
+            <a href="/contatti" class="rcs-industria-btn-primary">Richiedi Preventivo</a>
+        </div>
+    </section>

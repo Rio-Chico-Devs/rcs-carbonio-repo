@@ -1,0 +1,683 @@
+<!-- ========================================
+     HOME RCS CARBONIO - VERSIONE FINALE
+     - Presentation section
+     - CTA section con sfondo immagine
+     - Disclaimer box
+     - Bottone glass effect
+     ======================================== -->
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Teko:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg-page: #101010;
+    --bg-card: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --accent-color: #fdff00;
+}
+
+body.light-mode {
+    --bg-page: #f8f9fa;
+    --bg-card: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #58585d;
+    --accent-color: #0099ff;
+}
+
+/* HERO */
+.rcs-hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.rcs-hero-video-container {
+    position: absolute;
+    inset: 0;
+}
+
+.rcs-hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rcs-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+}
+
+body.light-mode .rcs-hero-overlay {
+    background: linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+}
+
+.rcs-hero-wrapper {
+    position: relative;
+    z-index: 2;
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 110px;
+    width: 100%;
+}
+
+.rcs-hero-title {
+    font-family: 'Teko', sans-serif;
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
+}
+
+.rcs-highlight { color: var(--accent-color); }
+
+.rcs-hero-text {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.95);
+    max-width: 700px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* PRESENTATION SECTION - Con img invece di background */
+.rcs-presentation {
+    position: relative;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 6rem 0;
+}
+
+.rcs-presentation-bg {
+    position: absolute;
+    inset: 0;
+}
+
+.rcs-presentation-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rcs-presentation-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+    z-index: 1;
+}
+
+body.light-mode .rcs-presentation-overlay {
+    background: linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+}
+
+.rcs-presentation-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 110px;
+    width: 100%;
+}
+
+.rcs-presentation-content h2 {
+    font-family: 'Teko', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
+    max-width: 800px;
+}
+
+.rcs-presentation-content p {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.95);
+    max-width: 700px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* DISCLAIMER BOX - Stile BMW */
+.rcs-disclaimer-box {
+    background: var(--bg-card);
+    padding: 2rem 110px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.light-mode .rcs-disclaimer-box {
+    background: #e8e8e8;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.rcs-disclaimer-box p {
+    max-width: 1920px;
+    margin: 0 auto;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    text-align: left;
+}
+
+/* SETTORI */
+.rcs-settori-section {
+    padding: 6rem 0;
+    background: var(--bg-page);
+}
+
+body.light-mode .rcs-settori-section {
+    background: #f8f9fa;
+}
+
+.rcs-wrapper {
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 110px;
+    width: 100%;
+}
+
+.rcs-section-header {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.rcs-section-title {
+    font-family: 'Teko', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.rcs-settori-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+}
+
+.rcs-settore-card {
+    text-align: center;
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    background: linear-gradient(145deg, #222222 0%, #1c1c1c 100%);
+    box-shadow: 
+        10px 10px 20px rgba(0, 0, 0, 0.9),
+        -10px -10px 20px rgba(60, 60, 60, 0.1);
+    transition: all 0.4s ease;
+}
+
+body.light-mode .rcs-settore-card {
+    background: linear-gradient(145deg, #f0f0f0 0%, #e8e8e8 100%);
+    box-shadow: 
+        10px 10px 20px #a3b1c6,
+        -10px -10px 20px #ffffff;
+}
+
+.rcs-settore-card:hover {
+    transform: translateY(-8px);
+}
+
+.rcs-settore-icon {
+    width: 5rem;
+    height: 5rem;
+    margin: 0 auto 2rem;
+    border-radius: 50%;
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 
+        inset 8px 8px 16px rgba(0, 0, 0, 0.9),
+        inset -8px -8px 16px rgba(60, 60, 60, 0.15);
+}
+
+body.light-mode .rcs-settore-icon {
+    background: #e8e8e8;
+    box-shadow: 
+        inset 8px 8px 16px #a3b1c6,
+        inset -8px -8px 16px #ffffff;
+}
+
+.rcs-settore-icon svg {
+    width: 2.5rem;
+    height: 2.5rem;
+    fill: var(--text-primary);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 0 0 transparent);
+}
+
+/* HOVER GLOW */
+body:not(.light-mode) .rcs-settore-card:hover .rcs-settore-icon svg {
+    fill: var(--accent-color);
+    filter: 
+        drop-shadow(0 0 3px rgba(253, 255, 0, 0.4))
+        drop-shadow(0 0 6px rgba(253, 255, 0, 0.2));
+    transform: scale(1.04);
+}
+
+body.light-mode .rcs-settore-card:hover .rcs-settore-icon svg {
+    fill: var(--accent-color);
+    filter: 
+        drop-shadow(0 0 3px rgba(0, 153, 255, 0.4))
+        drop-shadow(0 0 6px rgba(0, 153, 255, 0.2));
+    transform: scale(1.04);
+}
+
+.rcs-settore-card h3 {
+    font-family: 'Teko', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+    line-height: 1.2;
+}
+
+.rcs-settore-card:hover h3 {
+    color: var(--accent-color);
+}
+
+.rcs-settore-card p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+/* CTA SECTION - Con img invece di background */
+.rcs-cta-section {
+    position: relative;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 6rem 0;
+}
+
+.rcs-cta-bg {
+    position: absolute;
+    inset: 0;
+}
+
+.rcs-cta-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rcs-cta-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+    z-index: 1;
+}
+
+body.light-mode .rcs-cta-overlay {
+    background: linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+}
+
+.rcs-cta-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 110px;
+    width: 100%;
+}
+
+.rcs-cta-content h2 {
+    font-family: 'Teko', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
+    max-width: 900px;
+}
+
+.rcs-cta-content p {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.95);
+    max-width: 800px;
+    margin-bottom: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.rcs-cta-content em {
+    font-style: italic;
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+/* CUSTOM PARTS */
+.rcs-custom-section {
+    padding: 6rem 0;
+    background: var(--bg-card);
+}
+
+body.light-mode .rcs-custom-section {
+    background: #ffffff;
+}
+
+.rcs-custom-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+@media (min-width: 1024px) {
+    .rcs-custom-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.rcs-custom-text h2 {
+    font-family: 'Teko', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+    line-height: 1.1;
+}
+
+.rcs-custom-text p {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.rcs-custom-image {
+    border-radius: 1.5rem;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.rcs-custom-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* BOTTONE CON GLASS EFFECT */
+.rcs-btn {
+    display: inline-block;
+    padding: 18px 45px;
+    background: var(--accent-color);
+    color: #000 !important;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    font-family: 'Teko', sans-serif;
+    text-transform: uppercase;
+    font-size: 1.1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Riflesso glass */
+.rcs-btn::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -150%;
+    width: 100%;
+    height: 200%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.15) 30%,
+        rgba(255, 255, 255, 0.5) 50%, 
+        rgba(255, 255, 255, 0.15) 70%,
+        transparent 100%);
+    transform: skewX(-25deg);
+    pointer-events: none;
+}
+
+.rcs-btn:hover::before {
+    left: 150%;
+    transition: left 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.rcs-btn:not(:hover)::before {
+    left: -150%;
+    transition: none;
+}
+
+.rcs-btn:hover {
+    transform: translateY(-3px);
+    color: #000 !important;
+}
+
+body:not(.light-mode) .rcs-btn:hover {
+    box-shadow: 
+        0 13px 30px rgba(253, 255, 0, 0.4),
+        0 2px 8px rgba(253, 255, 0, 0.2);
+}
+
+body.light-mode .rcs-btn:hover {
+    box-shadow: 
+        0 13px 30px rgba(0, 153, 255, 0.4),
+        0 2px 8px rgba(0, 153, 255, 0.2);
+}
+
+/* REVEAL */
+.rcs-reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.rcs-reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+    .rcs-hero-wrapper,
+    .rcs-wrapper,
+    .rcs-presentation-content,
+    .rcs-cta-content,
+    .rcs-disclaimer-box {
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+}
+
+@media (max-width: 768px) {
+    .rcs-hero-wrapper,
+    .rcs-wrapper,
+    .rcs-presentation-content,
+    .rcs-cta-content,
+    .rcs-disclaimer-box {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+    
+    .rcs-settori-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* Mobile: overlay dal basso */
+    .rcs-presentation-overlay,
+    .rcs-cta-overlay {
+        background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 50%, transparent 100%) !important;
+    }
+}
+</style>
+
+<!-- HERO -->
+<section class="rcs-hero">
+    <div class="rcs-hero-video-container">
+        <video class="rcs-hero-video" autoplay loop muted playsinline>
+            <source src="https://darkgoldenrod-mole-448362.hostingersite.com/wp-content/uploads/2026/01/carbon-fiber-manufacturing-process.mp4" type="video/mp4">
+        </video>
+        <div class="rcs-hero-overlay"></div>
+    </div>
+    <div class="rcs-hero-wrapper rcs-reveal">
+        <h1 class="rcs-hero-title">Tubi in Carbonio<br><span class="rcs-highlight">Su Misura</span></h1>
+        <p class="rcs-hero-text">Produzione italiana di tubi in carbonio personalizzati per ottenere alte prestazioni. Forniamo componenti ultraleggeri e ultra-resistenti da più di 20 anni per Sport, Aerospace, Nautica e per il Settore Industriale.</p>
+    </div>
+</section>
+
+<!-- SETTORI -->
+<section class="rcs-settori-section">
+    <div class="rcs-wrapper">
+        <div class="rcs-section-header">
+            <h2 class="rcs-section-title rcs-reveal">Produciamo da anni tubi in carbonio<span class="rcs-highlight"> per i seguenti settori</span></h2>
+        </div>
+        <div class="rcs-settori-grid">
+            <!-- SPORT -->
+            <div class="rcs-settore-card rcs-reveal">
+                <div class="rcs-settore-icon">
+                    <svg viewBox="0 0 100 100" fill="currentColor">
+                        <path d="M 28 18 L 28 32 C 22 35 22 42 28 45 L 32 45 L 32 52 C 32 58 38 64 42 66 L 42 72 L 38 72 L 38 78 L 62 78 L 62 72 L 58 72 L 58 66 C 62 64 68 58 68 52 L 68 45 L 72 45 C 78 42 78 35 72 32 L 72 18 Z M 38 18 L 38 48 C 38 54 44 60 50 60 C 56 60 62 54 62 48 L 62 18 Z"/>
+                    </svg>
+                </div>
+                <h3>Sport</h3>
+                <p>Nel mondo dello sport ogni minimo particolare è decisivo per la vittoria. RCS partecipa attivamente nel mondo dello sport realizzando attrezzature su misura per i migliori atleti seguendo i loro consigli e i loro bisogni.</p>
+            </div>
+
+            <!-- AEROSPACE -->
+            <div class="rcs-settore-card rcs-reveal">
+                <div class="rcs-settore-icon">
+                    <svg viewBox="0 0 100 100" fill="currentColor">
+                        <path d="M 20 60 L 50 30 L 80 60 L 68 72 L 50 54 L 32 72 Z"/>
+                    </svg>
+                </div>
+                <h3>Aerospace</h3>
+                <p>Produciamo tubi in carbonio su misura di altissima precisione con materiali di ottima qualità. Essenziali per droni, aerospaziale e progetti avanzati.</p>
+            </div>
+
+            <!-- NAUTICA -->
+            <div class="rcs-settore-card rcs-reveal">
+                <div class="rcs-settore-icon">
+                    <svg viewBox="0 0 100 100" fill="currentColor">
+                        <path fill-rule="evenodd" d="
+                            M 50 5
+                            A 45 45 0 1 1 50 95
+                            A 45 45 0 1 1 50 5
+                            M 50 15
+                            A 35 35 0 1 0 50 85
+                            A 35 35 0 1 0 50 15
+                            M 50 20
+                            L 70 50
+                            L 50 80
+                            L 30 50
+                            Z
+                            M 50 42
+                            A 8 8 0 1 0 50 58
+                            A 8 8 0 1 0 50 42
+                        "/>
+                    </svg>
+                </div>
+                <h3>Nautica</h3>
+                <p>Produciamo tubi in carbonio per il settore navale, seguiamo le tue misure e ti aiutiamo a creare i tuoi componenti rispettando le tue necessità. Miriamo a creare soluzioni uniche e durevoli.</p>
+            </div>
+
+            <!-- INDUSTRIA -->
+            <div class="rcs-settore-card rcs-reveal">
+                <div class="rcs-settore-icon">
+                    <svg viewBox="0 0 100 100" fill="currentColor">
+                        <path d="M 50 20 L 60 30 L 75 30 L 75 45 L 85 55 L 75 65 L 75 80 L 60 80 L 50 90 L 40 80 L 25 80 L 25 65 L 15 55 L 25 45 L 25 30 L 40 30 Z M 50 40 A 15 15 0 1 0 50 70 A 15 15 0 1 0 50 40 Z"/>
+                    </svg>
+                </div>
+                <h3>Industria</h3>
+                <p>O nel caso le tue necessità siano più particolari, RCS è in grado di produrre il tubo perfetto per la tua applicazione industriale.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PRESENTATION SECTION -->
+<section class="rcs-presentation">
+    <div class="rcs-presentation-bg">
+        <img src="[URL-IMMAGINE-PRODUZIONE]" alt="Produzione tubi in fibra di carbonio su misura - RCS Carbonio" loading="lazy">
+    </div>
+    <div class="rcs-presentation-overlay"></div>
+    <div class="rcs-presentation-content rcs-reveal">
+        <h2>Vi piacerebbe trovare il tubo perfetto in modo <span class="rcs-highlight">semplice, veloce e conveniente</span>?</h2>
+        <p>Senza la preoccupazione di passare ore cercando la misura giusta e le specifiche tecniche necessarie per il tuo caso specifico?</p>
+    </div>
+</section>
+
+<!-- DISCLAIMER BOX -->
+<div class="rcs-disclaimer-box rcs-reveal">
+    <p>RCS produce tubi e componenti su specifica richiesta e per grandi quantitativi. Contattaci per verificare la fattibilità dell'ordine e valutare un preventivo personalizzato. A seconda del settore e dell'applicazione, la soluzione va valutata e studiata su misura.</p>
+</div>
+
+<!-- CTA SECTION -->
+<section class="rcs-cta-section">
+    <div class="rcs-cta-bg">
+        <img src="[URL-IMMAGINE-LABORATORIO]" alt="Laboratorio RCS Carbonio - Ricerca e sviluppo tubi in carbonio personalizzati" loading="lazy">
+    </div>
+    <div class="rcs-cta-overlay"></div>
+    <div class="rcs-cta-content rcs-reveal">
+        <h2>Potete smettere di cercare...</h2>
+        <p>Parlateci delle vostre esigenze e creeremo la soluzione ottimale per la vostra azienda. RCS produce tubi anche in grandi quantità, seguendo le <em>tue</em> misure e le tue necessità tecniche.</p>
+        <p><strong>Il futuro inizia da te.</strong> Consulta il nostro sito e segui i nostri social per scoprire a cosa hanno portato anni di esperienza e studio nel settore dei materiali compositi.</p>
+        <a href="/contatti" class="rcs-btn">Contattaci Ora</a>
+    </div>
+</section>
+
+<!-- CUSTOM PARTS -->
+<section class="rcs-custom-section">
+    <div class="rcs-wrapper">
+        <div class="rcs-custom-grid">
+            <div class="rcs-custom-text rcs-reveal">
+                <h2>Non Solo Tubi</h2>
+                <p>Siamo esperti artigiani nella produzione di tubi in fibra di carbonio, ma la nostra arte va ben oltre. Realizziamo anche componenti personalizzati su misura per ogni esigenza industriale.</p>
+                <p>Che si tratti di un particolare componente da testare, rinforzi strutturali complessi, parti meccaniche con forme particolari o componenti specifici per il tuo progetto, studiamo ogni dettaglio insieme al cliente e ci impegniamo a creare soluzioni uniche!</p>
+                <a href="/contatti" class="rcs-btn">Richiedi Consulenza Gratuita</a>
+            </div>
+            <div class="rcs-custom-image rcs-reveal">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400'%3E%3Crect fill='%23333' width='600' height='400'/%3E%3Ctext x='300' y='200' font-size='40' text-anchor='middle' fill='%23666'%3EImmagine Componenti%3C/text%3E%3C/svg%3E" alt="tubi in carbonio su misura" loading="lazy">
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+// Dark mode - sincronia con tema WordPress
+if (localStorage.getItem('darkMode') === 'light') { 
+    document.body.classList.add('light-mode'); 
+}
+
+// Reveal animation
+(function() {
+    function reveal() {
+        const reveals = document.querySelectorAll('.rcs-reveal');
+        reveals.forEach(element => {
+            const windowHeight = window.innerHeight;
+            const elementTop = element.getBoundingClientRect().top;
+            if (elementTop < windowHeight - 150) {
+                element.classList.add('active');
+            }
+        });
+    }
+    window.addEventListener('scroll', reveal);
+    window.addEventListener('load', reveal);
+    reveal();
+})();
+</script>

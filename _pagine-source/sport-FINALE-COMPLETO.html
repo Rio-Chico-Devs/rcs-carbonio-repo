@@ -1,0 +1,810 @@
+<!-- ========================================
+     SPORT RCS CARBONIO - VERSIONE FINALE
+     - GDPR Compliant (font locali)  
+     - Placeholder immagini hero e card
+     - Dark mode di default
+     - Fade-in animations
+     - Glow hover icone
+     ======================================== -->
+
+<style>
+/* Font locali dal tema - GDPR compliant */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/wp-content/themes/rcs-carbonpro-2026/assets/fonts/inter-v20-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('/wp-content/themes/rcs-carbonpro-2026/assets/fonts/inter-v20-latin-500.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('/wp-content/themes/rcs-carbonpro-2026/assets/fonts/inter-v20-latin-600.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('/wp-content/themes/rcs-carbonpro-2026/assets/fonts/inter-v20-latin-700.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Teko';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/wp-content/themes/rcs-carbonpro-2026/assets/fonts/teko-v23-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Teko';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('/wp-content/themes/rcs-carbonpro-2026/assets/fonts/teko-v23-latin-500.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Teko';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('/wp-content/themes/rcs-carbonpro-2026/assets/fonts/teko-v23-latin-600.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Teko';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('/wp-content/themes/rcs-carbonpro-2026/assets/fonts/teko-v23-latin-700.woff2') format('woff2');
+}
+
+:root {
+    --bg-page: #101010;
+    --bg-card: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --accent-color: #fdff00;
+}
+
+body.light-mode {
+    --bg-page: #f8f9fa;
+    --bg-card: #f8f9fa;
+    --text-primary: #1a1a1a;
+    --text-secondary: #58585d;
+    --accent-color: #0099ff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-page);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+}
+
+/* HERO */
+.rcs-sport-hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 120px 0 80px;
+}
+
+.rcs-sport-hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.rcs-sport-hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+body:not(.light-mode) .rcs-sport-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 40%, transparent 70%);
+    z-index: 1;
+}
+
+body.light-mode .rcs-sport-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 40%, transparent 70%);
+    z-index: 1;
+}
+
+.rcs-sport-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 110px;
+    width: 100%;
+    text-align: left;
+}
+
+.rcs-sport-hero-title {
+    font-family: 'Teko', sans-serif;
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
+    max-width: 50%;
+}
+
+.rcs-sport-highlight { 
+    color: var(--accent-color); 
+}
+
+.rcs-sport-hero-description {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 50%;
+    margin-bottom: 35px;
+}
+
+/* SECTIONS */
+.cards-section {
+    padding: 6rem 0;
+    background: var(--bg-card);
+}
+
+.rcs-sport-container {
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 110px;
+    width: 100%;
+}
+
+.rcs-sport-section-header {
+    text-align: left;
+    margin-bottom: 4rem;
+}
+
+.rcs-sport-section-header h2 {
+    font-family: 'Teko', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    line-height: 1.1;
+}
+
+.rcs-sport-section-header p {
+    color: var(--text-secondary);
+    font-size: 1.125rem;
+    max-width: 600px;
+}
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.rcs-sport-card {
+    position: relative;
+    min-height: 450px;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2rem;
+}
+
+.rcs-sport-card-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.rcs-sport-card-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rcs-sport-card:hover {
+    transform: translateY(-8px);
+}
+
+.rcs-sport-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 60%);
+    z-index: 1;
+}
+
+body.light-mode .rcs-sport-card::before {
+    background: linear-gradient(to top, rgba(224, 229, 236, 0.95) 0%, transparent 60%);
+}
+
+.rcs-sport-card-content {
+    position: relative;
+    z-index: 2;
+    text-align: left;
+}
+
+.rcs-sport-card h3 {
+    font-family: 'Teko', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    color: #ffffff;
+    transition: color 0.3s ease;
+    line-height: 1.2;
+}
+
+body.light-mode .rcs-sport-card h3 {
+    color: var(--text-primary);
+}
+
+.rcs-sport-card:hover h3 {
+    color: var(--accent-color);
+}
+
+.rcs-sport-card p {
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+body.light-mode .rcs-sport-card p {
+    color: var(--text-primary);
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background: rgba(26, 26, 26, 0.8);
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+body.light-mode .badge {
+    background: rgba(255, 255, 255, 0.8);
+    color: var(--text-primary);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* DISCLAIMER */
+.rcs-sport-disclaimer {
+    margin-top: 4rem;
+}
+
+.rcs-sport-disclaimer p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    text-align: left;
+}
+
+.rcs-sport-disclaimer strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* BENEFITS */
+.rcs-sport-benefits {
+    padding: 6rem 0;
+    background: var(--bg-page);
+}
+
+body.light-mode .rcs-sport-benefits {
+    background: #f8f9fa;
+}
+
+.rcs-sport-benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+}
+
+.rcs-sport-benefit-card {
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    background: linear-gradient(145deg, #222222 0%, #1c1c1c 100%);
+    box-shadow: 
+        10px 10px 20px rgba(0, 0, 0, 0.9),
+        -10px -10px 20px rgba(60, 60, 60, 0.1);
+    transition: all 0.4s ease;
+    text-align: left;
+}
+
+body.light-mode .rcs-sport-benefit-card {
+    background: linear-gradient(145deg, #f0f0f0 0%, #e8e8e8 100%);
+    box-shadow: 
+        10px 10px 20px #a3b1c6,
+        -10px -10px 20px #ffffff;
+}
+
+.rcs-sport-benefit-card:hover {
+    transform: translateY(-8px);
+}
+
+.rcs-sport-benefit-icon {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+    box-shadow: 
+        inset 8px 8px 16px rgba(0, 0, 0, 0.9),
+        inset -8px -8px 16px rgba(60, 60, 60, 0.15);
+}
+
+body.light-mode .rcs-sport-benefit-icon {
+    background: #e8e8e8;
+    box-shadow: 
+        inset 8px 8px 16px #a3b1c6,
+        inset -8px -8px 16px #ffffff;
+}
+
+.rcs-sport-benefit-icon svg {
+    width: 2.5rem;
+    height: 2.5rem;
+    stroke: var(--text-secondary);
+    fill: none;
+    stroke-width: 2;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: drop-shadow(0 0 0 transparent);
+}
+
+/* GLOW HOVER ICONE */
+body:not(.light-mode) .rcs-sport-benefit-card:hover .rcs-sport-benefit-icon svg {
+    stroke: var(--accent-color);
+    filter: 
+        drop-shadow(0 0 3px rgba(253, 255, 0, 0.4))
+        drop-shadow(0 0 6px rgba(253, 255, 0, 0.2));
+    transform: scale(1.04);
+}
+
+body.light-mode .rcs-sport-benefit-card:hover .rcs-sport-benefit-icon svg {
+    stroke: var(--accent-color);
+    filter: 
+        drop-shadow(0 0 3px rgba(0, 153, 255, 0.4))
+        drop-shadow(0 0 6px rgba(0, 153, 255, 0.2));
+    transform: scale(1.04);
+}
+
+.rcs-sport-benefit-card h3 {
+    font-family: 'Teko', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+    line-height: 1.2;
+}
+
+.rcs-sport-benefit-card:hover h3 {
+    color: var(--accent-color);
+}
+
+.rcs-sport-benefit-card p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+/* SEO CONTENT */
+.rcs-sport-seo-content {
+    padding: 6rem 0;
+    background: var(--bg-card);
+}
+
+.rcs-sport-content-wrapper {
+    max-width: 50%;
+}
+
+.rcs-sport-content-wrapper h2 {
+    font-family: 'Teko', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.rcs-sport-content-wrapper h3 {
+    font-family: 'Teko', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 2.5rem 0 1.5rem;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.rcs-sport-content-wrapper p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+}
+
+.rcs-sport-content-wrapper strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* CTA */
+.cta {
+    position: relative;
+    padding: 6rem 0;
+    overflow: hidden;
+}
+
+.cta-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.cta-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Immagine mobile nascosta di default */
+.cta-bg-mobile {
+    display: none;
+}
+
+/* Overlay direzionale come Hero - da sinistra */
+body:not(.light-mode) .cta-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 40%, transparent 70%);
+    z-index: 1;
+}
+
+body.light-mode .cta-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 40%, transparent 70%);
+    z-index: 1;
+}
+
+.cta-content {
+    position: relative;
+    z-index: 2;
+}
+
+.cta h2 {
+    font-family: 'Teko', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+    line-height: 1.1;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
+    max-width: 50%;
+}
+
+.cta p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;
+    max-width: 50%;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.rcs-sport-btn-primary {
+    display: inline-block;
+    padding: 18px 45px;
+    background: var(--accent-color);
+    color: #000 !important;
+    font-family: 'Teko', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.rcs-sport-btn-primary::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -150%;
+    width: 100%;
+    height: 200%;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.15) 30%,
+        rgba(255, 255, 255, 0.5) 50%, 
+        rgba(255, 255, 255, 0.15) 70%,
+        transparent 100%);
+    transform: skewX(-25deg);
+    pointer-events: none;
+}
+
+.rcs-sport-btn-primary:hover::before {
+    left: 150%;
+    transition: left 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.rcs-sport-btn-primary:not(:hover)::before {
+    left: -150%;
+    transition: none;
+}
+
+.rcs-sport-btn-primary:hover {
+    transform: translateY(-3px);
+    color: #000 !important;
+}
+
+body:not(.light-mode) .rcs-sport-btn-primary:hover {
+    box-shadow: 
+        0 13px 30px rgba(253, 255, 0, 0.4),
+        0 2px 8px rgba(253, 255, 0, 0.2);
+}
+
+body.light-mode .rcs-sport-btn-primary {
+    color: #000 !important;
+}
+
+body.light-mode .rcs-sport-btn-primary:hover {
+    box-shadow: 
+        0 13px 30px rgba(0, 153, 255, 0.4),
+        0 2px 8px rgba(0, 153, 255, 0.2);
+    color: #000 !important;
+}
+
+/* FADE-IN ANIMATIONS */
+.rcs-sport-reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.rcs-sport-reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+    .rcs-sport-hero-content, .rcs-sport-container {
+        padding: 0 60px;
+    }
+}
+
+@media (max-width: 768px) {
+    .rcs-sport-hero-content, .rcs-sport-container {
+        padding: 0 30px;
+    }
+    
+    /* Mobile: titoli e testi full width */
+    .rcs-sport-hero-title,
+    .rcs-sport-hero-description,
+    .rcs-sport-content-wrapper,
+    .cta h2,
+    .cta p {
+        max-width: 100%;
+    }
+    
+    /* CTA: nascondi desktop, mostra mobile */
+    .cta-bg img:not(.cta-bg-mobile) {
+        display: none;
+    }
+    
+    .cta-bg-mobile {
+        display: block !important;
+    }
+}
+</style>
+
+<!-- HERO -->
+<section class="rcs-sport-hero">
+    <div class="rcs-sport-hero-bg">
+        <img src="https://darkgoldenrod-mole-448362.hostingersite.com/wp-content/uploads/2026/03/scidifondocarbonfiber-scaled.webp" alt="Tubi in carbonio sport - RCS Carbonio">
+        <div class="rcs-sport-hero-overlay"></div>
+    </div>
+    <div class="rcs-sport-hero-content rcs-sport-reveal">
+        <h1 class="rcs-sport-hero-title">Tubi in Carbonio Prodotti<br><span class="rcs-sport-highlight">su Misura</span> per lo sport</h1>
+        <p class="rcs-sport-hero-description">Anni di attento lavoro e analisi hanno portato alla creazione dei nostri <strong>tubi in carbonio</strong> creati specificamente per migliorare e supportare i migliori atleti che dominano la scena sportiva, bilanciamento <strong>perfetto</strong>, risultati <strong>reali</strong>.</p>
+    </div>
+</section>
+
+<!-- SPORT CARDS -->
+<section class="cards-section">
+    <div class="rcs-sport-container">
+        <div class="rcs-sport-section-header rcs-sport-reveal">
+            <h2>Nel corso degli anni siamo diventati esperti<br>nella costruzione di <span class="rcs-sport-highlight">tubi specifici</span> per diversi sport come:</h2>
+        </div>
+        <div class="cards-grid">
+            <div class="rcs-sport-card rcs-sport-reveal">
+                <div class="rcs-sport-card-bg">
+                    <img src="https://darkgoldenrod-mole-448362.hostingersite.com/wp-content/uploads/2026/03/Ilaria_Veronese-1.webp" alt="Tubi carbonio sci di fondo">
+                </div>
+                <div class="rcs-sport-card-content">
+                    <h3>Tubi Carbonio<br>Sci di Fondo</h3>
+                    <p>Bastoncini ultraleggeri e rigidi per lo sci di fondo professionale. Massima trasmissione della spinta.</p>
+                    <div><span class="badge">Peso: -40%</span><span class="badge">Rigidità: +30%</span></div>
+                </div>
+            </div>
+            <div class="rcs-sport-card rcs-sport-reveal">
+                <div class="rcs-sport-card-bg">
+                    <img src="https://darkgoldenrod-mole-448362.hostingersite.com/wp-content/uploads/2026/03/carbon-fiber-shaft-athlete-rcscarbonio-scaled.webp" alt="Tubi carbonio skiroll">
+                </div>
+                <div class="rcs-sport-card-content">
+                    <h3>Tubi Carbonio<br>Skiroll</h3>
+                    <p>Bastoni specifici per skiroll con caratteristiche tecniche dedicate. Resistenza elevata agli impatti.</p>
+                    <div><span class="badge">Resistenza: 2000+ MPa</span><span class="badge">Flessibilità controllata</span></div>
+                </div>
+            </div>
+            <div class="rcs-sport-card rcs-sport-reveal">
+                <div class="rcs-sport-card-bg">
+                    <img src="[URL-IMMAGINE-PAGAIE]" alt="Tubi carbonio pagaie sportive">
+                </div>
+                <div class="rcs-sport-card-content">
+                    <h3>Tubi Carbonio<br>Pagaie Sportive</h3>
+                    <p>Pagaie per kayak e canoa racing in carbonio puro. Rigidità torsionale superiore e leggerezza estrema.</p>
+                    <div><span class="badge">Peso: 380g</span><span class="badge">Torsione: -60%</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- DISCLAIMER -->
+        <div class="rcs-sport-disclaimer rcs-sport-reveal">
+            <p><strong>La nostra produzione non si limita a questi settori.</strong> Realizziamo tubi in fibra di carbonio per qualsiasi disciplina sportiva, dal trekking al ciclismo, dalle attrezzature da palestra agli accessori per sport acquatici. Qualunque sia la vostra richiesta, il nostro staff tecnico è disponibile per valutare la fattibilità e sviluppare la soluzione ottimale per le vostre esigenze specifiche.</p>
+        </div>
+    </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="rcs-sport-benefits">
+    <div class="rcs-sport-container">
+        <div class="rcs-sport-section-header rcs-sport-reveal">
+            <h2>Perché Scegliere i Nostri<br>Tubi Carbonio Sport</h2>
+            <p>Vantaggi <strong>straordinari</strong> che fanno la differenza</p>
+        </div>
+        <div class="rcs-sport-benefits-grid">
+            <div class="rcs-sport-benefit-card rcs-sport-reveal">
+                <div class="rcs-sport-benefit-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12.67 19a2 2 0 0 0 1.416-.588l6.154-6.172a6 6 0 0 0-8.49-8.49L5.586 9.914A2 2 0 0 0 5 11.328V18a1 1 0 0 0 1 1z"></path>
+                        <path d="M16 8 2 22"></path>
+                    </svg>
+                </div>
+                <h3>Ultraleggero</h3>
+                <p>Peso ridotto fino al 40%. Prestazioni superiori senza compromessi sulla resistenza.</p>
+            </div>
+            <div class="rcs-sport-benefit-card rcs-sport-reveal">
+                <div class="rcs-sport-benefit-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path>
+                    </svg>
+                </div>
+                <h3>Alta Resistenza</h3>
+                <p>Resistenza a trazione superiore a 2000 MPa. Prestazioni estreme garantite.</p>
+            </div>
+            <div class="rcs-sport-benefit-card rcs-sport-reveal">
+                <div class="rcs-sport-benefit-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="m12 14 4-4"></path>
+                        <path d="M3.34 19a10 10 0 1 1 17.32 0"></path>
+                    </svg>
+                </div>
+                <h3>Rigidità Controllata</h3>
+                <p>Elimina l'effetto fionda. Trasforma la potenza muscolare in prestazione pura.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SEO CONTENT -->
+<section class="rcs-sport-seo-content">
+    <div class="rcs-sport-container">
+        <div class="rcs-sport-content-wrapper rcs-sport-reveal">
+            <h2>Tubi Carbonio Sport: La Differenza <span class="rcs-sport-highlight">Straordinaria</span></h2>
+            
+            <p>Quando tieni tra le mani i nostri <strong>tubi carbonio sport</strong>, la prima cosa che noti è quella sensazione <strong>incredibile</strong> di qualità. Il bilanciamento è <strong>perfetto</strong>, la rigidità è <strong>esattamente</strong> quella giusta. Non troppo rigido, non troppo flessibile.</p>
+
+            <p>Come <strong>fornitori specializzati</strong> di <strong>tubi in carbonio per articoli sportivi</strong> dal 2005, sappiamo esattamente cosa cercano gli atleti professionisti. La rigidità controllata che elimina l'effetto fionda durante lo sci. La <strong>precisione assoluta</strong> che trasforma la potenza dei tuoi muscoli in prestazione pura.</p>
+
+            <h3>Perché i Nostri Tubi Carbonio Sport Sono <span class="rcs-sport-highlight">Superiori</span></h3>
+
+            <p>La differenza nei nostri <strong>tubi carbonio sport</strong> inizia dal bilanciamento. Ogni tubo è progettato con <strong>precisione millimetrica</strong> per distribuire il peso in modo <strong>perfetto</strong>. Quando lo usi, senti immediatamente come risponde. Zero vibrazioni inutili, zero dispersione di energia.</p>
+
+            <p>Il segreto sta nella selezione dei materiali e nel processo produttivo. Utilizziamo solo fibre di carbonio ad alto modulo, con orientamento delle fibre studiato specificamente per ogni applicazione. Non esistono due sport uguali, e non esistono due tubi uguali nelle nostre produzioni personalizzate.</p>
+
+            <h3>Come Garantiamo la Qualità</h3>
+
+            <p>I nostri <strong>rigidi standard</strong> di produzione non sono negoziabili. Ogni <strong>tubo carbonio sport</strong> passa attraverso controlli di qualità <strong>severissimi</strong>. La <strong>precisione</strong> viene verificata al centesimo di millimetro con macchinari CNC di ultima generazione.</p>
+
+            <p>Lavoriamo direttamente con gli atleti che sponsorizziamo per testare i prototipi in condizioni reali. Solo dopo centinaia di ore di test sul campo un nuovo design viene approvato per la produzione. Perché quando si gareggia ad alti livelli, anche un grammo può fare la differenza tra il podio e il quarto posto.</p>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <div class="cta-bg">
+        <!-- Immagine DESKTOP -->
+        <img src="https://darkgoldenrod-mole-448362.hostingersite.com/wp-content/uploads/2026/03/dimitratheobanner-scaled.webp" alt="Gli atleti RCS Carbonio">
+        
+        <!-- Immagine MOBILE -->
+        <img class="cta-bg-mobile" src="https://darkgoldenrod-mole-448362.hostingersite.com/wp-content/uploads/2026/03/dimitratheocweb-scaled.webp" alt="Gli atleti RCS Carbonio - Mobile">
+    </div>
+    <div class="rcs-sport-container cta-content rcs-sport-reveal">
+        <h2>Siamo fieri di sponsorizzare<br><span class="rcs-sport-highlight">atleti professionisti</span></h2>
+        <p>Collaboriamo attivamente con atleti professionisti per migliorare i nostri prodotti e capire le esigenze che sorgono da dinamiche reali, dove ogni minima differenza crea un'opportunità.</p>
+        <p>Visita la nostra sezione dedicata per conoscere chi si è affidato a noi. RCS è sempre presente sul campo, sponsorizzando atleti e supportando chi ci fa sognare.</p>
+        <a href="/contatti" class="rcs-sport-btn-primary">Scopri gli Atleti</a>
+    </div>
+</section>
+
+<script>
+// Dark mode sync
+if (localStorage.getItem('darkMode') === 'light') { 
+    document.body.classList.add('light-mode'); 
+}
+
+// Reveal animation
+(function() {
+    function reveal() {
+        const reveals = document.querySelectorAll('.rcs-sport-reveal');
+        reveals.forEach(element => {
+            const windowHeight = window.innerHeight;
+            const elementTop = element.getBoundingClientRect().top;
+            if (elementTop < windowHeight - 150) {
+                element.classList.add('active');
+            }
+        });
+    }
+    window.addEventListener('scroll', reveal);
+    window.addEventListener('load', reveal);
+    reveal();
+})();
+</script>

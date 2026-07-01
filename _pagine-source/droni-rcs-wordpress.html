@@ -1,0 +1,557 @@
+<!-- ========================================
+     DRONI RCS CARBONIO - WORDPRESS
+     Incolla questo codice nell'Editor HTML
+     ======================================== -->
+
+<!-- NOTA: I font sono caricati dal tema (fonts locali GDPR compliant) -->
+
+<style>
+        :root {
+            --bg-page: #101010;
+            --bg-card: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --accent-color: #fdff00;
+        }
+
+        body.light-mode {
+            --bg-page: #f8f9fa;
+            --bg-card: #f8f9fa;
+            --text-primary: #1a1a1a;
+            --text-secondary: #58585d;
+            --accent-color: #0099ff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        /* HERO - full width bg, contenuto allineato a sinistra */
+        .rcs-droni-hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding: 80px 0 60px;
+        }
+
+        .rcs-droni-hero-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+        }
+
+        body:not(.light-mode) .rcs-droni-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 40%, transparent 70%);
+            z-index: 1;
+        }
+
+        body.light-mode .rcs-droni-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 40%, transparent 70%);
+            z-index: 1;
+        }
+
+        /* Contenuto hero allineato a SINISTRA */
+        .rcs-droni-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 0 110px;
+            width: 100%;
+            text-align: left;
+        }
+
+        .rcs-droni-hero-title {
+            font-family: 'Teko', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ffffff;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        .rcs-droni-highlight { 
+            color: var(--accent-color); 
+        }
+
+        .rcs-droni-hero-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin-bottom: 35px;
+        }
+
+        /* SECTIONS - tutto allineato a SINISTRA */
+        .cards-section {
+            padding: 6rem 0;
+            background: var(--bg-card);
+        }
+
+        .rcs-droni-container {
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 0 110px;
+            width: 100%;
+        }
+
+        /* Section header - ALLINEATO A SINISTRA */
+        .rcs-droni-section-header {
+            text-align: left;
+            margin-bottom: 4rem;
+        }
+
+        .rcs-droni-section-header h2 {
+            font-family: 'Teko', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            line-height: 1.1;
+        }
+
+        .rcs-droni-section-header p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .rcs-droni-card {
+            position: relative;
+            min-height: 350px;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+        }
+
+        body.light-mode .rcs-droni-card {
+            background: linear-gradient(135deg, #e8e8e8 0%, #d0d0d0 100%);
+        }
+
+        .rcs-droni-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .rcs-droni-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 60%);
+            z-index: 0;
+        }
+
+        body.light-mode .rcs-droni-card::before {
+            background: linear-gradient(to top, rgba(224, 229, 236, 0.95) 0%, transparent 60%);
+        }
+
+        /* Contenuto card allineato a SINISTRA */
+        .rcs-droni-card-content {
+            position: relative;
+            z-index: 1;
+            text-align: left;
+        }
+
+        .rcs-droni-card h3 {
+            font-family: 'Teko', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            transition: color 0.3s ease;
+            line-height: 1.2;
+        }
+
+        body.light-mode .rcs-droni-card h3 {
+            color: var(--text-primary);
+        }
+
+        .rcs-droni-card:hover h3 {
+            color: var(--accent-color);
+        }
+
+        .rcs-droni-card p {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.6;
+        }
+
+        body.light-mode .rcs-droni-card p {
+            color: var(--text-primary);
+        }
+
+        /* BENEFITS */
+        .rcs-droni-benefits {
+            padding: 6rem 0;
+            background: var(--bg-page);
+        }
+
+        body.light-mode .rcs-droni-benefits {
+            background: #f8f9fa;
+        }
+
+        .rcs-droni-benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .rcs-droni-benefit-card {
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            background: linear-gradient(145deg, #222222 0%, #1c1c1c 100%);
+            box-shadow: 
+                10px 10px 20px rgba(0, 0, 0, 0.9),
+                -10px -10px 20px rgba(60, 60, 60, 0.1);
+            transition: all 0.4s ease;
+            text-align: left;
+        }
+
+        body.light-mode .rcs-droni-benefit-card {
+            background: linear-gradient(145deg, #f0f0f0 0%, #e8e8e8 100%);
+            box-shadow: 
+                10px 10px 20px #a3b1c6,
+                -10px -10px 20px #ffffff;
+        }
+
+        .rcs-droni-benefit-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .rcs-droni-benefit-icon {
+            width: 5rem;
+            height: 5rem;
+            border-radius: 50%;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            box-shadow: 
+                inset 8px 8px 16px rgba(0, 0, 0, 0.9),
+                inset -8px -8px 16px rgba(60, 60, 60, 0.15);
+        }
+
+        body.light-mode .rcs-droni-benefit-icon {
+            background: #e8e8e8;
+            box-shadow: 
+                inset 8px 8px 16px #a3b1c6,
+                inset -8px -8px 16px #ffffff;
+        }
+
+        .rcs-droni-benefit-icon svg {
+            width: 2.5rem;
+            height: 2.5rem;
+            stroke: var(--text-secondary);
+            fill: none;
+            stroke-width: 2;
+            transition: all 0.4s ease;
+        }
+
+        .rcs-droni-benefit-card:hover .rcs-droni-benefit-icon svg {
+            stroke: var(--accent-color);
+        }
+
+        .rcs-droni-benefit-card h3 {
+            font-family: 'Teko', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+            line-height: 1.2;
+        }
+
+        .rcs-droni-benefit-card:hover h3 {
+            color: var(--accent-color);
+        }
+
+        .rcs-droni-benefit-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* SPECIFICHE */
+        .rcs-droni-specs-section {
+            padding: 6rem 0;
+            background: var(--bg-card);
+        }
+
+        .rcs-droni-specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .rcs-droni-spec-card {
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            background: linear-gradient(145deg, #222222 0%, #1c1c1c 100%);
+            box-shadow: 
+                10px 10px 20px rgba(0, 0, 0, 0.9),
+                -10px -10px 20px rgba(60, 60, 60, 0.1);
+            text-align: left;
+        }
+
+        body.light-mode .rcs-droni-spec-card {
+            background: linear-gradient(145deg, #f0f0f0 0%, #e8e8e8 100%);
+            box-shadow: 
+                10px 10px 20px #a3b1c6,
+                -10px -10px 20px #ffffff;
+        }
+
+        .rcs-droni-spec-card h3 {
+            font-family: 'Teko', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .rcs-droni-spec-card ul {
+            list-style: none;
+        }
+
+        .rcs-droni-spec-card li {
+            padding: 0.75rem 0;
+            color: var(--text-secondary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.light-mode .rcs-droni-spec-card li {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .rcs-droni-spec-card li:last-child {
+            border-bottom: none;
+        }
+
+        /* CTA */
+        .cta {
+            padding: 6rem 0;
+            background: var(--bg-page);
+        }
+
+        body.light-mode .cta {
+            background: #f8f9fa;
+        }
+
+        .cta h2 {
+            font-family: 'Teko', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            line-height: 1.1;
+        }
+
+        .cta p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+        }
+
+        .rcs-droni-btn-primary {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--accent-color);
+            color: #000;
+            font-family: 'Teko', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .rcs-droni-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(253, 255, 0, 0.4);
+        }
+
+        body.light-mode .rcs-droni-btn-primary {
+            box-shadow: 0 4px 12px rgba(0, 153, 255, 0.2);
+        }
+
+        body.light-mode .rcs-droni-btn-primary:hover {
+            box-shadow: 0 10px 30px rgba(0, 153, 255, 0.4);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .rcs-droni-hero-content, .rcs-droni-container {
+                padding: 0 60px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .rcs-droni-hero-content, .rcs-droni-container {
+                padding: 0 30px;
+            }
+        }
+    </style>
+
+    <!-- HERO -->
+    <section class="rcs-droni-hero">
+        <div class="rcs-droni-hero-bg"><div class="rcs-droni-hero-overlay"></div></div>
+        <div class="rcs-droni-hero-content">
+            <h1 class="rcs-droni-hero-title">Tubi in Carbonio per<br><span class="rcs-droni-highlight">Droni e UAV</span></h1>
+            <p class="rcs-droni-hero-description">Nel settore dei droni e degli UAV, ogni grammo conta. I nostri tubi in fibra di carbonio offrono il rapporto peso/resistenza ottimale per telaistica, bracci, landing gear e strutture di supporto, garantendo prestazioni di volo superiori e maggiore autonomia.</p>
+        </div>
+    </section>
+
+    <!-- APPLICAZIONI CARDS -->
+    <section class="cards-section">
+        <div class="rcs-droni-container">
+            <div class="rcs-droni-section-header">
+                <h2>Applicazioni <span class="rcs-droni-highlight">specifiche</span> per droni</h2>
+                <p>Dal racing ai droni industriali, forniamo soluzioni su misura per ogni esigenza.</p>
+            </div>
+            <div class="cards-grid">
+                <div class="rcs-droni-card">
+                    <div class="rcs-droni-card-content">
+                        <h3>Bracci per<br>Multirotori</h3>
+                        <p>Tubi tondi e ovali ad alta rigidità per droni racing, fotografici e industriali. Resistenza alle vibrazioni e massima precisione dimensionale.</p>
+                    </div>
+                </div>
+                <div class="rcs-droni-card">
+                    <div class="rcs-droni-card-content">
+                        <h3>Telaistica<br>Fixed-Wing</h3>
+                        <p>Strutture portanti per droni ad ala fissa, con profili ottimizzati per ridurre il peso mantenendo l'integrità strutturale nei voli prolungati.</p>
+                    </div>
+                </div>
+                <div class="rcs-droni-card">
+                    <div class="rcs-droni-card-content">
+                        <h3>Landing<br>Gear</h3>
+                        <p>Sistemi di atterraggio robusti ma leggeri, con eccellente capacità di assorbimento degli urti e resistenza agli impatti ripetuti.</p>
+                    </div>
+                </div>
+                <div class="rcs-droni-card">
+                    <div class="rcs-droni-card-content">
+                        <h3>Gimbal e<br>Supporti Payload</h3>
+                        <p>Tubi di precisione per sistemi di stabilizzazione camera e montaggio sensori, con tolleranze strette e finitura superficiale impeccabile.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BENEFITS -->
+    <section class="rcs-droni-benefits">
+        <div class="rcs-droni-container">
+            <div class="rcs-droni-section-header">
+                <h2>Vantaggi <span class="rcs-droni-highlight">competitivi</span></h2>
+                <p>Perché scegliere i nostri tubi in carbonio per i tuoi droni.</p>
+            </div>
+            <div class="rcs-droni-benefits-grid">
+                <div class="rcs-droni-benefit-card">
+                    <div class="rcs-droni-benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
+                    <h3>Leggerezza<br>Estrema</h3>
+                    <p>Fino al 70% più leggeri dell'alluminio, per maggiore autonomia di volo e capacità di carico utile.</p>
+                </div>
+                <div class="rcs-droni-benefit-card">
+                    <div class="rcs-droni-benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20m0-20a4 4 0 0 1 4 4v12a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/></svg>
+                    </div>
+                    <h3>Rigidità<br>Superiore</h3>
+                    <p>Riduzione delle vibrazioni e maggiore stabilità durante il volo, per riprese video più nitide.</p>
+                </div>
+                <div class="rcs-droni-benefit-card">
+                    <div class="rcs-droni-benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                    </div>
+                    <h3>Precisione<br>Dimensionale</h3>
+                    <p>Tolleranze strette e superfici lisce per accoppiamenti perfetti con componenti elettronici.</p>
+                </div>
+                <div class="rcs-droni-benefit-card">
+                    <div class="rcs-droni-benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <h3>Personalizzazione<br>Totale</h3>
+                    <p>Diametri, spessori e lunghezze su misura per ogni progetto, dal prototipo alla serie.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SPECIFICHE TECNICHE -->
+    <section class="rcs-droni-specs-section">
+        <div class="rcs-droni-container">
+            <div class="rcs-droni-section-header">
+                <h2>Specifiche <span class="rcs-droni-highlight">tecniche</span></h2>
+                <p>Tutto quello che devi sapere sui nostri prodotti per droni.</p>
+            </div>
+            <div class="rcs-droni-specs-grid">
+                <div class="rcs-droni-spec-card">
+                    <h3>Dimensioni<br>Disponibili</h3>
+                    <ul>
+                        <li>Diametri: da 6mm a 100mm</li>
+                        <li>Spessori: da 0.5mm a 5mm</li>
+                        <li>Lunghezze: fino a 6 metri</li>
+                        <li>Profili: tondi, ovali, quadri</li>
+                    </ul>
+                </div>
+                <div class="rcs-droni-spec-card">
+                    <h3>Finiture</h3>
+                    <ul>
+                        <li>Superficie lucida o opaca</li>
+                        <li>Taglio di precisione</li>
+                        <li>Forature e lavorazioni CNC</li>
+                        <li>Trattamenti superficiali custom</li>
+                    </ul>
+                </div>
+                <div class="rcs-droni-spec-card">
+                    <h3>Certificazioni</h3>
+                    <ul>
+                        <li>Test di resistenza strutturale</li>
+                        <li>Certificati di qualità materiali</li>
+                        <li>Documentazione tecnica completa</li>
+                        <li>Supporto ingegneristico</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="rcs-droni-container">
+            <h2>Hai un progetto <span class="rcs-droni-highlight">drone</span>?</h2>
+            <p>Contattaci per una consulenza tecnica gratuita e un preventivo personalizzato.</p>
+            <a href="/contatti" class="rcs-droni-btn-primary">Richiedi Preventivo</a>
+        </div>
+    </section>

@@ -1,0 +1,29 @@
+# === WordPress core e ambiente (NON versionare) ===
+# Questo repo contiene SOLO il tema custom + pagine source.
+# Il core WP, i plugin di terzi, il DB e gli uploads NON vanno qui.
+
+wp-admin/
+wp-includes/
+wp-content/plugins/
+wp-content/uploads/
+wp-config.php
+.htaccess
+
+# === Immagini pesanti (stanno su hosting) ===
+# Le immagini reali del sito vivono in wp-content/uploads/ su Hostinger.
+# Nomi file e mappatura sono in docs/HANDOFF-COMPLETO-DETTAGLIATO.md
+*.mp4
+
+# === Sistema / editor ===
+.DS_Store
+Thumbs.db
+*.log
+node_modules/
+.vscode/
+.idea/
+
+# === Backup e temporanei ===
+*.bak
+*.tmp
+*~
+*.zip

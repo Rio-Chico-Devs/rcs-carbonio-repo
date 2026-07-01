@@ -1,0 +1,500 @@
+<!-- ========================================
+     CONTATTI RCS CARBONIO - WORDPRESS
+     Incolla questo codice nell'Editor HTML
+     ======================================== -->
+
+<!-- NOTA: I font sono caricati dal tema (fonts locali GDPR compliant) -->
+
+<style>
+        :root {
+            --bg-page: #101010;
+            --bg-card: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --accent-color: #fdff00;
+        }
+
+        body.light-mode {
+            --bg-page: #f8f9fa;
+            --bg-card: #f8f9fa;
+            --text-primary: #1a1a1a;
+            --text-secondary: #58585d;
+            --accent-color: #0099ff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        /* HERO */
+        .rcs-contact-hero {
+            position: relative;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding: 80px 0 60px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+        }
+
+        .rcs-contact-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 0 110px;
+            width: 100%;
+            text-align: left;
+        }
+
+        .rcs-contact-hero-title {
+            font-family: 'Teko', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ffffff;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        .rcs-contact-highlight {
+            color: var(--accent-color);
+        }
+
+        .rcs-contact-hero-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin-bottom: 35px;
+        }
+
+        /* MAIN SECTION */
+        .rcs-contact-main {
+            padding: 6rem 0;
+            background: var(--bg-page);
+        }
+
+        .rcs-contact-container {
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 0 110px;
+            width: 100%;
+        }
+
+        .rcs-contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        /* INFO SECTION */
+        .rcs-contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+        }
+
+        .rcs-contact-info-card {
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            background: linear-gradient(145deg, #222222 0%, #1c1c1c 100%);
+            box-shadow: 
+                10px 10px 20px rgba(0, 0, 0, 0.9),
+                -10px -10px 20px rgba(60, 60, 60, 0.1);
+        }
+
+        body.light-mode .rcs-contact-info-card {
+            background: linear-gradient(145deg, #f0f0f0 0%, #e8e8e8 100%);
+            box-shadow: 
+                10px 10px 20px #a3b1c6,
+                -10px -10px 20px #ffffff;
+        }
+
+        .rcs-contact-info-card h3 {
+            font-family: 'Teko', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .rcs-contact-icon {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            box-shadow: 
+                inset 4px 4px 8px rgba(0, 0, 0, 0.9),
+                inset -4px -4px 8px rgba(60, 60, 60, 0.15);
+        }
+
+        body.light-mode .rcs-contact-icon {
+            background: #e8e8e8;
+            box-shadow: 
+                inset 4px 4px 8px #a3b1c6,
+                inset -4px -4px 8px #ffffff;
+        }
+
+        .rcs-contact-icon svg {
+            width: 1.5rem;
+            height: 1.5rem;
+            stroke: var(--accent-color);
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .rcs-contact-info-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .rcs-contact-info-card a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .rcs-contact-info-card a:hover {
+            color: var(--accent-color);
+        }
+
+        /* MAP PLACEHOLDER */
+        .rcs-contact-map {
+            position: relative;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            background: linear-gradient(145deg, #222222 0%, #1c1c1c 100%);
+            box-shadow: 
+                10px 10px 20px rgba(0, 0, 0, 0.9),
+                -10px -10px 20px rgba(60, 60, 60, 0.1);
+        }
+
+        body.light-mode .rcs-contact-map {
+            background: linear-gradient(145deg, #f0f0f0 0%, #e8e8e8 100%);
+            box-shadow: 
+                10px 10px 20px #a3b1c6,
+                -10px -10px 20px #ffffff;
+        }
+
+        .rcs-contact-map-placeholder {
+            padding: 4rem 2rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .rcs-contact-map-icon {
+            width: 5rem;
+            height: 5rem;
+            border-radius: 50%;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                inset 8px 8px 16px rgba(0, 0, 0, 0.9),
+                inset -8px -8px 16px rgba(60, 60, 60, 0.15);
+        }
+
+        body.light-mode .rcs-contact-map-icon {
+            background: #e8e8e8;
+            box-shadow: 
+                inset 8px 8px 16px #a3b1c6,
+                inset -8px -8px 16px #ffffff;
+        }
+
+        .rcs-contact-map-icon svg {
+            width: 2.5rem;
+            height: 2.5rem;
+            stroke: var(--accent-color);
+        }
+
+        .rcs-contact-map-placeholder h4 {
+            font-family: 'Teko', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .rcs-contact-map-placeholder p {
+            color: var(--text-secondary);
+            max-width: 400px;
+            margin: 0;
+        }
+
+        .rcs-contact-map-btn {
+            padding: 12px 30px;
+            background: var(--accent-color);
+            color: #000;
+            font-family: 'Teko', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .rcs-contact-map-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(253, 255, 0, 0.4);
+        }
+
+        body.light-mode .rcs-contact-map-btn:hover {
+            box-shadow: 0 10px 30px rgba(0, 153, 255, 0.4);
+        }
+
+        /* FORM SECTION */
+        .rcs-contact-form {
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            background: linear-gradient(145deg, #222222 0%, #1c1c1c 100%);
+            box-shadow: 
+                10px 10px 20px rgba(0, 0, 0, 0.9),
+                -10px -10px 20px rgba(60, 60, 60, 0.1);
+        }
+
+        body.light-mode .rcs-contact-form {
+            background: linear-gradient(145deg, #f0f0f0 0%, #e8e8e8 100%);
+            box-shadow: 
+                10px 10px 20px #a3b1c6,
+                -10px -10px 20px #ffffff;
+        }
+
+        .rcs-contact-form h3 {
+            font-family: 'Teko', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        /* WPForms styling override */
+        .rcs-contact-form .wpforms-container {
+            margin: 0;
+        }
+
+        .rcs-contact-form .wpforms-field-label {
+            color: var(--text-primary) !important;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .rcs-contact-form .wpforms-field-label-inline {
+            color: var(--text-primary) !important;
+        }
+
+        .rcs-contact-form input[type="text"],
+        .rcs-contact-form input[type="email"],
+        .rcs-contact-form input[type="tel"],
+        .rcs-contact-form textarea,
+        .rcs-contact-form select {
+            background: var(--bg-card) !important;
+            border: 2px solid rgba(255, 255, 255, 0.1) !important;
+            color: var(--text-primary) !important;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .rcs-contact-form input::placeholder,
+        .rcs-contact-form textarea::placeholder {
+            color: var(--text-secondary) !important;
+            opacity: 1;
+        }
+
+        .rcs-contact-form .wpforms-field-description,
+        .rcs-contact-form .wpforms-field-sublabel {
+            color: var(--text-secondary) !important;
+        }
+
+        body.light-mode .rcs-contact-form input[type="text"],
+        body.light-mode .rcs-contact-form input[type="email"],
+        body.light-mode .rcs-contact-form input[type="tel"],
+        body.light-mode .rcs-contact-form textarea,
+        body.light-mode .rcs-contact-form select {
+            background: #ffffff !important;
+            border-color: rgba(0, 0, 0, 0.1) !important;
+            color: var(--text-primary) !important;
+        }
+
+        body.light-mode .rcs-contact-form input::placeholder,
+        body.light-mode .rcs-contact-form textarea::placeholder {
+            color: var(--text-secondary) !important;
+        }
+
+        .rcs-contact-form input:focus,
+        .rcs-contact-form textarea:focus,
+        .rcs-contact-form select:focus {
+            outline: none;
+            border-color: var(--accent-color) !important;
+            box-shadow: 0 0 0 3px rgba(253, 255, 0, 0.1) !important;
+        }
+
+        body.light-mode .rcs-contact-form input:focus,
+        body.light-mode .rcs-contact-form textarea:focus,
+        body.light-mode .rcs-contact-form select:focus {
+            box-shadow: 0 0 0 3px rgba(0, 153, 255, 0.1) !important;
+        }
+
+        /* Radio buttons e checkbox */
+        .rcs-contact-form .wpforms-field-radio label,
+        .rcs-contact-form .wpforms-field-checkbox label,
+        .rcs-contact-form .wpforms-field-payment-multiple label {
+            color: var(--text-primary) !important;
+        }
+
+        /* Required asterisk */
+        .rcs-contact-form .wpforms-required-label {
+            color: #ff4444 !important;
+        }
+
+        .rcs-contact-form button[type="submit"] {
+            background: var(--accent-color);
+            color: #000;
+            font-family: 'Teko', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .rcs-contact-form button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(253, 255, 0, 0.4);
+        }
+
+        body.light-mode .rcs-contact-form button[type="submit"]:hover {
+            box-shadow: 0 10px 30px rgba(0, 153, 255, 0.4);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .rcs-contact-hero-content, .rcs-contact-container {
+                padding: 0 60px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .rcs-contact-hero-content, .rcs-contact-container {
+                padding: 0 30px;
+            }
+            .rcs-contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .rcs-contact-map-placeholder {
+                padding: 3rem 1.5rem;
+            }
+        }
+    </style>
+
+    <!-- HERO -->
+    <section class="rcs-contact-hero">
+        <div class="rcs-contact-hero-content">
+            <h1 class="rcs-contact-hero-title"><span class="rcs-contact-highlight">Contattaci</span></h1>
+            <p class="rcs-contact-hero-description">Hai un progetto in mente? Vuoi maggiori informazioni sui nostri prodotti? Il nostro team è a tua disposizione per supportarti.</p>
+        </div>
+    </section>
+
+    <!-- MAIN CONTACT SECTION -->
+    <section class="rcs-contact-main">
+        <div class="rcs-contact-container">
+            <div class="rcs-contact-grid">
+                
+                <!-- LEFT COLUMN: INFO -->
+                <div class="rcs-contact-info">
+                    
+                    <!-- INFO AZIENDA UNICA -->
+                    <div class="rcs-contact-info-card">
+                        <h3>
+                            <div class="rcs-contact-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                            </div>
+                            Informazioni di Contatto
+                        </h3>
+                        <p style="margin-bottom: 1.5rem;">
+                            <strong>Sede Operativa</strong><br>
+                            [VIA E NUMERO CIVICO]<br>
+                            [CAP CITTÀ, PROVINCIA]<br>
+                            [PAESE]
+                        </p>
+                        <p style="margin-bottom: 1.5rem;">
+                            <strong>Telefono</strong><br>
+                            <a href="tel:[NUMERO]">[NUMERO TELEFONO]</a>
+                        </p>
+                        <p style="margin-bottom: 1.5rem;">
+                            <strong>Email</strong><br>
+                            Info: <a href="mailto:[EMAIL-INFO]">[EMAIL-INFO]</a><br>
+                            Commerciale: <a href="mailto:[EMAIL-VENDITE]">[EMAIL-VENDITE]</a>
+                        </p>
+                        <p>
+                            <strong>Orari Ufficio</strong><br>
+                            Lunedì - Venerdì: [ORARI]<br>
+                            Sabato: [ORARI]<br>
+                            Domenica: Chiuso
+                        </p>
+                    </div>
+
+                    <!-- MAPPA PLACEHOLDER GDPR-SAFE -->
+                    <div class="rcs-contact-map">
+                        <div class="rcs-contact-map-placeholder">
+                            <div class="rcs-contact-map-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                </svg>
+                            </div>
+                            <h4>Visualizza la Mappa</h4>
+                            <p>Per visualizzare la posizione della nostra sede, clicca sul pulsante qui sotto per aprire Google Maps.</p>
+                            <!-- SOSTITUISCI questo link con il tuo indirizzo Google Maps -->
+                            <a href="[LINK-GOOGLE-MAPS]" target="_blank" rel="noopener" class="rcs-contact-map-btn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                                Apri in Google Maps
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- RIGHT COLUMN: FORM -->
+                <div class="rcs-contact-form">
+                    <h3>Invia un Messaggio</h3>
+                    <!-- SOSTITUISCI "123" con il tuo ID form WPForms -->
+                    [wpforms id="123"]
+                </div>
+
+            </div>
+        </div>
+    </section>

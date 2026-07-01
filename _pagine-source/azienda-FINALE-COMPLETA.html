@@ -1,0 +1,999 @@
+<!-- ========================================
+     AZIENDA RCS CARBONIO - VERSIONE FINALE
+     Con script cambio immagine funzionante
+     ======================================== -->
+
+<style>
+/* Font locali dal tema - GDPR compliant */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/wp-content/themes/rcs-carbonpro-2026/assets/fonts/inter-v20-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('/wp-content/themes/rcs-carbonpro-2026/assets/fonts/inter-v20-latin-500.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('/wp-content/themes/rcs-carbonpro-2026/assets/fonts/inter-v20-latin-600.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('/wp-content/themes/rcs-carbonpro-2026/assets/fonts/inter-v20-latin-700.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Teko';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/wp-content/themes/rcs-carbonpro-2026/assets/fonts/teko-v23-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Teko';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('/wp-content/themes/rcs-carbonpro-2026/assets/fonts/teko-v23-latin-500.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Teko';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('/wp-content/themes/rcs-carbonpro-2026/assets/fonts/teko-v23-latin-600.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Teko';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('/wp-content/themes/rcs-carbonpro-2026/assets/fonts/teko-v23-latin-700.woff2') format('woff2');
+}
+
+/* Applica font base */
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+:root {
+    --bg-page: #101010;
+    --bg-card: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --accent-color: #fdff00;
+}
+
+body.light-mode {
+    --bg-page: #f8f9fa;
+    --bg-card: #ffffff;
+    --text-primary: #1a1a1a;
+    --text-secondary: #58585d;
+    --accent-color: #0099ff;
+}
+
+.azienda-hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 0 80px;
+    background: var(--bg-page);
+}
+
+body.light-mode .azienda-hero {
+    background: #f8f9fa;
+}
+
+.azienda-hero-content {
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 110px;
+    width: 100%;
+}
+
+.azienda-hero-badge {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: 2rem;
+}
+
+body.light-mode .azienda-hero-badge {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.azienda-hero-title {
+    font-family: 'Teko', sans-serif;
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 25px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-primary);
+}
+
+.highlight { color: var(--accent-color); }
+
+.azienda-hero-description {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 700px;
+}
+
+.hero-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 700;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.hero-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent-color);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+}
+
+.hero-link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+.hero-link:hover {
+    text-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* ===== STORIA - STICKY CSS ===== */
+.storia-scroll-section {
+    background: var(--bg-card);
+    padding: 6rem 0;
+}
+
+body.light-mode .storia-scroll-section {
+    background: #ffffff;
+}
+
+.storia-scroll-container {
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 110px;
+}
+
+.storia-scroll-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+}
+
+/* Contenuto a sinistra */
+.storia-content-scroll {
+    padding: 2rem 0;
+    min-height: 400vh;
+}
+
+.storia-phase {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem 0 0 0;
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--text-secondary);
+    position: relative;
+}
+
+/* Spazio DOPO la linea */
+.storia-phase::after {
+    content: '';
+    display: block;
+    height: 2rem;
+    width: 1px;
+    margin-top: 0;
+}
+
+.storia-phase:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    min-height: 100vh;
+}
+
+.storia-phase:last-child::after {
+    display: none;
+}
+
+.storia-phase-year {
+    font-family: 'Teko', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    line-height: 1;
+}
+
+.storia-phase h3 {
+    font-family: 'Teko', sans-serif;
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.storia-phase p {
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.storia-phase ul {
+    list-style: none;
+    margin: 1.25rem 0 0 0;
+    padding: 0;
+}
+
+.storia-phase li {
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    text-align: left;
+    padding: 0;
+}
+
+.storia-phase strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* Immagine STICKY a destra */
+.storia-image-sticky {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 180px;
+    height: 600px;
+    align-self: start;
+}
+
+.storia-image-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    background: var(--bg-page);
+}
+
+body.light-mode .storia-image-container {
+    background: #e8e8e8;
+}
+
+.storia-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+body.light-mode .storia-image-container img {
+    /* Rimosso - ora è su .storia-img */
+}
+
+/* Stack di immagini sovrapposte - controllo JS */
+.storia-img {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Effetto retrò vintage intensificato */
+    filter: grayscale(100%) contrast(1.2) brightness(0.92) sepia(25%) saturate(0.8);
+}
+
+body.light-mode .storia-img {
+    filter: grayscale(100%) contrast(1.25) brightness(1.08) sepia(20%) saturate(0.7);
+}
+
+/* Mostra immagine quando ha classe active */
+.storia-img.active {
+    opacity: 1;
+}
+
+/* SEZIONE SPORT SPONSORSHIP - con background immagine */
+.sport-section {
+    position: relative;
+    padding: 10rem 0;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.sport-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.sport-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Immagine mobile - nascosta di default */
+.sport-bg-mobile {
+    display: none;
+}
+
+.sport-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgba(16, 16, 16, 0.92) 0%,
+        rgba(26, 26, 26, 0.85) 50%,
+        rgba(16, 16, 16, 0.92) 100%
+    );
+}
+
+body.light-mode .sport-bg::after {
+    background: linear-gradient(
+        135deg,
+        rgba(248, 249, 250, 0.92) 0%,
+        rgba(255, 255, 255, 0.85) 50%,
+        rgba(248, 249, 250, 0.92) 100%
+    );
+}
+
+.sport-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 110px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.sport-content h2 {
+    font-family: 'Teko', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+    line-height: 1.1;
+    max-width: 50%;
+}
+
+.sport-content p {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    max-width: 50%;
+    margin: 0 0 1.5rem 0;
+    text-align: left;
+}
+
+.sport-content .highlight {
+    color: var(--accent-color);
+    font-weight: 700;
+}
+
+/* SEZIONI NORMALI */
+.azienda-section {
+    padding: 8rem 0;
+    background: var(--bg-card);
+}
+
+body.light-mode .azienda-section {
+    background: #ffffff;
+}
+
+.azienda-section.alt {
+    background: var(--bg-page);
+}
+
+body.light-mode .azienda-section.alt {
+    background: #f8f9fa;
+}
+
+.azienda-container {
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 110px;
+}
+
+.azienda-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+}
+
+.azienda-content h2 {
+    font-family: 'Teko', sans-serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+}
+
+.azienda-content p {
+    font-size: 1.125rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.azienda-image {
+    border-radius: 1.5rem;
+    overflow: hidden;
+}
+
+.azienda-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* NON SOLO TUBI */
+.nonsolo-disclaimer {
+    background: rgba(253, 255, 0, 0.08);
+    border-left: 4px solid var(--accent-color);
+    padding: 1.5rem 2rem;
+    margin-top: 2rem;
+    border-radius: 0.5rem;
+}
+
+body.light-mode .nonsolo-disclaimer {
+    background: rgba(0, 153, 255, 0.08);
+    border-left-color: var(--accent-color);
+}
+
+.nonsolo-disclaimer p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.nonsolo-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.3s ease;
+}
+
+.nonsolo-link:hover {
+    opacity: 0.8;
+}
+
+/* TIMELINE */
+.timeline-section {
+    padding: 8rem 0;
+    background: var(--bg-card);
+}
+
+body.light-mode .timeline-section {
+    background: #ffffff;
+}
+
+.timeline-header {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.timeline-header h2 {
+    font-family: 'Teko', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.timeline-header p {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+}
+
+.timeline-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 3rem;
+}
+
+.timeline-item {
+    text-align: center;
+    padding: 2.5rem;
+    background: var(--bg-page);
+    border-radius: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+body.light-mode .timeline-item {
+    background: #f8f9fa;
+}
+
+.timeline-item:hover {
+    transform: translateY(-10px);
+}
+
+.timeline-year {
+    font-family: 'Teko', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+}
+
+.timeline-item h3 {
+    font-family: 'Teko', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.timeline-item p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* CLIENTI */
+.cliente-card {
+    text-align: center;
+    padding: 2.5rem;
+    background: var(--bg-page);
+    border-radius: 1.5rem;
+    transition: transform 0.3s ease;
+    text-decoration: none;
+    display: block;
+    color: inherit;
+}
+
+body.light-mode .cliente-card {
+    background: #f8f9fa;
+}
+
+.cliente-card:hover {
+    transform: translateY(-10px);
+}
+
+.cliente-card h3 {
+    font-family: 'Teko', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+}
+
+.cliente-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* FORCE STICKY - Override tema WordPress */
+body {
+    overflow-x: visible;
+    overflow-y: auto;
+}
+
+html {
+    overflow: visible;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+    .azienda-hero-content, .azienda-container, .storia-scroll-container {
+        padding: 0 60px;
+    }
+}
+
+@media (max-width: 768px) {
+    .azienda-hero-content, .azienda-container, .storia-scroll-container {
+        padding: 0 30px;
+    }
+    
+    .azienda-hero {
+        min-height: auto;
+        padding: 100px 0 60px;
+    }
+    
+    .azienda-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    
+    .azienda-section, .storia-scroll-section, .timeline-section {
+        padding: 4rem 0;
+    }
+    
+    /* MOBILE: layout verticale semplice */
+    .storia-scroll-wrapper {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .storia-phase {
+        min-height: auto;
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+    }
+    
+    .storia-phase::after {
+        display: none;
+    }
+    
+    /* Immagine normale in mobile */
+    .storia-image-sticky {
+        position: relative;
+        top: 0;
+        height: 400px;
+        margin-bottom: 2rem;
+    }
+    
+    .timeline-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .timeline-item {
+        padding: 2rem;
+    }
+    
+    /* Sport section mobile */
+    .sport-section {
+        padding: 5rem 0;
+        min-height: 50vh;
+    }
+    
+    .sport-content {
+        padding: 0 30px;
+    }
+    
+    .sport-content h2,
+    .sport-content p {
+        max-width: 100%;
+    }
+    
+    /* MOBILE: nascondi immagine desktop, mostra mobile */
+    .sport-bg img:not(.sport-bg-mobile) {
+        display: none;
+    }
+    
+    .sport-bg-mobile {
+        display: block !important;
+    }
+}
+</style>
+
+<!-- HERO -->
+<section class="azienda-hero">
+    <div class="azienda-hero-content">
+        <div class="azienda-hero-badge reveal">Produzione italiana di tubi in carbonio dal 2005</div>
+        <h1 class="azienda-hero-title reveal reveal-delay-1">
+            Siamo un'azienda specializzata nella produzione di<br>
+            <span class="highlight">tubi in Carbonio</span>
+        </h1>
+        <p class="azienda-hero-description reveal reveal-delay-2">
+    Da oltre 20 anni produciamo tubi unici nel loro genere seguendo la <span class="highlight">tua</span> formula personale, qualunque sia il tuo settore <a href="/contatti" class="hero-link">contattaci</a> per creare la tua soluzione ideale.
+</p>
+    </div>
+</section>
+
+<!-- LA NOSTRA STORIA - STICKY CSS -->
+<section class="storia-scroll-section">
+    <div class="storia-scroll-container">
+        <div class="storia-scroll-wrapper">
+            <!-- CONTENUTO SCROLL a sinistra -->
+            <div class="storia-content-scroll">
+                <div class="storia-phase" data-img="1">
+                    <div class="storia-phase-year">2005</div>
+                    <h3>La Fondazione</h3>
+                    <p>R.C.S. (Rusalen Compositi Sarone) nasce nel 2005 dalla ventennale esperienza nel settore dei materiali compositi avanzati maturata dal suo titolare <strong>Graziano Rusalen</strong> in varie realtà produttive con mansioni dirigenziali.</p>
+                    <p>RCS Carbonio nasce nel 2005 dall'esperienza ventennale di Graziano Rusalen 
+nella lavorazione di materiali compositi avanzati. La prima produzione era 
+interamente dedicata ai <strong class="highlight">telai in fibra di carbonio per uso agonistico</strong> — 
+biciclette da competizione dove <strong class="highlight">ogni grammo conta</strong> e ogni giunzione deve 
+reggere sollecitazioni che la maggior parte dei materiali non sopportano. Esperienza e studio costante furono fondamentali per garantire la migliore performance in un settore dove anche il più piccolo dettaglio può determinare la vittoria</p>
+                </div>
+                
+                <div class="storia-phase" data-img="2">
+                    <div class="storia-phase-year">2008</div>
+                    <h3>Accessori Settore Ciclo</h3>
+                    <p>Con il passare del tempo la diversificazione produttiva ha portato l'azienda ad esplorare nuovi settori, iniziando con gli <strong>accessori per il settore ciclo</strong>, oltre a un telaio di ottima qualità, sorgeva la necessità di creare accessori che sfruttassero al meglio la qualità dei telai, la produzione comprendeva: </p>
+                    <ul>
+                        <li>Mozzi per ruote ad alte prestazioni</li>
+                        <li>Componenti strutturali per telai personalizzati</li>
+                        <li>Parti su misura per biciclette racing professionali</li>
+                    </ul>
+<p>In questo periodo le varie sfide volte a raggiungere il massimo delle prestazioni e la diversificazione della produzione hanno portato l'azienda ad evolversi per raggiungere nuovi obiettivi.</p>
+                </div>
+                
+                <div class="storia-phase" data-img="3">
+                    <div class="storia-phase-year">2011</div>
+                    <h3>Settore Industriale</h3>
+                    <p>L'ingresso nel <strong>settore industriale</strong> ha rappresentato una svolta importante, dimostrando la versatilità dei materiali compositi.</p>
+                    <ul>
+                        <li>Mole per rettifica ad alta precisione</li>
+                        <li>Rulli per macchine di stampaggio CMT e CMS</li>
+                        <li>Componenti tecnici per macchinari industriali</li>
+                    </ul>
+                </div>
+                
+                <div class="storia-phase" data-img="4">
+                    <div class="storia-phase-year">2014</div>
+                    <h3>Aeronautica</h3>
+                    <p>Il salto tecnologico nel <strong>settore aeronautico</strong> ha richiesto standard qualitativi elevatissimi. RCS comincia a produrre componenti e tubi per l'utilizzo nel settore aerospaziale, dove l'approssimazione non esiste, creando: </p>
+                    <ul>
+                        <li>Componenti strutturali per droni professionali</li>
+                        <li>Semilavorati per elicotteri di aviazione leggera</li>
+                        <li>Certificazioni aerospace e controlli qualità rigorosi</li>
+                    </ul>
+<p>Essere fornitori di tubi in carbonio fatti su misure specifiche vuol dire anche questo. Vuol dire essere precisi, sempre.</p>
+                </div>
+                
+                <div class="storia-phase" data-img="5">
+                    <div class="storia-phase-year">2018</div>
+                    <h3>Nautica</h3>
+                    <p>RCS imbocca il mare. L'esperienza nel <strong>settore nautico</strong> ha aperto nuove opportunità nel mondo della vela racing. In mare, la fibra di carbonio è una scelta quasi obbligata per chi corre. 
+Alberi, bompressi, tangoni, componenti aftermarket per regate: RCS comincia a produrre tubi in carbonio 
+su misura per cantieri nautici e armatori che conoscono la differenza tra 
+un tubo generico e uno progettato per reggere il carico di uno strallo 
+sotto vento forte. Grazie anche alla collaborazione dei suoi partner RCS diventa un partner serio e affidabile per l'industria navale. </p>
+                    <ul>
+                        <li>Accessori aftermarket per natanti da regata</li>
+                        <li>Componenti su misura per imbarcazioni da diporto</li>
+                        <li>Alberi e boma ultraleggeri per competizioni</li>
+                    </ul>
+                </div>
+                
+                <div class="storia-phase" data-img="6">
+                    <div class="storia-phase-year">Oggi</div>
+                    <h3>La storia continua</h3>
+                    <p>Oggi RCS produce per la maggior parte componenti e tubi in carbonio per il settore sportivo, per il settore navale, per il settore aerospaziale e per l'industria. Ma punta ancora più in alto, RCS continua a investire nei suoi atleti, nei suoi materiali e nel suo staff.</p>
+
+<p></p>
+
+<p>Questa è RCS. Il futuro lo creiamo con te, scriviamo insieme la prossima pagina di storia. Esplora il nostro sito, non vediamo l'ora di avere tue notizie.</p>
+                </div>
+            </div>
+            
+            <!-- IMMAGINE STICKY a destra - 6 immagini sovrapposte -->
+            <div class="storia-image-sticky">
+                <div class="storia-image-container">
+                    <img class="storia-img storia-img-1" src="https://darkgoldenrod-mole-448362.hostingersite.com/wp-content/uploads/2026/03/IMG_2945-scaled.webp" alt="2005 - La Fondazione">
+                    <img class="storia-img storia-img-2" src="https://darkgoldenrod-mole-448362.hostingersite.com/wp-content/uploads/2026/03/untitled_artwork-YBge3VqygwFxo85o.jpg" alt="2008 - Accessori Settore Ciclo">
+                    <img class="storia-img storia-img-3" src="https://darkgoldenrod-mole-448362.hostingersite.com/wp-content/uploads/2026/03/foto-07-02-25-13-31-19-A85E0a8qGvTV4NG6.jpg" alt="2011 - Settore Industriale">
+                    <img class="storia-img storia-img-4" src="https://darkgoldenrod-mole-448362.hostingersite.com/wp-content/uploads/2026/03/foto-07-02-25-13-31-19-A85E0a8qGvTV4NG6.jpg" alt="2014 - Aeronautica">
+                    <img class="storia-img storia-img-5" src="https://darkgoldenrod-mole-448362.hostingersite.com/wp-content/uploads/2026/03/Hands-scaled.webp" alt="2018 - Nautica">
+                    <img class="storia-img storia-img-6" src="https://darkgoldenrod-mole-448362.hostingersite.com/wp-content/uploads/2026/03/img_4995-2-YKbEXDLQGVfvLvzQ-scaled.webp" alt="Oggi - La storia continua">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- VALORI -->
+<section class="azienda-section alt">
+    <div class="azienda-container">
+        <div class="azienda-grid">
+            <div class="azienda-image reveal">
+                <img src="https://darkgoldenrod-mole-448362.hostingersite.com/wp-content/uploads/2026/03/tele-scaled.webp" alt="Processo produttivo azienda specializzata in tubi in fibra di carbonio">
+            </div>
+            <div class="azienda-content">
+                <h2 class="reveal">La Nostra Scelta</h2>
+                <p class="reveal reveal-delay-1">
+                    <strong class="highlight">Qualità senza compromessi.</strong> Abbiamo scelto di produrre tubi seguendo misure specifiche. Abbiamo scelto di affiancare persone brillanti con idee uniche. Abbiamo scelto i vostri bisogni. RCS è una promessa volta a chi vuole un prodotto perfetto per le sue idee, anche in grandi quantitativi. Se cerchi un tubo fatto apposta per te, sei nel posto giusto.
+                </p>
+                <p class="reveal reveal-delay-2">
+                   <strong class="highlight">Innovazione continua.</strong> Investiamo costantemente in ricerca e sviluppo per esplorare nuove applicazioni della fibra di carbonio, creare nuovi artefatti o migliorare prodotti già esistenti, RCS non si ferma mai.
+                </p>
+                <p class="reveal reveal-delay-3">
+                    <strong class="highlight">Alta qualità.</strong> Scegliamo solo le migliori tele e utilizziamo materiali di qualità, la differenza risiede nel metodo e nella cura con la quale vengono trattati i materiali, non basta solo un' ottima materia prima, anni di esperienza e studio ci hanno permesso di comprendere a pieno le caratteristiche dei materiali che utilizziamo. Lavorare il materiale è un arte che unisce l'ingegno al cuore. Siamo fieri dei nostri prodotti.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- NON SOLO TUBI -->
+<section class="azienda-section">
+    <div class="azienda-container">
+        <div class="azienda-grid">
+            <div class="azienda-content">
+                <h2 class="reveal">Non Solo Tubi</h2>
+                <p class="reveal reveal-delay-1">
+                    Siamo esperti artigiani nella produzione di tubi in fibra di carbonio, ma la nostra competenza va ben oltre. Realizziamo anche <strong>componenti personalizzati su misura</strong> per ogni esigenza tecnica e industriale.
+                </p>
+                <p class="reveal reveal-delay-2">
+                    Che si tratti di particolari da testare, rinforzi strutturali complessi, parti meccaniche con geometrie specifiche o componenti unici per il tuo progetto, lavoriamo a stretto <a href="/contatti" class="nonsolo-link">contatto</a> con il cliente per trovare la soluzione ideale.
+                </p>
+                <div class="nonsolo-disclaimer reveal reveal-delay-3">
+                    <p><strong>Nota:</strong> Ogni componente personalizzato richiede una valutazione preliminare di fattibilità tecnica e produttiva. Ti invitiamo a <a href="/contatti" class="nonsolo-link">contattarci</a> per discutere nel dettaglio le specifiche del tuo progetto e verificare insieme la realizzabilità.</p>
+                </div>
+            </div>
+            <div class="azienda-image reveal">
+                <img src="https://darkgoldenrod-mole-448362.hostingersite.com/wp-content/uploads/2026/03/img_6138-A3Q2EVD2J5u9w18E-1.jpg" alt="Componenti personalizzati in fibra di carbonio su misura - RCS Carbonio">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- IL NOSTRO IMPEGNO NELLO SPORT -->
+<section class="sport-section">
+    <div class="sport-bg">
+        <!-- Immagine DESKTOP: 1920x800px - soggetto a destra -->
+        <img src="https://darkgoldenrod-mole-448362.hostingersite.com/wp-content/uploads/2026/03/IMG_1467.webp" alt="Atleta sponsorizzato dall'azienda RCS Carbonio" loading="lazy">
+        
+        <!-- Immagine MOBILE: 800x1200px (verticale) - soggetto centrato -->
+        <img class="sport-bg-mobile" src="[URL-IMMAGINE-SPORT-MOBILE]" alt="Atleta sponsorizzato dall'azienda RCS Carbonio - Mobile" loading="lazy">
+    </div>
+    <div class="sport-content">
+        <h2 class="reveal">Il Nostro Impegno nello <span class="highlight">Sport</span></h2>
+        <p class="reveal reveal-delay-1">
+            Sei anche tu alla costante ricerca di un tubo in carbonio di diametro personalizzato o con specifiche tecniche personalizzabili per create i tuoi articoli sportivi professionali? Ti sarà sicuramente capitato di spendere ore e risorse alla ricerca di un tubo perfetto che si abbini bene al resto dei tuoi componenti, noi lavoriamo proprio per far fronte a questo bisogno.
+        </p>
+        <p class="reveal reveal-delay-2">
+            Sviluppiamo i nostri tubi insieme agli atleti che sponsorizziamo, e alle aziende che ci hanno già scelto come partner sui percorsi dove quei tubi 
+devono <strong class="highlight">effettivamente funzionare</strong>. Leggerezza, rigidità torsionale, 
+resistenza alla fatica: hanno un impatto significativo sulla performance di un professionista — sono i parametri 
+che misuriamo e ottimizziamo ad ogni ciclo di sviluppo.
+        </p>
+    </div>
+</section>
+
+<!-- CI HANNO GIÀ SCELTO -->
+<section class="timeline-section">
+    <div class="azienda-container">
+        <div class="timeline-header">
+            <h2 class="reveal">Ci Hanno Già Scelto</h2>
+            <p class="reveal reveal-delay-1">Aziende leader che hanno scelto RCS Carbonio come partner per i loro progetti</p>
+        </div>
+        
+        <div class="timeline-grid">
+            <a href="https://www.azienda-esempio1.com" target="_blank" rel="noopener noreferrer" class="cliente-card reveal reveal-delay-1">
+                <h3>Azienda Alpha</h3>
+                <p>Leader nel settore nautico da regata, specializzata in imbarcazioni ad alte prestazioni per competizioni internazionali e velisti professionisti.</p>
+            </a>
+            
+            <a href="https://www.azienda-esempio2.com" target="_blank" rel="noopener noreferrer" class="cliente-card reveal reveal-delay-2">
+                <h3>Beta Industrial</h3>
+                <p>Produttore di macchinari industriali di precisione per il settore manifatturiero, con focus su automazione e componenti custom ad alta resistenza.</p>
+            </a>
+            
+            <a href="https://www.azienda-esempio3.com" target="_blank" rel="noopener noreferrer" class="cliente-card reveal reveal-delay-3">
+                <h3>Gamma Aerospace</h3>
+                <p>Azienda specializzata nello sviluppo di droni professionali per applicazioni civili e commerciali, con certificazioni aerospace internazionali.</p>
+            </a>
+            
+            <a href="https://www.azienda-esempio4.com" target="_blank" rel="noopener noreferrer" class="cliente-card reveal reveal-delay-3">
+                <h3>Delta Sports Tech</h3>
+                <p>Fornitori di attrezzature sportive professionali per atleti olimpici, specializzati in pagaie da canoa e bastoncini da sci di fondo racing.</p>
+            </a>
+        </div>
+    </div>
+</section>
+
+<script>
+// Reveal animation
+(function() {
+    function reveal() {
+        const reveals = document.querySelectorAll('.reveal');
+        reveals.forEach(element => {
+            const windowHeight = window.innerHeight;
+            const elementTop = element.getBoundingClientRect().top;
+            if (elementTop < windowHeight - 150) {
+                element.classList.add('active');
+            }
+        });
+    }
+    window.addEventListener('scroll', reveal);
+    window.addEventListener('load', reveal);
+    reveal();
+})();
+
+// Cambio immagine storia basato su scroll (come esempio Venair)
+(function() {
+    var phases = document.querySelectorAll('.storia-phase');
+    var images = document.querySelectorAll('.storia-img');
+    var currentActive = 0;
+    
+    function updateImage() {
+        var scrollPos = window.pageYOffset || document.documentElement.scrollTop;
+        var windowHeight = window.innerHeight;
+        var triggerPoint = scrollPos + (windowHeight * 0.5);
+        
+        phases.forEach(function(phase, index) {
+            var rect = phase.getBoundingClientRect();
+            var phaseTop = scrollPos + rect.top;
+            var phaseBottom = phaseTop + phase.offsetHeight;
+            
+            if (triggerPoint >= phaseTop && triggerPoint < phaseBottom) {
+                if (currentActive !== index) {
+                    images.forEach(function(img) { img.classList.remove('active'); });
+                    var imgIndex = parseInt(phase.getAttribute('data-img')) - 1;
+                    if (images[imgIndex]) {
+                        images[imgIndex].classList.add('active');
+                    }
+                    currentActive = index;
+                }
+            }
+        });
+    }
+    
+    // Attiva prima immagine all'inizio
+    if (images[0]) images[0].classList.add('active');
+    
+    window.addEventListener('scroll', updateImage);
+    window.addEventListener('resize', updateImage);
+    updateImage();
+})();
+
+// Dark mode sync
+if (localStorage.getItem('darkMode') === 'light') { 
+    document.body.classList.add('light-mode'); 
+}
+</script>

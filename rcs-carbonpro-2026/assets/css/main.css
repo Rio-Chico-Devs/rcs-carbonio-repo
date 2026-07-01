@@ -1,0 +1,781 @@
+/* ============================================ */
+/* RCS CARBONIO - TEMA WORDPRESS */
+/* SOLO: Reset + Variabili + Navbar + Footer */
+/* Le pagine hanno il loro CSS inline */
+/* ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+:root {
+    /* Dark theme */
+    --bg-page: #101010;
+    --bg-card: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --accent-color: #fdff00;
+    --accent-glow: rgba(253, 255, 0, 0.6);
+    --shadow-dark: rgba(0, 0, 0, 0.9);
+    --shadow-light: rgba(60, 60, 60, 0.1);
+}
+
+/* VARIABILI LIGHT MODE */
+body.light-mode {
+    --bg-page: #f8f9fa;
+    --bg-card: #f8f9fa;
+    --text-primary: #1a1a1a;
+    --text-secondary: #58585d;
+    --accent-color: #0099ff;
+    --accent-glow: rgba(0, 153, 255, 0.5);
+    --shadow-dark: #a3b1c6;
+    --shadow-light: #ffffff;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg-page);
+    color: var(--text-primary);
+    transition: all 0.4s ease;
+}
+
+/* Pattern carbonio - SOLO dark mode */
+body:not(.light-mode)::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: #0d0d0d;
+    background-image:
+        linear-gradient(45deg, 
+            rgba(0, 0, 0, 0.6) 0%, 
+            rgba(0, 0, 0, 0.6) 22%,
+            rgba(15, 15, 15, 0.3) 22%,
+            rgba(15, 15, 15, 0.3) 28%,
+            rgba(0, 0, 0, 0.6) 28%,
+            rgba(0, 0, 0, 0.6) 47%,
+            rgba(40, 40, 40, 0.2) 47%,
+            rgba(40, 40, 40, 0.2) 53%,
+            rgba(0, 0, 0, 0.6) 53%
+        ),
+        linear-gradient(-45deg,
+            rgba(25, 25, 25, 0.5) 0%, 
+            rgba(25, 25, 25, 0.5) 47%,
+            rgba(50, 50, 50, 0.2) 47%,
+            rgba(50, 50, 50, 0.2) 53%,
+            rgba(25, 25, 25, 0.5) 53%
+        ),
+        repeating-linear-gradient(90deg,
+            transparent 0px,
+            transparent 3px,
+            rgba(255, 255, 255, 0.02) 3px,
+            rgba(255, 255, 255, 0.05) 4px,
+            transparent 5px,
+            transparent 8px
+        );
+    background-size: 
+        14px 14px,
+        14px 14px,
+        8px 100%;
+    background-position: 
+        0 0,
+        7px 7px,
+        0 0;
+    opacity: 0.65;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 20px 0;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+/* DARK MODE navbar */
+body:not(.light-mode) .navbar {
+    background: linear-gradient(180deg, #1a1a1a 0%, #101010 50%, #0a0a0a 100%);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(255, 255, 255, 0.1) inset;
+}
+
+/* LIGHT MODE navbar */
+body.light-mode .navbar {
+    background: linear-gradient(180deg, #f8f8f8 0%, #efefef 50%, #e8e8e8 100%);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 1px 0 rgba(255, 255, 255, 1) inset;
+}
+
+/* Texture carbonio DARK MODE - 4 Layer Completi */
+body:not(.light-mode) .navbar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: #0d0d0d;
+    background-image:
+        linear-gradient(45deg, 
+            rgba(0, 0, 0, 0.9) 0%, 
+            rgba(0, 0, 0, 0.9) 22%,
+            rgba(20, 20, 20, 0.4) 22%,
+            rgba(20, 20, 20, 0.4) 28%,
+            rgba(0, 0, 0, 0.9) 28%,
+            rgba(0, 0, 0, 0.9) 47%,
+            rgba(50, 50, 50, 0.3) 47%,
+            rgba(50, 50, 50, 0.3) 53%,
+            rgba(0, 0, 0, 0.9) 53%,
+            rgba(0, 0, 0, 0.9) 72%,
+            rgba(20, 20, 20, 0.4) 72%,
+            rgba(20, 20, 20, 0.4) 78%,
+            rgba(0, 0, 0, 0.9) 78%
+        ),
+        linear-gradient(-45deg,
+            rgba(35, 35, 35, 0.7) 0%, 
+            rgba(35, 35, 35, 0.7) 22%,
+            rgba(55, 55, 55, 0.3) 22%,
+            rgba(55, 55, 55, 0.3) 28%,
+            rgba(35, 35, 35, 0.7) 28%,
+            rgba(35, 35, 35, 0.7) 47%,
+            rgba(70, 70, 70, 0.2) 47%,
+            rgba(70, 70, 70, 0.2) 53%,
+            rgba(35, 35, 35, 0.7) 53%,
+            rgba(35, 35, 35, 0.7) 72%,
+            rgba(55, 55, 55, 0.3) 72%,
+            rgba(55, 55, 55, 0.3) 78%,
+            rgba(35, 35, 35, 0.7) 78%
+        ),
+        repeating-linear-gradient(90deg,
+            transparent 0px,
+            transparent 3px,
+            rgba(255, 255, 255, 0.03) 3px,
+            rgba(255, 255, 255, 0.08) 4px,
+            rgba(255, 255, 255, 0.03) 5px,
+            transparent 5px,
+            transparent 8px
+        ),
+        repeating-linear-gradient(0deg,
+            transparent 0px,
+            transparent 3px,
+            rgba(255, 255, 255, 0.03) 3px,
+            rgba(255, 255, 255, 0.08) 4px,
+            rgba(255, 255, 255, 0.03) 5px,
+            transparent 5px,
+            transparent 8px
+        );
+    background-size: 
+        14px 14px,
+        14px 14px,
+        8px 100%,
+        100% 8px;
+    background-position: 
+        0 0,
+        7px 7px,
+        0 0,
+        0 0;
+    opacity: 0.75;
+    pointer-events: none;
+}
+
+/* Texture carbonio LIGHT MODE */
+body.light-mode .navbar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: #ebebeb;
+    background-image:
+        linear-gradient(45deg, 
+            rgba(0, 0, 0, 0.04) 0%, rgba(0, 0, 0, 0.04) 23%,
+            rgba(0, 0, 0, 0.015) 23%, rgba(0, 0, 0, 0.015) 27%,
+            rgba(0, 0, 0, 0.04) 27%, rgba(0, 0, 0, 0.04) 48%,
+            rgba(255, 255, 255, 0.2) 48%, rgba(255, 255, 255, 0.2) 52%,
+            rgba(0, 0, 0, 0.04) 52%
+        );
+    background-size: 14px 14px;
+    background-position: 0 0;
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+/* Riflesso lucido DARK MODE */
+body:not(.light-mode) .navbar::before {
+    content: '';
+    position: absolute;
+    top: -35%;
+    left: -5%;
+    width: 110%;
+    height: 75%;
+    background: 
+        radial-gradient(
+            ellipse 120% 80% at 50% 0%,
+            rgba(255, 255, 255, 0.4) 0%,
+            rgba(255, 255, 255, 0.25) 20%,
+            rgba(255, 255, 255, 0.12) 40%,
+            rgba(255, 255, 255, 0.05) 60%,
+            transparent 80%
+        ),
+        linear-gradient(168deg,
+            transparent 0%,
+            rgba(255, 255, 255, 0.15) 30%,
+            rgba(255, 255, 255, 0.25) 45%,
+            rgba(255, 255, 255, 0.15) 60%,
+            transparent 100%
+        );
+    pointer-events: none;
+    transform: skewY(-1.5deg);
+    z-index: 1;
+    filter: blur(0.5px);
+}
+
+/* Riflesso lucido LIGHT MODE */
+body.light-mode .navbar::before {
+    content: '';
+    position: absolute;
+    top: -35%;
+    left: -5%;
+    width: 110%;
+    height: 75%;
+    background: 
+        radial-gradient(
+            ellipse 120% 80% at 50% 0%,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(255, 255, 255, 0.85) 15%,
+            rgba(255, 255, 255, 0.6) 35%,
+            rgba(255, 255, 255, 0.3) 55%,
+            transparent 75%
+        );
+    pointer-events: none;
+    transform: skewY(-1.5deg);
+    z-index: 1;
+    filter: blur(1px);
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 110px;
+}
+
+.logo {
+    font-family: 'Teko', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--text-primary);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Theme toggle */
+.theme-toggle {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-card);
+    box-shadow: 6px 6px 12px var(--shadow-dark), -6px -6px 12px var(--shadow-light);
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.05);
+}
+
+.theme-toggle svg {
+    width: 24px;
+    height: 24px;
+    transition: all 0.4s ease;
+}
+
+/* DARK MODE - GIALLO */
+body:not(.light-mode) .theme-toggle svg {
+    fill: var(--accent-color);
+    stroke: var(--accent-color);
+    filter: 
+        drop-shadow(-2px -2px 4px rgba(255, 255, 255, 0.15))
+        drop-shadow(2px 2px 5px rgba(0, 0, 0, 1));
+}
+
+/* LIGHT MODE - GRIGIO */
+body.light-mode .theme-toggle svg {
+    fill: #8b98ab;
+    stroke: #8b98ab;
+    filter: 
+        drop-shadow(-2px -2px 4px rgba(163, 177, 198, 0.8))
+        drop-shadow(2px 2px 5px rgba(255, 255, 255, 1));
+}
+
+.theme-toggle svg line,
+.theme-toggle svg circle {
+    stroke: inherit;
+    fill: inherit;
+}
+
+/* HOVER - glow */
+.theme-toggle:hover svg {
+    transform: scale(1.1);
+    filter: 
+        drop-shadow(-2px -2px 6px var(--accent-glow))
+        drop-shadow(2px 2px 7px rgba(0, 0, 0, 0.9))
+        drop-shadow(0 0 20px var(--accent-glow));
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    position: relative;
+    padding: 80px 0 40px;
+    background: var(--bg-card);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+/* Immagine di sfondo decorativa */
+.footer::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 70%;
+    height: 80%;
+    background-image: url('[URL-IMMAGINE-FOOTER]');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 0;
+}
+
+body.light-mode .footer {
+    background: var(--bg-card);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+body.light-mode .footer::before {
+    opacity: 0.06;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 60px;
+    margin-bottom: 50px;
+    max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 110px;
+    position: relative;
+    z-index: 1;
+}
+
+.footer-section h3 {
+    font-family: 'Teko', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.footer-section p {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 10px;
+}
+
+.footer-section ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.footer-section ul li {
+    margin-bottom: 8px !important;
+    list-style: none !important;
+}
+
+.footer-section a {
+    color: var(--text-secondary) !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease !important;
+}
+
+.footer-section a:hover {
+    color: var(--accent-color) !important;
+}
+
+.footer-logo {
+    font-family: 'Teko', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.footer-bottom {
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 1920px;
+    margin: 0 auto;
+    padding-left: 110px;
+    padding-right: 110px;
+    position: relative;
+    z-index: 1;
+}
+
+body.light-mode .footer-bottom {
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.footer-bottom p {
+    color: var(--text-secondary);
+}
+
+.footer-bottom a {
+    color: var(--text-secondary) !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease !important;
+}
+
+.footer-bottom a:hover {
+    color: var(--accent-color) !important;
+}
+
+/* ICONE SOCIAL - NEUMORPHIC STYLE - ISOLATE */
+.footer-social-icons {
+    display: flex !important;
+    gap: 20px !important;
+}
+
+.footer-social-link {
+    width: 65px !important;
+    height: 65px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: var(--bg-card) !important;
+    box-shadow: 
+        8px 8px 16px var(--shadow-dark),
+        -4px -4px 8px var(--shadow-light) !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
+    text-decoration: none !important;
+}
+
+.footer-social-link:hover {
+    box-shadow: 
+        inset 6px 6px 12px var(--shadow-dark),
+        inset -4px -4px 8px var(--shadow-light) !important;
+}
+
+.footer-social-link svg {
+    width: 28px !important;
+    height: 28px !important;
+    fill: var(--accent-color) !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    filter: drop-shadow(0 0 0 transparent) !important;
+}
+
+/* HOVER EFFECTS - ISOLATI */
+body:not(.light-mode) .footer-social-link:hover svg {
+    filter: 
+        drop-shadow(0 0 3px rgba(253, 255, 0, 0.4))
+        drop-shadow(0 0 6px rgba(253, 255, 0, 0.2)) !important;
+    transform: scale(1.04) !important;
+}
+
+body.light-mode .footer-social-link:hover svg {
+    filter: 
+        drop-shadow(0 0 3px rgba(0, 153, 255, 0.4))
+        drop-shadow(0 0 6px rgba(0, 153, 255, 0.2)) !important;
+    transform: scale(1.04) !important;
+}
+
+/* ========================================== */
+/* WORDPRESS FULLSCREEN - Aggiunte necessarie */
+/* ========================================== */
+
+/* Reset WordPress containers per fullscreen */
+.site, .site-content, #content, #primary, .content-area,
+main, article, .entry-content, .post-content {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+}
+
+/* ========================================== */
+/* FIX CRITICI v7.1.0 */
+/* ========================================== */
+
+/* FIX 1: Reset link WordPress - NO stile vecchio */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:visited {
+    color: inherit;
+}
+
+a:hover {
+    color: inherit;
+}
+
+/* FIX 2: Button light mode - BLU con testo BIANCO */
+body.light-mode .btn-primary {
+    background: var(--accent-color);
+    color: #ffffff;
+    box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+body.light-mode .btn-primary:hover {
+    box-shadow: 0 6px 25px var(--accent-glow);
+}
+
+/* FIX 3: Navbar texture - z-index corretto */
+.navbar::before,
+.navbar::after {
+    pointer-events: none;
+}
+
+.nav-container {
+    position: relative;
+    z-index: 2;
+}
+
+/* ========================================== */
+/* NAVBAR FIX COMPLETO v7.2.0 */
+/* ========================================== */
+
+/* Nav links centrati */
+.nav-links {
+    display: flex;
+    gap: 8px;
+    list-style: none;
+    align-items: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.nav-links li {
+    margin: 0;
+}
+
+.nav-links a {
+    padding: 10px 20px;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    white-space: nowrap; /* NO a capo */
+}
+
+.nav-links a:hover {
+    color: var(--accent-color);
+}
+
+/* Link ATTIVO - effetto incavato neumorphic */
+.nav-links .current-menu-item a,
+.nav-links a.active {
+    background: var(--bg-card);
+    box-shadow: 
+        inset 4px 4px 8px var(--shadow-dark),
+        inset -4px -4px 8px var(--shadow-light);
+}
+
+/* Dark mode - link attivo giallo */
+body:not(.light-mode) .nav-links .current-menu-item a,
+body:not(.light-mode) .nav-links a.active {
+    color: #fdff00;
+}
+
+/* Light mode - link attivo blu */
+body.light-mode .nav-links .current-menu-item a,
+body.light-mode .nav-links a.active {
+    color: #0099ff;
+}
+
+/* Hamburger - SOLO mobile */
+.hamburger {
+    display: none;
+}
+
+@media (max-width: 1024px) {
+    .nav-links {
+        display: none;
+    }
+    .hamburger {
+        display: flex;
+    }
+}
+
+/* ========================================== */
+/* MOBILE MENU - v7.5.1 FORCED */
+/* ========================================== */
+
+.mobile-menu {
+    display: none !important; /* FORZA nascondimento su desktop */
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: var(--bg-card);
+    z-index: 999;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.mobile-menu.active {
+    display: block !important; /* FORZA visibilità quando attivo */
+}
+
+@media (max-width: 1024px) {
+    .mobile-menu {
+        display: none !important; /* Anche su mobile, nascosto di default */
+    }
+    .mobile-menu.active {
+        display: block !important; /* Visibile solo quando aperto */
+    }
+}
+
+.mobile-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-menu li {
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-menu a {
+    display: block;
+    padding: 15px 20px;
+    color: var(--text-primary);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.mobile-menu a:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--accent-color);
+    padding-left: 30px;
+}
+
+/* Nav actions - destra */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* ========================================== */
+/* FIX LINKS MENU - v7.1.1 */
+/* ========================================== */
+
+/* Reset link menu navbar */
+.nav-links a,
+.mobile-menu a {
+    color: var(--text-primary);
+    text-decoration: none !important;
+}
+
+.nav-links a:visited,
+.mobile-menu a:visited {
+    color: var(--text-primary);
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--accent-color);
+    text-decoration: none !important;
+}
+
+.mobile-menu a:hover {
+    color: var(--accent-color);
+    text-decoration: none !important;
+}
+
+/* Reset link footer */
+.footer-section a {
+    color: var(--text-secondary);
+    text-decoration: none !important;
+}
+
+.footer-section a:visited {
+    color: var(--text-secondary);
+}
+
+.footer-section a:hover {
+    color: var(--accent-color);
+    text-decoration: none !important;
+}
+
+/* Reset link bottoni */
+.btn-primary,
+.btn-secondary {
+    text-decoration: none !important;
+}
+
+.btn-primary:visited,
+.btn-secondary:visited {
+    color: inherit;
+}
+
+
+/* ========================================== */
+/* RESPONSIVE PADDING */
+/* ========================================== */
+
+@media (max-width: 1200px) {
+    .nav-container,
+    .footer-content,
+    .footer-bottom {
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-container,
+    .footer-content,
+    .footer-bottom {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}

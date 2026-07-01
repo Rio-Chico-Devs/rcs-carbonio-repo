@@ -1,0 +1,840 @@
+<!-- ========================================
+     LABORATORIO 3D - RCS CARBONIO
+     Configuratore 3D avanzato con Three.js
+     - Font locali GDPR compliant
+     - Three.js r128 da caricare nel tema
+     - Design system RCS integrato
+     ======================================== -->
+
+<style>
+/* Font locali dal tema - GDPR compliant */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/wp-content/themes/rcs-carbonpro-2026/assets/fonts/inter-v20-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('/wp-content/themes/rcs-carbonpro-2026/assets/fonts/inter-v20-latin-600.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Teko';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('/wp-content/themes/rcs-carbonpro-2026/assets/fonts/teko-v23-latin-600.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Teko';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('/wp-content/themes/rcs-carbonpro-2026/assets/fonts/teko-v23-latin-700.woff2') format('woff2');
+}
+
+:root {
+    --bg-page: #101010;
+    --bg-card: #1a1a1a;
+    --bg-panel: #141418;
+    --border: #222228;
+    --border2: #2e2e38;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-muted: #55555f;
+    --accent-color: #fdff00;
+    --accent2: #6ec8b4;
+    --danger: #c86e6e;
+}
+
+body.light-mode {
+    --bg-page: #f8f9fa;
+    --bg-card: #f8f9fa;
+    --bg-panel: #e8e8e8;
+    --border: rgba(0, 0, 0, 0.1);
+    --border2: rgba(0, 0, 0, 0.15);
+    --text-primary: #1a1a1a;
+    --text-secondary: #58585d;
+    --text-muted: #888;
+    --accent-color: #0099ff;
+    --accent2: #6ec8b4;
+    --danger: #c86e6e;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* HERO */
+.rcs-lab3d-hero {
+    position: relative;
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 80px 0 40px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+}
+
+body.light-mode .rcs-lab3d-hero {
+    background: linear-gradient(135deg, #e8e8e8 0%, #d0d0d0 100%);
+}
+
+.rcs-lab3d-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 110px;
+    width: 100%;
+    text-align: left;
+}
+
+.rcs-lab3d-hero-title {
+    font-family: 'Teko', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ffffff;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
+}
+
+body.light-mode .rcs-lab3d-hero-title {
+    color: var(--text-primary);
+    text-shadow: none;
+}
+
+.rcs-lab3d-highlight { color: var(--accent-color); }
+
+.rcs-lab3d-hero-description {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 700px;
+}
+
+body.light-mode .rcs-lab3d-hero-description {
+    color: var(--text-secondary);
+}
+
+/* LAYOUT */
+.rcs-lab3d-layout {
+    display: flex;
+    max-width: 1920px;
+    margin: 0 auto;
+    padding: 0 110px 80px;
+    gap: 30px;
+}
+
+/* SIDEBAR */
+.rcs-lab3d-sidebar {
+    width: 320px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.rcs-lab3d-section-head {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+/* Product cards */
+.rcs-lab3d-prod-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.rcs-lab3d-prod-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    text-align: left;
+    transition: all .2s;
+    border-radius: 8px;
+}
+
+.rcs-lab3d-prod-card:hover {
+    background: var(--bg-panel);
+    border-color: var(--border2);
+}
+
+.rcs-lab3d-prod-card.active {
+    background: rgba(253, 255, 0, 0.07);
+    border-color: var(--accent-color);
+}
+
+body.light-mode .rcs-lab3d-prod-card.active {
+    background: rgba(0, 153, 255, 0.07);
+}
+
+.rcs-lab3d-prod-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    opacity: 0.5;
+    transition: opacity .2s;
+}
+
+.rcs-lab3d-prod-card.active .rcs-lab3d-prod-icon,
+.rcs-lab3d-prod-card:hover .rcs-lab3d-prod-icon {
+    opacity: 1;
+}
+
+.rcs-lab3d-prod-info { flex: 1; }
+
+.rcs-lab3d-prod-name {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.rcs-lab3d-prod-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    display: block;
+}
+
+.rcs-lab3d-prod-card.active .rcs-lab3d-prod-desc {
+    color: var(--accent-color);
+}
+
+/* Parameters */
+.rcs-lab3d-params {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.rcs-lab3d-param-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.rcs-lab3d-param-row label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+}
+
+.rcs-lab3d-param-row label .unit {
+    color: var(--accent2);
+}
+
+.rcs-lab3d-param-row input[type=number] {
+    width: 100%;
+    background: var(--bg-panel);
+    border: 1px solid var(--border2);
+    color: var(--text-primary);
+    padding: 10px 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    outline: none;
+    transition: border-color .2s;
+    border-radius: 6px;
+}
+
+.rcs-lab3d-param-row input[type=number]:focus {
+    border-color: var(--accent-color);
+}
+
+/* Generate button */
+.rcs-lab3d-btn-gen {
+    padding: 16px;
+    background: var(--accent-color);
+    color: #000;
+    border: none;
+    font-family: 'Teko', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all .2s;
+    border-radius: 8px;
+}
+
+.rcs-lab3d-btn-gen:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(253, 255, 0, 0.3);
+}
+
+body.light-mode .rcs-lab3d-btn-gen:hover {
+    box-shadow: 0 8px 20px rgba(0, 153, 255, 0.3);
+}
+
+.rcs-lab3d-btn-gen:active {
+    transform: translateY(0);
+}
+
+/* Stats */
+.rcs-lab3d-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.rcs-lab3d-stat-item {
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+    padding: 12px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.rcs-lab3d-stat-val {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent-color);
+    display: block;
+}
+
+.rcs-lab3d-stat-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 9px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 2px;
+}
+
+/* VIEWPORT */
+.rcs-lab3d-viewport {
+    flex: 1;
+    position: relative;
+    min-height: 600px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg-panel);
+    border: 1px solid var(--border);
+}
+
+#rcs-lab3d-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.rcs-lab3d-vp-corner {
+    position: absolute;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    pointer-events: none;
+}
+
+.rcs-lab3d-vp-corner.tl {
+    top: 16px;
+    left: 16px;
+}
+
+.rcs-lab3d-vp-corner.bl {
+    bottom: 16px;
+    left: 16px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+    .rcs-lab3d-hero-content,
+    .rcs-lab3d-layout {
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+}
+
+@media (max-width: 968px) {
+    .rcs-lab3d-layout {
+        flex-direction: column;
+    }
+    
+    .rcs-lab3d-sidebar {
+        width: 100%;
+    }
+    
+    .rcs-lab3d-viewport {
+        min-height: 500px;
+    }
+}
+
+@media (max-width: 768px) {
+    .rcs-lab3d-hero-content,
+    .rcs-lab3d-layout {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+</style>
+
+<!-- HERO -->
+<section class="rcs-lab3d-hero">
+    <div class="rcs-lab3d-hero-content">
+        <h1 class="rcs-lab3d-hero-title">Configuratore <span class="rcs-lab3d-highlight">3D</span></h1>
+        <p class="rcs-lab3d-hero-description">Progetta il tuo tubo in fibra di carbonio personalizzato. Configura dimensioni, geometria e visualizza il risultato in tempo reale.</p>
+    </div>
+</section>
+
+<!-- LAYOUT -->
+<div class="rcs-lab3d-layout">
+    
+    <!-- SIDEBAR -->
+    <div class="rcs-lab3d-sidebar">
+        
+        <div>
+            <div class="rcs-lab3d-section-head">// Prodotti</div>
+            <div class="rcs-lab3d-prod-list">
+                <button class="rcs-lab3d-prod-card active" data-shape="tube" onclick="selectShape('tube', this)">
+                    <div class="rcs-lab3d-prod-icon">
+                        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2">
+                            <ellipse cx="18" cy="9" rx="11" ry="4"/>
+                            <ellipse cx="18" cy="27" rx="11" ry="4"/>
+                            <line x1="7" y1="9" x2="7" y2="27"/>
+                            <line x1="29" y1="9" x2="29" y2="27"/>
+                        </svg>
+                    </div>
+                    <div class="rcs-lab3d-prod-info">
+                        <span class="rcs-lab3d-prod-name">Tubo Dritto</span>
+                        <span class="rcs-lab3d-prod-desc">Cilindrico · Sezione costante</span>
+                    </div>
+                </button>
+
+                <button class="rcs-lab3d-prod-card" data-shape="tapered" onclick="selectShape('tapered', this)">
+                    <div class="rcs-lab3d-prod-icon">
+                        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2">
+                            <ellipse cx="18" cy="9" rx="7" ry="2.5"/>
+                            <ellipse cx="18" cy="27" rx="13" ry="4"/>
+                            <line x1="5" y1="27" x2="11" y2="9"/>
+                            <line x1="31" y1="27" x2="25" y2="9"/>
+                        </svg>
+                    </div>
+                    <div class="rcs-lab3d-prod-info">
+                        <span class="rcs-lab3d-prod-name">Tubo Conico</span>
+                        <span class="rcs-lab3d-prod-desc">Frustum · Conicità singola</span>
+                    </div>
+                </button>
+
+                <button class="rcs-lab3d-prod-card" data-shape="bent" onclick="selectShape('bent', this)">
+                    <div class="rcs-lab3d-prod-icon">
+                        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2">
+                            <path d="M8 28 Q8 8 28 8" stroke-width="5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <div class="rcs-lab3d-prod-info">
+                        <span class="rcs-lab3d-prod-name">Tubo Curvo</span>
+                        <span class="rcs-lab3d-prod-desc">Sweep toroidale · Angolo libero</span>
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <div>
+            <div class="rcs-lab3d-section-head">// Parametri</div>
+            <div class="rcs-lab3d-params" id="params-wrap"></div>
+        </div>
+
+        <button class="rcs-lab3d-btn-gen" onclick="generate()">▶ VISUALIZZA</button>
+
+        <div>
+            <div class="rcs-lab3d-section-head">// Dimensioni Modello</div>
+            <div class="rcs-lab3d-stats">
+                <div class="rcs-lab3d-stat-item">
+                    <span class="rcs-lab3d-stat-val" id="s-x">—</span>
+                    <span class="rcs-lab3d-stat-label">Larghezza</span>
+                </div>
+                <div class="rcs-lab3d-stat-item">
+                    <span class="rcs-lab3d-stat-val" id="s-y">—</span>
+                    <span class="rcs-lab3d-stat-label">Altezza</span>
+                </div>
+                <div class="rcs-lab3d-stat-item">
+                    <span class="rcs-lab3d-stat-val" id="s-z">—</span>
+                    <span class="rcs-lab3d-stat-label">Profondità</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VIEWPORT -->
+    <div class="rcs-lab3d-viewport">
+        <canvas id="rcs-lab3d-canvas"></canvas>
+        <div class="rcs-lab3d-vp-corner tl" id="vp-label" style="display:none;">
+            <span id="shape-label" style="color:var(--accent-color);font-size:12px;letter-spacing:2px;"></span>
+        </div>
+        <div class="rcs-lab3d-vp-corner bl">TRASCINA · RUOTA &nbsp;|&nbsp; SCROLL · ZOOM</div>
+    </div>
+</div>
+
+<!-- Three.js r128 - DA CARICARE NEL TEMA -->
+<script src="/wp-content/themes/rcs-carbonpro-2026/assets/js/three.min.js"></script>
+
+<script>
+// ═══ CONFIGURAZIONE PRODOTTI ═══
+const SHAPES = {
+    tube: {
+        label: 'TUBO DRITTO',
+        params: [
+            { k:'od', l:'Diametro Esterno', u:'mm', v:30, min:1 },
+            { k:'id', l:'Diametro Interno (0=pieno)', u:'mm', v:24, min:0 },
+            { k:'len', l:'Lunghezza', u:'mm', v:500, min:1 },
+        ]
+    },
+    tapered: {
+        label: 'TUBO CONICO',
+        params: [
+            { k:'od1', l:'Ø Esterno Base', u:'mm', v:40, min:1 },
+            { k:'id1', l:'Ø Interno Base', u:'mm', v:34, min:0 },
+            { k:'od2', l:'Ø Esterno Punta', u:'mm', v:25, min:1 },
+            { k:'id2', l:'Ø Interno Punta', u:'mm', v:21, min:0 },
+            { k:'len', l:'Lunghezza', u:'mm', v:600, min:1 },
+        ]
+    },
+    bent: {
+        label: 'TUBO CURVO',
+        params: [
+            { k:'od', l:'Diametro Esterno', u:'mm', v:30, min:1 },
+            { k:'id', l:'Diametro Interno', u:'mm', v:24, min:0 },
+            { k:'br', l:'Raggio di Curvatura', u:'mm', v:120, min:10 },
+            { k:'ang', l:'Angolo Curva', u:'°', v:90, min:5 },
+        ]
+    },
+};
+
+let curShape = 'tube';
+let mesh = null;
+let renderer, scene, camera;
+let drag = false, prevM = {x:0,y:0};
+let sph = {t:0.5, p:1.1, r:200};
+const SEG = 96;
+
+// ═══ THREE.JS INIT ═══
+function initThree() {
+    const cv = document.getElementById('rcs-lab3d-canvas');
+    const container = cv.parentElement;
+    
+    renderer = new THREE.WebGLRenderer({canvas:cv, antialias:true, alpha:true});
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    
+    const isDark = !document.body.classList.contains('light-mode');
+    renderer.setClearColor(isDark ? 0x141418 : 0xe8e8e8, 1);
+    
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(40, 1, 0.1, 20000);
+    camPos();
+    
+    // Lights
+    scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+    const d1 = new THREE.DirectionalLight(0xffffff, 2.5);
+    d1.position.set(200,300,300);
+    scene.add(d1);
+    const d2 = new THREE.DirectionalLight(0xfdff00, 1.4);
+    d2.position.set(-300,-100,200);
+    scene.add(d2);
+    
+    // Grid
+    window._grid = new THREE.GridHelper(1000, 40, isDark ? 0x1e1e24 : 0xd0d0d0, isDark ? 0x141418 : 0xe0e0e0);
+    scene.add(window._grid);
+    
+    new ResizeObserver(onResize).observe(container);
+    onResize();
+    
+    // Mouse controls
+    cv.addEventListener('mousedown', e => { drag=true; prevM={x:e.clientX,y:e.clientY}; });
+    window.addEventListener('mouseup', () => drag=false);
+    window.addEventListener('mousemove', e => {
+        if (!drag) return;
+        sph.t -= (e.clientX-prevM.x)*0.008;
+        sph.p = Math.max(0.15, Math.min(Math.PI-0.15, sph.p-(e.clientY-prevM.y)*0.008));
+        prevM = {x:e.clientX, y:e.clientY};
+        camPos();
+    });
+    cv.addEventListener('wheel', e => {
+        sph.r = Math.max(10, sph.r + e.deltaY * 0.5);
+        camPos();
+    }, {passive:true});
+    
+    // Animation loop
+    (function loop(){ requestAnimationFrame(loop); renderer.render(scene,camera); })();
+}
+
+function camPos() {
+    camera.position.set(
+        sph.r*Math.sin(sph.p)*Math.sin(sph.t),
+        sph.r*Math.cos(sph.p),
+        sph.r*Math.sin(sph.p)*Math.cos(sph.t)
+    );
+    camera.lookAt(0,0,0);
+}
+
+function onResize() {
+    const vp = document.querySelector('.rcs-lab3d-viewport');
+    const w=vp.clientWidth, h=vp.clientHeight;
+    renderer.setSize(w,h);
+    camera.aspect=w/h;
+    camera.updateProjectionMatrix();
+}
+
+// ═══ UI ═══
+function selectShape(s, btn) {
+    curShape = s;
+    document.querySelectorAll('.rcs-lab3d-prod-card').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderParams();
+}
+
+function renderParams() {
+    const cfg = SHAPES[curShape];
+    const wrap = document.getElementById('params-wrap');
+    wrap.innerHTML = cfg.params.map(p => `
+        <div class="rcs-lab3d-param-row">
+            <label>${p.l.toUpperCase()}<span class="unit">${p.u}</span></label>
+            <input type="number" id="p_${p.k}" value="${p.v}" min="${p.min}" step="0.1">
+        </div>
+    `).join('');
+}
+
+function getP() {
+    const cfg = SHAPES[curShape];
+    const out = {};
+    cfg.params.forEach(p => {
+        out[p.k] = parseFloat(document.getElementById('p_'+p.k)?.value ?? p.v) || 0;
+    });
+    return out;
+}
+
+// ═══ MATERIAL ═══
+function makeMat() {
+    return new THREE.MeshPhongMaterial({
+        color: 0x2a2a38,
+        specular: 0xfdff00,
+        shininess: 200,
+        side: THREE.DoubleSide,
+    });
+}
+
+// ═══ GEOMETRY BUILDERS ═══
+function hollowCyl(rOut, rIn, len) {
+    const pos=[], nor=[];
+    function pushTri(v0,v1,v2){
+        const ax=v1[0]-v0[0],ay=v1[1]-v0[1],az=v1[2]-v0[2];
+        const bx=v2[0]-v0[0],by=v2[1]-v0[1],bz=v2[2]-v0[2];
+        let nx=ay*bz-az*by,ny=az*bx-ax*bz,nz=ax*by-ay*bx;
+        const l=Math.sqrt(nx*nx+ny*ny+nz*nz)||1;
+        nx/=l;ny/=l;nz/=l;
+        for(const v of [v0,v1,v2]){pos.push(...v);nor.push(nx,ny,nz);}
+    }
+    const solid = rIn < 0.5 || rIn >= rOut;
+    for(let i=0;i<SEG;i++){
+        const a0=2*Math.PI*i/SEG, a1=2*Math.PI*(i+1)/SEG;
+        const co0=rOut*Math.cos(a0),so0=rOut*Math.sin(a0);
+        const co1=rOut*Math.cos(a1),so1=rOut*Math.sin(a1);
+        pushTri([co0,so0,0],[co1,so1,0],[co1,so1,len]);
+        pushTri([co0,so0,0],[co1,so1,len],[co0,so0,len]);
+        if(!solid){
+            const ci0=rIn*Math.cos(a0),si0=rIn*Math.sin(a0);
+            const ci1=rIn*Math.cos(a1),si1=rIn*Math.sin(a1);
+            pushTri([ci0,si0,0],[ci1,si1,len],[ci1,si1,0]);
+            pushTri([ci0,si0,0],[ci0,si0,len],[ci1,si1,len]);
+            pushTri([ci0,si0,0],[co0,so0,0],[co1,so1,0]);
+            pushTri([ci0,si0,0],[co1,so1,0],[ci1,si1,0]);
+            pushTri([ci0,si0,len],[co1,so1,len],[co0,so0,len]);
+            pushTri([ci0,si0,len],[ci1,si1,len],[co1,so1,len]);
+        } else {
+            pushTri([0,0,0],[co1,so1,0],[co0,so0,0]);
+            pushTri([0,0,len],[co0,so0,len],[co1,so1,len]);
+        }
+    }
+    const g=new THREE.BufferGeometry();
+    g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+    g.setAttribute('normal',new THREE.Float32BufferAttribute(nor,3));
+    return g;
+}
+
+function frustumTube(rOut1, rIn1, rOut2, rIn2, len) {
+    const pos=[], nor=[];
+    function pushTri(v0,v1,v2){
+        const ax=v1[0]-v0[0],ay=v1[1]-v0[1],az=v1[2]-v0[2];
+        const bx=v2[0]-v0[0],by=v2[1]-v0[1],bz=v2[2]-v0[2];
+        let nx=ay*bz-az*by,ny=az*bx-ax*bz,nz=ax*by-ay*bx;
+        const l=Math.sqrt(nx*nx+ny*ny+nz*nz)||1;
+        nx/=l;ny/=l;nz/=l;
+        for(const v of [v0,v1,v2]){pos.push(...v);nor.push(nx,ny,nz);}
+    }
+    const hollow = rIn1>0.5 && rIn2>0.5;
+    for(let i=0;i<SEG;i++){
+        const a0=2*Math.PI*i/SEG, a1=2*Math.PI*(i+1)/SEG;
+        const o0b=[rOut1*Math.cos(a0),rOut1*Math.sin(a0),0];
+        const o1b=[rOut1*Math.cos(a1),rOut1*Math.sin(a1),0];
+        const o0t=[rOut2*Math.cos(a0),rOut2*Math.sin(a0),len];
+        const o1t=[rOut2*Math.cos(a1),rOut2*Math.sin(a1),len];
+        pushTri(o0b,o1b,o1t); pushTri(o0b,o1t,o0t);
+        if(hollow){
+            const i0b=[rIn1*Math.cos(a0),rIn1*Math.sin(a0),0];
+            const i1b=[rIn1*Math.cos(a1),rIn1*Math.sin(a1),0];
+            const i0t=[rIn2*Math.cos(a0),rIn2*Math.sin(a0),len];
+            const i1t=[rIn2*Math.cos(a1),rIn2*Math.sin(a1),len];
+            pushTri(i0b,i1t,i1b); pushTri(i0b,i0t,i1t);
+            pushTri(i0b,o0b,o1b); pushTri(i0b,o1b,i1b);
+            pushTri(i0t,o1t,o0t); pushTri(i0t,i1t,o1t);
+        } else {
+            pushTri([0,0,0],o1b,o0b);
+            pushTri([0,0,len],o0t,o1t);
+        }
+    }
+    const g=new THREE.BufferGeometry();
+    g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+    g.setAttribute('normal',new THREE.Float32BufferAttribute(nor,3));
+    return g;
+}
+
+function bentTube(rTube, rHole, bendR, angleDeg) {
+    const ang = angleDeg*Math.PI/180;
+    const seg1=Math.max(32, Math.round(angleDeg/2));
+    const seg2=24;
+    const pos=[],nor=[];
+    function pushTri(v0,v1,v2){
+        const ax=v1[0]-v0[0],ay=v1[1]-v0[1],az=v1[2]-v0[2];
+        const bx=v2[0]-v0[0],by=v2[1]-v0[1],bz=v2[2]-v0[2];
+        let nx=ay*bz-az*by,ny=az*bx-ax*bz,nz=ax*by-ay*bx;
+        const l=Math.sqrt(nx*nx+ny*ny+nz*nz)||1;
+        nx/=l;ny/=l;nz/=l;
+        for(const v of [v0,v1,v2]){pos.push(...v);nor.push(nx,ny,nz);}
+    }
+    const rings = rHole>0.5 ? [rTube/2, rHole/2] : [rTube/2, 0];
+    function sectionPts(phi, r) {
+        const pts=[];
+        const cx=(bendR)*Math.cos(phi), cz=(bendR)*Math.sin(phi);
+        const nx2=Math.cos(phi), nz2=Math.sin(phi);
+        for(let j=0;j<seg2;j++){
+            const a=2*Math.PI*j/seg2;
+            const dr=r*Math.cos(a), dy=r*Math.sin(a);
+            pts.push([cx+dr*nx2, dy, cz+dr*nz2]);
+        }
+        return pts;
+    }
+    for(let ri=0;ri<rings.length;ri++){
+        const r=rings[ri];
+        if(r<0.1) continue;
+        const reverse=ri===1;
+        for(let i=0;i<seg1;i++){
+            const phi0=ang*i/seg1, phi1=ang*(i+1)/seg1;
+            const p0=sectionPts(phi0,r), p1=sectionPts(phi1,r);
+            for(let j=0;j<seg2;j++){
+                const j1=(j+1)%seg2;
+                const v00=p0[j],v01=p0[j1],v10=p1[j],v11=p1[j1];
+                if(!reverse){
+                    pushTri(v00,v01,v11); pushTri(v00,v11,v10);
+                } else {
+                    pushTri(v00,v11,v01); pushTri(v00,v10,v11);
+                }
+            }
+        }
+    }
+    const g=new THREE.BufferGeometry();
+    g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+    g.setAttribute('normal',new THREE.Float32BufferAttribute(nor,3));
+    return g;
+}
+
+// ═══ GENERATE ═══
+function generate() {
+    const p = getP();
+    let geo;
+
+    switch(curShape) {
+        case 'tube':
+            geo = hollowCyl(p.od/2, p.id/2, p.len);
+            break;
+        case 'tapered':
+            geo = frustumTube(p.od1/2, p.id1/2, p.od2/2, p.id2/2, p.len);
+            break;
+        case 'bent':
+            geo = bentTube(p.od, p.id, p.br, p.ang);
+            break;
+    }
+
+    if (!geo) return;
+
+    // Remove old mesh
+    if(mesh){ scene.remove(mesh); mesh=null; }
+
+    const group = new THREE.Group();
+    group.add(new THREE.Mesh(geo, makeMat()));
+
+    // Center
+    geo.computeBoundingBox();
+    const bb=geo.boundingBox;
+    const cx=(bb.max.x+bb.min.x)/2, cz=(bb.max.z+bb.min.z)/2;
+    group.position.set(-cx, -bb.min.y, -cz);
+    scene.add(group);
+    mesh=group;
+
+    // Camera fit
+    const sz=new THREE.Vector3(); bb.getSize(sz);
+    const maxDim = Math.max(sz.x, sz.y, sz.z);
+    sph.r = maxDim * 2.2;
+    camPos();
+
+    // Update grid
+    if (window._grid) { scene.remove(window._grid); window._grid.geometry.dispose(); }
+    const gridSize = Math.pow(10, Math.ceil(Math.log10(maxDim * 1.5)));
+    const isDark = !document.body.classList.contains('light-mode');
+    window._grid = new THREE.GridHelper(gridSize, 40, isDark ? 0x1e1e24 : 0xd0d0d0, isDark ? 0x141418 : 0xe0e0e0);
+    scene.add(window._grid);
+
+    // Stats
+    document.getElementById('s-x').textContent = sz.x.toFixed(1)+'mm';
+    document.getElementById('s-y').textContent = sz.y.toFixed(1)+'mm';
+    document.getElementById('s-z').textContent = sz.z.toFixed(1)+'mm';
+
+    // Show label
+    document.getElementById('vp-label').style.display='block';
+    document.getElementById('shape-label').textContent = SHAPES[curShape].label;
+}
+
+// ═══ BOOT ═══
+renderParams();
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initThree);
+} else {
+    initThree();
+}
+
+// Dark mode sync
+if (localStorage.getItem('darkMode') === 'light') { 
+    document.body.classList.add('light-mode'); 
+}
+</script>

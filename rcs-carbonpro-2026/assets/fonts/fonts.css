@@ -1,0 +1,75 @@
+/* ============================================ */
+/* RCS CARBONIO - FONT LOCALI (GDPR COMPLIANT) */
+/* ============================================ */
+
+/* Inter Regular 400 */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('inter-v20-latin-regular.woff2') format('woff2');
+}
+
+/* Inter Medium 500 */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('inter-v20-latin-500.woff2') format('woff2');
+}
+
+/* Inter SemiBold 600 */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('inter-v20-latin-600.woff2') format('woff2');
+}
+
+/* Inter Bold 700 */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('inter-v20-latin-700.woff2') format('woff2');
+}
+
+/* Teko Regular 400 */
+@font-face {
+    font-family: 'Teko';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('teko-v23-latin-regular.woff2') format('woff2');
+}
+
+/* Teko Medium 500 */
+@font-face {
+    font-family: 'Teko';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('teko-v23-latin-500.woff2') format('woff2');
+}
+
+/* Teko SemiBold 600 */
+@font-face {
+    font-family: 'Teko';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('teko-v23-latin-600.woff2') format('woff2');
+}
+
+/* Teko Bold 700 */
+@font-face {
+    font-family: 'Teko';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('teko-v23-latin-700.woff2') format('woff2');
+}

@@ -1,0 +1,617 @@
+<!-- ========================================
+     AEROSPACE RCS CARBONIO - WORDPRESS
+     Incolla questo codice nell'Editor HTML
+     ======================================== -->
+
+<!-- NOTA: I font sono caricati dal tema (fonts locali GDPR compliant) -->
+
+<style>
+        :root {
+            --bg-page: #101010;
+            --bg-card: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --accent-color: #fdff00;
+        }
+
+        body.light-mode {
+            --bg-page: #f8f9fa;
+            --bg-card: #f8f9fa;
+            --text-primary: #1a1a1a;
+            --text-secondary: #58585d;
+            --accent-color: #0099ff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        /* HERO - full width bg, contenuto allineato a sinistra */
+        .rcs-aerospace-hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding: 80px 0 60px;
+        }
+
+        .rcs-aerospace-hero-bg {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+        }
+
+        body:not(.light-mode) .rcs-aerospace-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 40%, transparent 70%);
+            z-index: 1;
+        }
+
+        body.light-mode .rcs-aerospace-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 40%, transparent 70%);
+            z-index: 1;
+        }
+
+        /* Contenuto hero allineato a SINISTRA */
+        .rcs-aerospace-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 0 110px;
+            width: 100%;
+            text-align: left;
+        }
+
+        .rcs-aerospace-hero-title {
+            font-family: 'Teko', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #ffffff;
+            text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.7);
+        }
+
+        .rcs-aerospace-highlight { 
+            color: var(--accent-color); 
+        }
+
+        .rcs-aerospace-hero-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin-bottom: 35px;
+        }
+
+        /* SECTIONS - tutto allineato a SINISTRA */
+        .cards-section {
+            padding: 6rem 0;
+            background: var(--bg-card);
+        }
+
+        .rcs-aerospace-container {
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 0 110px;
+            width: 100%;
+        }
+
+        /* Section header - ALLINEATO A SINISTRA */
+        .rcs-aerospace-section-header {
+            text-align: left;
+            margin-bottom: 4rem;
+        }
+
+        .rcs-aerospace-section-header h2 {
+            font-family: 'Teko', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            line-height: 1.1;
+        }
+
+        .rcs-aerospace-section-header p {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+            max-width: 600px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .rcs-aerospace-card {
+            position: relative;
+            min-height: 350px;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 2rem;
+        }
+
+        body.light-mode .rcs-aerospace-card {
+            background: linear-gradient(135deg, #e8e8e8 0%, #d0d0d0 100%);
+        }
+
+        .rcs-aerospace-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .rcs-aerospace-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 60%);
+            z-index: 0;
+        }
+
+        body.light-mode .rcs-aerospace-card::before {
+            background: linear-gradient(to top, rgba(224, 229, 236, 0.95) 0%, transparent 60%);
+        }
+
+        /* Contenuto card allineato a SINISTRA */
+        .rcs-aerospace-card-content {
+            position: relative;
+            z-index: 1;
+            text-align: left;
+        }
+
+        .rcs-aerospace-card h3 {
+            font-family: 'Teko', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            transition: color 0.3s ease;
+            line-height: 1.2;
+        }
+
+        body.light-mode .rcs-aerospace-card h3 {
+            color: var(--text-primary);
+        }
+
+        .rcs-aerospace-card:hover h3 {
+            color: var(--accent-color);
+        }
+
+        .rcs-aerospace-card p {
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.6;
+        }
+
+        body.light-mode .rcs-aerospace-card p {
+            color: var(--text-primary);
+        }
+
+        /* SEZIONE DRONI DEDICATA */
+        .droni-section {
+            padding: 6rem 0;
+            background: var(--bg-page);
+        }
+
+        body.light-mode .droni-section {
+            background: #f8f9fa;
+        }
+
+        /* BENEFITS */
+        .rcs-aerospace-benefits {
+            padding: 6rem 0;
+            background: var(--bg-card);
+        }
+
+        .rcs-aerospace-benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .rcs-aerospace-benefit-card {
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            background: linear-gradient(145deg, #222222 0%, #1c1c1c 100%);
+            box-shadow: 
+                10px 10px 20px rgba(0, 0, 0, 0.9),
+                -10px -10px 20px rgba(60, 60, 60, 0.1);
+            transition: all 0.4s ease;
+            text-align: left;
+        }
+
+        body.light-mode .rcs-aerospace-benefit-card {
+            background: linear-gradient(145deg, #f0f0f0 0%, #e8e8e8 100%);
+            box-shadow: 
+                10px 10px 20px #a3b1c6,
+                -10px -10px 20px #ffffff;
+        }
+
+        .rcs-aerospace-benefit-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .rcs-aerospace-benefit-icon {
+            width: 5rem;
+            height: 5rem;
+            border-radius: 50%;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            box-shadow: 
+                inset 8px 8px 16px rgba(0, 0, 0, 0.9),
+                inset -8px -8px 16px rgba(60, 60, 60, 0.15);
+        }
+
+        body.light-mode .rcs-aerospace-benefit-icon {
+            background: #e8e8e8;
+            box-shadow: 
+                inset 8px 8px 16px #a3b1c6,
+                inset -8px -8px 16px #ffffff;
+        }
+
+        .rcs-aerospace-benefit-icon svg {
+            width: 2.5rem;
+            height: 2.5rem;
+            stroke: var(--text-secondary);
+            fill: none;
+            stroke-width: 2;
+            transition: all 0.4s ease;
+        }
+
+        .rcs-aerospace-benefit-card:hover .rcs-aerospace-benefit-icon svg {
+            stroke: var(--accent-color);
+        }
+
+        .rcs-aerospace-benefit-card h3 {
+            font-family: 'Teko', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+            line-height: 1.2;
+        }
+
+        .rcs-aerospace-benefit-card:hover h3 {
+            color: var(--accent-color);
+        }
+
+        .rcs-aerospace-benefit-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* SPECIFICHE */
+        .rcs-aerospace-specs-section {
+            padding: 6rem 0;
+            background: var(--bg-page);
+        }
+
+        body.light-mode .rcs-aerospace-specs-section {
+            background: #f8f9fa;
+        }
+
+        .rcs-aerospace-specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .rcs-aerospace-spec-card {
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            background: linear-gradient(145deg, #222222 0%, #1c1c1c 100%);
+            box-shadow: 
+                10px 10px 20px rgba(0, 0, 0, 0.9),
+                -10px -10px 20px rgba(60, 60, 60, 0.1);
+            text-align: left;
+        }
+
+        body.light-mode .rcs-aerospace-spec-card {
+            background: linear-gradient(145deg, #f0f0f0 0%, #e8e8e8 100%);
+            box-shadow: 
+                10px 10px 20px #a3b1c6,
+                -10px -10px 20px #ffffff;
+        }
+
+        .rcs-aerospace-spec-card h3 {
+            font-family: 'Teko', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .rcs-aerospace-spec-card ul {
+            list-style: none;
+        }
+
+        .rcs-aerospace-spec-card li {
+            padding: 0.75rem 0;
+            color: var(--text-secondary);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.light-mode .rcs-aerospace-spec-card li {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .rcs-aerospace-spec-card li:last-child {
+            border-bottom: none;
+        }
+
+        /* CTA */
+        .cta {
+            padding: 6rem 0;
+            background: var(--bg-card);
+        }
+
+        .cta h2 {
+            font-family: 'Teko', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            line-height: 1.1;
+        }
+
+        .cta p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+        }
+
+        .rcs-aerospace-btn-primary {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--accent-color);
+            color: #000;
+            font-family: 'Teko', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .rcs-aerospace-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(253, 255, 0, 0.4);
+        }
+
+        body.light-mode .rcs-aerospace-btn-primary {
+            box-shadow: 0 4px 12px rgba(0, 153, 255, 0.2);
+        }
+
+        body.light-mode .rcs-aerospace-btn-primary:hover {
+            box-shadow: 0 10px 30px rgba(0, 153, 255, 0.4);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .rcs-aerospace-hero-content, .rcs-aerospace-container {
+                padding: 0 60px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .rcs-aerospace-hero-content, .rcs-aerospace-container {
+                padding: 0 30px;
+            }
+            
+            .rcs-aerospace-hero {
+                min-height: auto;
+                padding: 100px 0 60px;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .rcs-aerospace-card {
+                min-height: 300px;
+            }
+            
+            .rcs-aerospace-benefits-grid,
+            .rcs-aerospace-specs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <!-- HERO -->
+    <section class="rcs-aerospace-hero">
+        <div class="rcs-aerospace-hero-bg"><div class="rcs-aerospace-hero-overlay"></div></div>
+        <div class="rcs-aerospace-hero-content">
+            <h1 class="rcs-aerospace-hero-title">Componenti in Carbonio per<br><span class="rcs-aerospace-highlight">Aerospace & Aviation</span></h1>
+            <p class="rcs-aerospace-hero-description">Nel settore aerospaziale, ogni grammo conta e ogni componente deve garantire affidabilità assoluta. I nostri tubi e semilavorati in fibra di carbonio rispettano standard qualitativi rigorosi per applicazioni aeronautiche, elicotteri leggeri, droni professionali e sistemi UAV certificati.</p>
+        </div>
+    </section>
+
+    <!-- APPLICAZIONI GENERALI AEROSPACE -->
+    <section class="cards-section">
+        <div class="rcs-aerospace-container">
+            <div class="rcs-aerospace-section-header">
+                <h2>Applicazioni <span class="rcs-aerospace-highlight">aerospaziali</span></h2>
+                <p>Soluzioni certificate per l'industria aeronautica più esigente.</p>
+            </div>
+            <div class="cards-grid">
+                <div class="rcs-aerospace-card">
+                    <div class="rcs-aerospace-card-content">
+                        <h3>Strutture<br>Portanti</h3>
+                        <p>Tubi strutturali per telai aeronautici, longheroni, centine e rinforzi per velivoli leggeri e ultraleggeri certificati.</p>
+                    </div>
+                </div>
+                <div class="rcs-aerospace-card">
+                    <div class="rcs-aerospace-card-content">
+                        <h3>Componenti<br>Elicotteri</h3>
+                        <p>Semilavorati ad alta precisione per rotori, pali di trasmissione e sistemi di controllo per aviazione rotante.</p>
+                    </div>
+                </div>
+                <div class="rcs-aerospace-card">
+                    <div class="rcs-aerospace-card-content">
+                        <h3>Sistemi di<br>Controllo</h3>
+                        <p>Aste di comando, leveraggi e collegamenti meccanici dove leggerezza e rigidità torsionale sono critici.</p>
+                    </div>
+                </div>
+                <div class="rcs-aerospace-card">
+                    <div class="rcs-aerospace-card-content">
+                        <h3>Componenti<br>Custom</h3>
+                        <p>Progettazione e realizzazione di particolari tecnici su disegno per prototipi aerospace e applicazioni speciali.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEZIONE DRONI E UAV -->
+    <section class="droni-section">
+        <div class="rcs-aerospace-container">
+            <div class="rcs-aerospace-section-header">
+                <h2>Droni e <span class="rcs-aerospace-highlight">UAV professionali</span></h2>
+                <p>Nel settore dei droni, ogni grammo influisce su autonomia e payload. Forniamo tubi e componenti ottimizzati per prestazioni di volo superiori.</p>
+            </div>
+            <div class="cards-grid">
+                <div class="rcs-aerospace-card">
+                    <div class="rcs-aerospace-card-content">
+                        <h3>Bracci per<br>Multirotori</h3>
+                        <p>Tubi tondi e ovali ad alta rigidità per droni racing, fotografici e industriali. Resistenza alle vibrazioni e precisione dimensionale.</p>
+                    </div>
+                </div>
+                <div class="rcs-aerospace-card">
+                    <div class="rcs-aerospace-card-content">
+                        <h3>Telaistica<br>Fixed-Wing</h3>
+                        <p>Strutture portanti per droni ad ala fissa, con profili ottimizzati per ridurre peso mantenendo integrità strutturale.</p>
+                    </div>
+                </div>
+                <div class="rcs-aerospace-card">
+                    <div class="rcs-aerospace-card-content">
+                        <h3>Landing<br>Gear</h3>
+                        <p>Sistemi di atterraggio robusti ma leggeri, con eccellente capacità di assorbimento urti e resistenza agli impatti ripetuti.</p>
+                    </div>
+                </div>
+                <div class="rcs-aerospace-card">
+                    <div class="rcs-aerospace-card-content">
+                        <h3>Gimbal e<br>Supporti</h3>
+                        <p>Tubi di precisione per sistemi di stabilizzazione camera e montaggio sensori, con tolleranze strette e finitura impeccabile.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BENEFITS -->
+    <section class="rcs-aerospace-benefits">
+        <div class="rcs-aerospace-container">
+            <div class="rcs-aerospace-section-header">
+                <h2>Vantaggi <span class="rcs-aerospace-highlight">prestazionali</span></h2>
+                <p>Perché la fibra di carbonio è la scelta per l'aerospace.</p>
+            </div>
+            <div class="rcs-aerospace-benefits-grid">
+                <div class="rcs-aerospace-benefit-card">
+                    <div class="rcs-aerospace-benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
+                    <h3>Leggerezza<br>Estrema</h3>
+                    <p>Fino al 70% più leggeri dell'alluminio aeronautico. Riduzione peso strutturale per maggiore autonomia, payload e prestazioni.</p>
+                </div>
+                <div class="rcs-aerospace-benefit-card">
+                    <div class="rcs-aerospace-benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2v20m0-20a4 4 0 0 1 4 4v12a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/></svg>
+                    </div>
+                    <h3>Rigidità<br>Superiore</h3>
+                    <p>Modulo elastico elevato per ridurre vibrazioni, flutter aerodinamico e deformazioni sotto carico in volo.</p>
+                </div>
+                <div class="rcs-aerospace-benefit-card">
+                    <div class="rcs-aerospace-benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                    </div>
+                    <h3>Resistenza<br>Fatica</h3>
+                    <p>Comportamento superiore ai metalli nei cicli di carico ripetuti. Durata operativa estesa con minore manutenzione.</p>
+                </div>
+                <div class="rcs-aerospace-benefit-card">
+                    <div class="rcs-aerospace-benefit-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <h3>Certificazioni<br>Aerospace</h3>
+                    <p>Controlli qualità rigorosi, test di resistenza strutturale e documentazione tecnica completa per applicazioni certificate.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SPECIFICHE TECNICHE -->
+    <section class="rcs-aerospace-specs-section">
+        <div class="rcs-aerospace-container">
+            <div class="rcs-aerospace-section-header">
+                <h2>Specifiche <span class="rcs-aerospace-highlight">tecniche</span></h2>
+                <p>Dati tecnici e capacità produttive per il settore aerospace.</p>
+            </div>
+            <div class="rcs-aerospace-specs-grid">
+                <div class="rcs-aerospace-spec-card">
+                    <h3>Dimensioni<br>Disponibili</h3>
+                    <ul>
+                        <li>Diametri: da 6mm a 150mm</li>
+                        <li>Spessori: da 0.5mm a 8mm</li>
+                        <li>Lunghezze: fino a 6 metri</li>
+                        <li>Profili: tondi, ovali, quadri, custom</li>
+                    </ul>
+                </div>
+                <div class="rcs-aerospace-spec-card">
+                    <h3>Lavorazioni<br>Meccaniche</h3>
+                    <ul>
+                        <li>Taglio di precisione CNC</li>
+                        <li>Forature e filettature</li>
+                        <li>Laminazioni multi-strato orientate</li>
+                        <li>Trattamenti superficiali protettivi</li>
+                    </ul>
+                </div>
+                <div class="rcs-aerospace-spec-card">
+                    <h3>Certificazioni<br>e Qualità</h3>
+                    <ul>
+                        <li>Test di resistenza meccanica</li>
+                        <li>Controllo qualità materiali 100%</li>
+                        <li>Documentazione tecnica completa</li>
+                        <li>Supporto ingegneristico dedicato</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="rcs-aerospace-container">
+            <h2>Progetto <span class="rcs-aerospace-highlight">aerospace</span>?</h2>
+            <p>Contattaci per una consulenza tecnica specializzata e scopri come i nostri componenti in carbonio possono ottimizzare le prestazioni del tuo velivolo o drone.</p>
+            <a href="/contatti" class="rcs-aerospace-btn-primary">Richiedi Preventivo</a>
+        </div>
+    </section>
