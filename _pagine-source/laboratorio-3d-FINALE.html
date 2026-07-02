@@ -585,6 +585,41 @@ function initThree() {
         sph.r = Math.max(10, sph.r + e.deltaY * 0.5);
         camPos();
     }, {passive:true});
+
+    // Touch controls (drag = rotate, pinch = zoom)
+    let pinchDist = null;
+    cv.addEventListener('touchstart', e => {
+        if (e.touches.length === 1) {
+            drag = true;
+            prevM = {x: e.touches[0].clientX, y: e.touches[0].clientY};
+        } else if (e.touches.length === 2) {
+            drag = false;
+            pinchDist = Math.hypot(
+                e.touches[0].clientX - e.touches[1].clientX,
+                e.touches[0].clientY - e.touches[1].clientY
+            );
+        }
+    }, {passive:true});
+    cv.addEventListener('touchmove', e => {
+        if (e.touches.length === 1 && drag) {
+            const t = e.touches[0];
+            sph.t -= (t.clientX-prevM.x)*0.008;
+            sph.p = Math.max(0.15, Math.min(Math.PI-0.15, sph.p-(t.clientY-prevM.y)*0.008));
+            prevM = {x:t.clientX, y:t.clientY};
+            camPos();
+        } else if (e.touches.length === 2 && pinchDist !== null) {
+            const d = Math.hypot(
+                e.touches[0].clientX - e.touches[1].clientX,
+                e.touches[0].clientY - e.touches[1].clientY
+            );
+            sph.r = Math.max(10, sph.r + (pinchDist - d) * 0.5);
+            pinchDist = d;
+            camPos();
+        }
+    }, {passive:true});
+    window.addEventListener('touchend', e => {
+        if (e.touches.length === 0) { drag = false; pinchDist = null; }
+    });
     
     // Animation loop
     (function loop(){ requestAnimationFrame(loop); renderer.render(scene,camera); })();
@@ -788,8 +823,15 @@ function generate() {
 
     if (!geo) return;
 
-    // Remove old mesh
-    if(mesh){ scene.remove(mesh); mesh=null; }
+    // Remove old mesh (dispose geometry+material to avoid GPU memory leak)
+    if(mesh){
+        scene.remove(mesh);
+        mesh.traverse(obj => {
+            if (obj.geometry) obj.geometry.dispose();
+            if (obj.material) obj.material.dispose();
+        });
+        mesh=null;
+    }
 
     const group = new THREE.Group();
     group.add(new THREE.Mesh(geo, makeMat()));
@@ -809,7 +851,7 @@ function generate() {
     camPos();
 
     // Update grid
-    if (window._grid) { scene.remove(window._grid); window._grid.geometry.dispose(); }
+    if (window._grid) { scene.remove(window._grid); window._grid.geometry.dispose(); window._grid.material.dispose(); }
     const gridSize = Math.pow(10, Math.ceil(Math.log10(maxDim * 1.5)));
     const isDark = !document.body.classList.contains('light-mode');
     window._grid = new THREE.GridHelper(gridSize, 40, isDark ? 0x1e1e24 : 0xd0d0d0, isDark ? 0x141418 : 0xe0e0e0);
@@ -834,7 +876,7 @@ if (document.readyState === 'loading') {
 }
 
 // Dark mode sync
-if (localStorage.getItem('darkMode') === 'light') { 
+if (localStorage.getItem('theme') === 'light') {
     document.body.classList.add('light-mode'); 
 }
 </script>
