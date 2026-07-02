@@ -21,13 +21,24 @@ Description: Configuratore 3D standalone (tubi + piastre). Bypassa header/footer
   --panel:    #141418;
   --border:   #222228;
   --border2:  #2e2e38;
-  --accent:   #c8a96e;
+  --accent:   #fdff00;
   --accent2:  #6ec8b4;
   --text:     #e0ddd8;
   --muted:    #55555f;
   --danger:   #c86e6e;
   --font:     'Teko', sans-serif;
-  --mono:     ui-monospace, 'SF Mono', 'Cascadia Code', Consolas, monospace;
+  --mono:     'Inter', sans-serif;
+}
+
+body.light-mode {
+  --bg:       #f8f9fa;
+  --surface:  #ffffff;
+  --panel:    #f1f1f3;
+  --border:   #e2e2e5;
+  --border2:  #d0d0d5;
+  --accent:   #0099ff;
+  --text:     #1a1a1a;
+  --muted:    #58585d;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -107,10 +118,26 @@ header {
   font-size: 10px;
   letter-spacing: 1.5px;
   border: 1px solid var(--border2);
+  border-radius: 50px;
   padding: 6px 12px;
   transition: all .15s;
 }
 .header-home:hover { color: var(--accent); border-color: var(--accent); }
+
+.theme-toggle {
+  width: 34px; height: 34px;
+  border: 1px solid var(--border2);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .15s;
+}
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.theme-toggle svg { width: 17px; height: 17px; }
 
 /* ═══ LAYOUT ═══ */
 .layout {
@@ -155,6 +182,7 @@ header {
   padding: 10px 12px;
   cursor: pointer;
   border: 1px solid transparent;
+  border-radius: 12px;
   transition: all .15s;
   background: transparent;
   color: var(--text);
@@ -223,6 +251,7 @@ header {
   width: 100%;
   background: var(--panel);
   border: 1px solid var(--border2);
+  border-radius: 12px;
   color: var(--text);
   padding: 7px 10px;
   font-family: var(--mono);
@@ -247,6 +276,7 @@ header {
   background: var(--accent);
   color: #080809;
   border: none;
+  border-radius: 50px;
   font-family: var(--font);
   font-size: 16px;
   font-weight: 600;
@@ -255,7 +285,7 @@ header {
   cursor: pointer;
   transition: all .15s;
 }
-.btn-gen:hover { background: #d9be85; }
+.btn-gen:hover { filter: brightness(1.12); }
 .btn-gen:active { transform: scale(.98); }
 
 /* Stats bar */
@@ -268,6 +298,7 @@ header {
 .stat-item {
   background: var(--panel);
   border: 1px solid var(--border);
+  border-radius: 12px;
   padding: 7px 8px;
   text-align: center;
 }
@@ -337,6 +368,7 @@ header {
 .section-block {
   background: var(--panel);
   border: 1px solid var(--border2);
+  border-radius: 12px;
   padding: 8px 10px;
   margin-bottom: 6px;
   position: relative;
@@ -409,6 +441,7 @@ header {
   width: 36px; height: 36px;
   background: rgba(15,15,18,.85);
   border: 1px solid var(--border2);
+  border-radius: 8px;
   color: var(--text);
   font-size: 16px;
   cursor: pointer;
@@ -417,7 +450,7 @@ header {
   backdrop-filter: blur(4px);
   font-family: var(--mono);
 }
-.ctrl-btn:hover { background: rgba(200,169,110,.15); border-color: var(--accent); color: var(--accent); }
+.ctrl-btn:hover { filter: brightness(1.3); border-color: var(--accent); color: var(--accent); }
 .ctrl-btn:active { transform: scale(.9); }
 .ctrl-sep { width: 36px; height: 1px; background: var(--border2); margin: 2px 0; }
 .ctrl-label {
@@ -465,6 +498,7 @@ header {
   width: 300px;
   background: rgba(15,15,18,.95);
   border: 1px solid var(--accent);
+  border-radius: 12px;
   padding: 16px 18px;
   backdrop-filter: blur(6px);
   display: none;
@@ -507,6 +541,7 @@ header {
   background: var(--accent);
   color: #080809;
   border: none;
+  border-radius: 50px;
   font-family: var(--font);
   font-size: 13px;
   font-weight: 600;
@@ -514,12 +549,17 @@ header {
   text-transform: uppercase;
   cursor: pointer;
   text-decoration: none;
-  transition: background .15s;
+  transition: filter .15s;
 }
-.part-info-panel .pi-cta:hover { background: #d9be85; }
+.part-info-panel .pi-cta:hover { filter: brightness(1.12); }
 </style>
 </head>
 <body>
+<script>
+// Applica subito il tema salvato, prima del render, per evitare il flash
+// del tema sbagliato (stessa chiave 'theme' usata dal resto del sito).
+if (localStorage.getItem('theme') === 'light') { document.body.classList.add('light-mode'); }
+</script>
 
 <header>
   <div class="logo-mark">
@@ -531,6 +571,22 @@ header {
   <div class="header-right">
     <div class="status-dot"></div>
     <div class="status-label">Rendering Engine Attivo</div>
+    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambia tema">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="display:none;">
+        <circle cx="12" cy="12" r="5"/>
+        <line x1="12" y1="1" x2="12" y2="3" stroke-width="2" stroke-linecap="round"/>
+        <line x1="12" y1="21" x2="12" y2="23" stroke-width="2" stroke-linecap="round"/>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke-width="2" stroke-linecap="round"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke-width="2" stroke-linecap="round"/>
+        <line x1="1" y1="12" x2="3" y2="12" stroke-width="2" stroke-linecap="round"/>
+        <line x1="21" y1="12" x2="23" y2="12" stroke-width="2" stroke-linecap="round"/>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke-width="2" stroke-linecap="round"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
     <a class="header-home" href="<?php echo esc_url(home_url('/')); ?>">← TORNA AL SITO</a>
   </div>
 </header>
@@ -894,11 +950,35 @@ let sph = {t:0.5, p:1.1, r:200};
 const SEG = 96;
 
 // ═══ THREE INIT ═══
+// Colori viewport 3D coerenti col tema chiaro/scuro dell'interfaccia
+const VIEWPORT_THEME = {
+  dark:  { clear: 0x0d0d14, gridMain: 0x1e1e24, gridSub: 0x141418 },
+  light: { clear: 0xeef0f2, gridMain: 0xd5d5da, gridSub: 0xe6e6ea },
+};
+function currentViewportTheme() {
+  return document.body.classList.contains('light-mode') ? VIEWPORT_THEME.light : VIEWPORT_THEME.dark;
+}
+function applyViewportTheme() {
+  if (!renderer) return;
+  const t = currentViewportTheme();
+  renderer.setClearColor(t.clear, 1);
+  if (window._grid) {
+    scene.remove(window._grid);
+    window._grid.geometry.dispose();
+    window._grid.material.dispose();
+    const size = window._grid.userData.size || 1000;
+    const divs = window._grid.userData.divs || 40;
+    window._grid = new THREE.GridHelper(size, divs, t.gridMain, t.gridSub);
+    window._grid.userData = {size, divs};
+    scene.add(window._grid);
+  }
+}
+
 function initThree() {
   const cv = document.getElementById('cv');
   renderer = new THREE.WebGLRenderer({canvas:cv, antialias:true, alpha:true});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setClearColor(0x0d0d14, 1);
+  renderer.setClearColor(currentViewportTheme().clear, 1);
 
   // Perdita di contesto WebGL (tab in background a lungo, driver GPU
   // resettato, ecc.): senza gestirla il canvas resta bloccato/nero senza
@@ -923,7 +1003,8 @@ function initThree() {
   const d4 = new THREE.DirectionalLight(0xffffff, 0.8); d4.position.set(-200,100,300); scene.add(d4);
 
   // Grid
-  window._grid = new THREE.GridHelper(1000, 40, 0x1e1e24, 0x141418);
+  window._grid = new THREE.GridHelper(1000, 40, currentViewportTheme().gridMain, currentViewportTheme().gridSub);
+  window._grid.userData = {size:1000, divs:40};
   scene.add(window._grid);
 
   new ResizeObserver(onResize).observe(cv.parentElement);
@@ -1038,6 +1119,21 @@ function showInfoPanel(info) {
 function hideInfoPanel() {
   clearSelectionHighlight();
   document.getElementById('part-info-panel').classList.remove('visible');
+}
+
+// ═══ TEMA CHIARO/SCURO (stessa chiave localStorage 'theme' del resto del sito) ═══
+function toggleTheme() {
+  document.body.classList.toggle('light-mode');
+  localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+  syncThemeIcon();
+  applyViewportTheme();
+}
+function syncThemeIcon() {
+  const isLight = document.body.classList.contains('light-mode');
+  const sun = document.querySelector('.icon-sun');
+  const moon = document.querySelector('.icon-moon');
+  if (sun) sun.style.display = isLight ? 'block' : 'none';
+  if (moon) moon.style.display = isLight ? 'none' : 'block';
 }
 
 function camPos() {
@@ -1737,7 +1833,9 @@ function generate() {
   if (window._grid) { scene.remove(window._grid); window._grid.geometry.dispose(); window._grid.material.dispose(); }
   const gridSize = Math.pow(10, Math.ceil(Math.log10(maxDim * 1.5)));
   const gridDivs = 40;
-  window._grid = new THREE.GridHelper(gridSize, gridDivs, 0x1e1e24, 0x141418);
+  const vt = currentViewportTheme();
+  window._grid = new THREE.GridHelper(gridSize, gridDivs, vt.gridMain, vt.gridSub);
+  window._grid.userData = {size:gridSize, divs:gridDivs};
   scene.add(window._grid);
 
   // Scale indicator
@@ -1827,6 +1925,7 @@ window.addEventListener('error', e => {
 });
 
 // ═══ BOOT ═══
+syncThemeIcon();
 renderParams();
 try {
   initThree();
