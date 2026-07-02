@@ -8,6 +8,12 @@
 function rcs_carbonio_setup() {
     add_theme_support('title-tag');
     add_theme_support('post-thumbnails');
+    register_nav_menus(array(
+        'primary'        => 'Menu Principale',
+        'footer-quick'   => 'Footer - Link Rapidi',
+        'footer-company' => 'Footer - Azienda',
+        'footer-support' => 'Footer - Supporto',
+    ));
 }
 add_action('after_setup_theme', 'rcs_carbonio_setup');
 
