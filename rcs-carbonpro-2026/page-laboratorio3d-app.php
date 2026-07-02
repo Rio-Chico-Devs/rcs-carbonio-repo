@@ -606,36 +606,6 @@ header {
         </div>
       </button>
 
-      <button class="prod-card" data-shape="tripod" onclick="selectShape('tripod',this)">
-        <div class="prod-icon">
-          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2">
-            <line x1="18" y1="8" x2="6" y2="30"/>
-            <line x1="18" y1="8" x2="18" y2="31"/>
-            <line x1="18" y1="8" x2="30" y2="30"/>
-            <line x1="18" y1="3" x2="18" y2="8"/>
-            <circle cx="18" cy="8" r="2.5"/>
-          </svg>
-        </div>
-        <div class="prod-info">
-          <span class="prod-name">Treppiede</span>
-          <span class="prod-desc">3 gambe · testa · colonna telescopica</span>
-        </div>
-      </button>
-
-      <button class="prod-card" data-shape="telescopic" onclick="selectShape('telescopic',this)">
-        <div class="prod-icon">
-          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2">
-            <rect x="4" y="15" width="12" height="6"/>
-            <rect x="14" y="16.5" width="10" height="3"/>
-            <rect x="22" y="17.2" width="8" height="1.6"/>
-          </svg>
-        </div>
-        <div class="prod-info">
-          <span class="prod-name">Tubo Telescopico</span>
-          <span class="prod-desc">4 sezioni · allungamento variabile</span>
-        </div>
-      </button>
-
       <button class="prod-card" data-shape="plate-rect" onclick="selectShape('plate-rect',this)">
         <div class="prod-icon">
           <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2">
@@ -664,6 +634,42 @@ header {
         <div class="prod-info">
           <span class="prod-name">Piastra Rotonda</span>
           <span class="prod-desc">Disco · foro centrale + periferici</span>
+        </div>
+      </button>
+
+    </div>
+
+    <div class="divider"></div>
+    <div class="sec-head">// Esempi di Utilizzo</div>
+    <div class="prod-list" id="usage-list">
+
+      <button class="prod-card" data-shape="tripod" onclick="selectShape('tripod',this)">
+        <div class="prod-icon">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2">
+            <line x1="18" y1="8" x2="6" y2="30"/>
+            <line x1="18" y1="8" x2="18" y2="31"/>
+            <line x1="18" y1="8" x2="30" y2="30"/>
+            <line x1="18" y1="3" x2="18" y2="8"/>
+            <circle cx="18" cy="8" r="2.5"/>
+          </svg>
+        </div>
+        <div class="prod-info">
+          <span class="prod-name">Treppiede</span>
+          <span class="prod-desc">3 gambe · testa · colonna telescopica</span>
+        </div>
+      </button>
+
+      <button class="prod-card" data-shape="telescopic" onclick="selectShape('telescopic',this)">
+        <div class="prod-icon">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2">
+            <rect x="4" y="15" width="12" height="6"/>
+            <rect x="14" y="16.5" width="10" height="3"/>
+            <rect x="22" y="17.2" width="8" height="1.6"/>
+          </svg>
+        </div>
+        <div class="prod-info">
+          <span class="prod-name">Tubo Telescopico</span>
+          <span class="prod-desc">4 sezioni · allungamento variabile</span>
         </div>
       </button>
 
