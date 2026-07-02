@@ -546,6 +546,22 @@ header {
         </div>
       </button>
 
+      <button class="prod-card" data-shape="tripod" onclick="selectShape('tripod',this)">
+        <div class="prod-icon">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2">
+            <line x1="18" y1="8" x2="6" y2="30"/>
+            <line x1="18" y1="8" x2="18" y2="31"/>
+            <line x1="18" y1="8" x2="30" y2="30"/>
+            <line x1="18" y1="3" x2="18" y2="8"/>
+            <circle cx="18" cy="8" r="2.5"/>
+          </svg>
+        </div>
+        <div class="prod-info">
+          <span class="prod-name">Treppiede</span>
+          <span class="prod-desc">3 gambe · testa · colonna telescopica</span>
+        </div>
+      </button>
+
       <button class="prod-card" data-shape="plate-rect" onclick="selectShape('plate-rect',this)">
         <div class="prod-icon">
           <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2">
@@ -697,6 +713,27 @@ const SHAPES = {
       { label: 'CURVA', params: [
         { k:'br', l:'Raggio di Curvatura', u:'mm', v:120, min:10 },
         { k:'ang', l:'Angolo Curva', u:'°', v:90, min:5 },
+      ]},
+    ]
+  },
+  tripod: {
+    label: 'TREPPIEDE',
+    groups: [
+      { label: 'GAMBE', params: [
+        { k:'legOD', l:'Ø Esterno Gambe', u:'mm', v:25, min:5 },
+        { k:'legID', l:'Ø Interno Gambe', u:'mm', v:20, min:0 },
+        { k:'legLen', l:'Lunghezza Gambe', u:'mm', v:500, min:50 },
+        { k:'spread', l:'Apertura dalla Verticale', u:'°', v:20, min:5 },
+      ]},
+      { label: 'TESTA', params: [
+        { k:'headOD', l:'Ø Testa', u:'mm', v:60, min:20 },
+        { k:'headLen', l:'Altezza Testa', u:'mm', v:40, min:10 },
+      ]},
+      { label: 'COLONNA TELESCOPICA', params: [
+        { k:'colOD', l:'Ø Esterno Colonna', u:'mm', v:22, min:5 },
+        { k:'colID', l:'Ø Interno Colonna', u:'mm', v:17, min:0 },
+        { k:'colLen', l:'Lunghezza Colonna Fissa', u:'mm', v:150, min:20 },
+        { k:'colExt', l:'Estensione Telescopica (0=chiusa)', u:'mm', v:100, min:0 },
       ]},
     ]
   },
@@ -1096,6 +1133,71 @@ function bentTube(rTube, rHole, bendR, angleDeg) {
   return g;
 }
 
+// Treppiede — assembla piu' istanze di hollowCyl() gia' usata per i tubi
+// dritti: 3 gambe convergenti su una testa + colonna centrale telescopica.
+// Riusa la stessa geometria dei tubi, cambia solo posizione/orientamento.
+function buildTripod(p) {
+  const group = new THREE.Group();
+  const spreadRad = p.spread * Math.PI / 180;
+  const UP = new THREE.Vector3(0,1,0);
+  const Z_AXIS = new THREE.Vector3(0,0,1);
+
+  // 3 gambe uguali, aperte di "spread" gradi dalla verticale, a 120° tra loro.
+  // hollowCyl() genera il tubo lungo l'asse Z locale da 0 a legLen: ruotando
+  // il mesh con setFromUnitVectors l'estremo a (0,0,0) resta ancorato
+  // all'apice (origine del gruppo) e l'altro estremo punta verso "dir".
+  for (let i = 0; i < 3; i++) {
+    const yaw = i * (2*Math.PI/3);
+    const dir = new THREE.Vector3(
+      Math.sin(spreadRad)*Math.cos(yaw),
+      -Math.cos(spreadRad),
+      -Math.sin(spreadRad)*Math.sin(yaw)
+    ).normalize();
+    const legGeo = hollowCyl(p.legOD/2, p.legID/2, p.legLen);
+    const legMesh = new THREE.Mesh(legGeo, makeMat());
+    legMesh.quaternion.setFromUnitVectors(Z_AXIS, dir);
+    group.add(legMesh);
+    const legWire = new THREE.Mesh(legGeo, makeWire());
+    legWire.quaternion.copy(legMesh.quaternion);
+    group.add(legWire);
+  }
+
+  // Testa (hub): corpo pieno appena sotto il punto di convergenza delle gambe
+  const headGeo = hollowCyl(p.headOD/2, 0, p.headLen);
+  const headMesh = new THREE.Mesh(headGeo, makeMat());
+  headMesh.quaternion.setFromUnitVectors(Z_AXIS, UP);
+  headMesh.position.y = -p.headLen;
+  group.add(headMesh);
+
+  // Colonna centrale fissa, sopra l'apice
+  const colGeo = hollowCyl(p.colOD/2, p.colID/2, p.colLen);
+  const colMesh = new THREE.Mesh(colGeo, makeMat());
+  colMesh.quaternion.setFromUnitVectors(Z_AXIS, UP);
+  group.add(colMesh);
+  const colWire = new THREE.Mesh(colGeo, makeWire());
+  colWire.quaternion.copy(colMesh.quaternion);
+  group.add(colWire);
+
+  // Sezione telescopica: tubo piu' sottile che esce dalla colonna fissa
+  if (p.colExt > 0) {
+    const overlap = Math.min(60, p.colLen*0.3);
+    const innerOD = Math.max(4, p.colID > 1 ? p.colID - 1.5 : p.colOD*0.7);
+    const wallThick = Math.max(1, (p.colOD-p.colID)/2);
+    const innerID = Math.max(0, innerOD - wallThick*2);
+    const extGeo = hollowCyl(innerOD/2, innerID/2, p.colExt + overlap);
+    const extMesh = new THREE.Mesh(extGeo, makeMat());
+    extMesh.quaternion.setFromUnitVectors(Z_AXIS, UP);
+    extMesh.position.y = Math.max(0, p.colLen - overlap);
+    group.add(extMesh);
+    const extWire = new THREE.Mesh(extGeo, makeWire());
+    extWire.quaternion.copy(extMesh.quaternion);
+    extWire.position.copy(extMesh.position);
+    group.add(extWire);
+  }
+
+  return group;
+}
+
 // Rectangular plate with holes
 function plateRect(w, h, t, nHoles, hd, margin) {
   const pos=[],nor=[];
@@ -1224,6 +1326,10 @@ function validateInputs(p) {
   }
   if (curShape === 'bent')   pairs.push({od:p.od, id:p.id, label:'tubo'});
   if (curShape === 'plate-round') pairs.push({od:p.od, id:p.id, label:'piastra'});
+  if (curShape === 'tripod') {
+    pairs.push({od:p.legOD, id:p.legID, label:'gamba'});
+    pairs.push({od:p.colOD, id:p.colID, label:'colonna'});
+  }
   for (const {od, id, label} of pairs) {
     if (id > 0 && id >= od) return `Ø interno (${id}mm) ≥ Ø esterno (${od}mm) — ${label}`;
     if (id > 0 && (od-id)/2 < 0.4) return `Parete troppo sottile (${((od-id)/2).toFixed(1)}mm) — ${label}`;
@@ -1245,6 +1351,8 @@ function generate() {
   showError(null);
   const p = getP();
   let geo;
+  let preBuiltGroup = null;
+  let bb;
 
   if (curShape !== 'tapered2') {
     const err = validateInputs(p);
@@ -1279,6 +1387,9 @@ function generate() {
     case 'bent':
       geo = bentTube(p.od, p.id, p.br, p.ang);
       break;
+    case 'tripod':
+      preBuiltGroup = buildTripod(p);
+      break;
     case 'plate-rect':
       geo = plateRect(p.w,p.h,p.t,p.holes,p.hd,p.hm);
       break;
@@ -1287,7 +1398,7 @@ function generate() {
       break;
   }
 
-  if (!geo) { showError('Geometria non generata — controlla i parametri.'); return; }
+  if (!geo && !preBuiltGroup) { showError('Geometria non generata — controlla i parametri.'); return; }
 
   try {
     // Remove old mesh (dispose geometria+materiali per evitare memory leak GPU)
@@ -1300,13 +1411,21 @@ function generate() {
       mesh=null;
     }
 
-    const group = new THREE.Group();
-    group.add(new THREE.Mesh(geo, makeMat()));
-    group.add(new THREE.Mesh(geo, makeWire()));
+    let group;
+    if (preBuiltGroup) {
+      // Assemblaggio multi-parte (es. treppiede): bounding box calcolata
+      // sull'intero gruppo, non su una singola geometria.
+      group = preBuiltGroup;
+      bb = new THREE.Box3().setFromObject(group);
+    } else {
+      group = new THREE.Group();
+      group.add(new THREE.Mesh(geo, makeMat()));
+      group.add(new THREE.Mesh(geo, makeWire()));
+      geo.computeBoundingBox();
+      bb = geo.boundingBox;
+    }
 
     // Center on scene
-    geo.computeBoundingBox();
-    const bb=geo.boundingBox;
     if (!bb || isNaN(bb.min.x)) throw new Error('Bounding box non valida');
     const cx=(bb.max.x+bb.min.x)/2, cz=(bb.max.z+bb.min.z)/2;
     group.position.set(-cx, -bb.min.y, -cz);
