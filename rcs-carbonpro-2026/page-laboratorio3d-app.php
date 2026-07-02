@@ -457,6 +457,66 @@ header {
   transition: opacity .3s;
 }
 .model-tag.show { opacity: 1; }
+
+/* ═══ PART INFO PANEL (click su un pezzo dell'assemblaggio) ═══ */
+.part-info-panel {
+  position: absolute;
+  left: 20px; bottom: 20px;
+  width: 300px;
+  background: rgba(15,15,18,.95);
+  border: 1px solid var(--accent);
+  padding: 16px 18px;
+  backdrop-filter: blur(6px);
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  cursor: default;
+}
+.part-info-panel.visible { display: flex; }
+.part-info-panel .pi-close {
+  position: absolute;
+  top: 6px; right: 8px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 13px;
+  font-family: var(--mono);
+}
+.part-info-panel .pi-close:hover { color: var(--danger); }
+.part-info-panel .pi-label {
+  font-family: var(--font);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--accent);
+  text-transform: uppercase;
+  line-height: 1;
+}
+.part-info-panel .pi-text {
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--text);
+  opacity: .85;
+}
+.part-info-panel .pi-cta {
+  margin-top: 4px;
+  align-self: flex-start;
+  padding: 9px 18px;
+  background: var(--accent);
+  color: #080809;
+  border: none;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .15s;
+}
+.part-info-panel .pi-cta:hover { background: #d9be85; }
 </style>
 </head>
 <body>
@@ -562,6 +622,20 @@ header {
         </div>
       </button>
 
+      <button class="prod-card" data-shape="telescopic" onclick="selectShape('telescopic',this)">
+        <div class="prod-icon">
+          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2">
+            <rect x="4" y="15" width="12" height="6"/>
+            <rect x="14" y="16.5" width="10" height="3"/>
+            <rect x="22" y="17.2" width="8" height="1.6"/>
+          </svg>
+        </div>
+        <div class="prod-info">
+          <span class="prod-name">Tubo Telescopico</span>
+          <span class="prod-desc">4 sezioni · allungamento variabile</span>
+        </div>
+      </button>
+
       <button class="prod-card" data-shape="plate-rect" onclick="selectShape('plate-rect',this)">
         <div class="prod-icon">
           <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2">
@@ -630,7 +704,14 @@ header {
       <span class="ax ax-y">Y</span>
       <span class="ax ax-z">Z</span>
     </div>
-    <div class="vp-corner bl">TRASCINA · RUOTA &nbsp;|&nbsp; SCROLL · ZOOM</div>
+    <div class="vp-corner bl" id="vp-hint">TRASCINA · RUOTA &nbsp;|&nbsp; SCROLL · ZOOM</div>
+
+    <div class="part-info-panel" id="part-info-panel">
+      <button class="pi-close" onclick="hideInfoPanel()">✕ CHIUDI</button>
+      <div class="pi-label" id="part-info-label"></div>
+      <div class="pi-text" id="part-info-text"></div>
+      <a class="pi-cta" href="<?php echo esc_url(home_url('/contatti')); ?>">Richiedi Preventivo</a>
+    </div>
   </div>
 
     <!-- SCALE BAR -->
@@ -737,6 +818,34 @@ const SHAPES = {
       ]},
     ]
   },
+  telescopic: {
+    label: 'TUBO TELESCOPICO',
+    groups: [
+      { label: 'SEZIONE 1 · ESTERNA (fissa)', params: [
+        { k:'od1', l:'Ø Esterno', u:'mm', v:32, min:5 },
+        { k:'id1', l:'Ø Interno', u:'mm', v:27, min:0 },
+        { k:'len1', l:'Lunghezza', u:'mm', v:350, min:20 },
+      ]},
+      { label: 'SEZIONE 2', params: [
+        { k:'od2', l:'Ø Esterno', u:'mm', v:25, min:5 },
+        { k:'id2', l:'Ø Interno', u:'mm', v:21, min:0 },
+        { k:'len2', l:'Lunghezza', u:'mm', v:320, min:20 },
+      ]},
+      { label: 'SEZIONE 3', params: [
+        { k:'od3', l:'Ø Esterno', u:'mm', v:19, min:5 },
+        { k:'id3', l:'Ø Interno', u:'mm', v:15.5, min:0 },
+        { k:'len3', l:'Lunghezza', u:'mm', v:300, min:20 },
+      ]},
+      { label: 'SEZIONE 4 · INTERNA', params: [
+        { k:'od4', l:'Ø Esterno', u:'mm', v:13.5, min:3 },
+        { k:'id4', l:'Ø Interno (0=pieno)', u:'mm', v:0, min:0 },
+        { k:'len4', l:'Lunghezza', u:'mm', v:280, min:20 },
+      ]},
+      { label: 'ALLUNGAMENTO', params: [
+        { k:'ext', l:'Estensione (0=chiuso, 100=aperto)', u:'%', v:60, min:0 },
+      ]},
+    ]
+  },
   'plate-rect': {
     label: 'PIASTRA RETTANGOLARE',
     groups: [
@@ -827,7 +936,91 @@ function initThree() {
     lTouch=t; camPos(); e.preventDefault();
   }, {passive:false});
 
+  // Click su un pezzo (distinto dal drag-rotate: conta solo se il puntatore
+  // non si e' spostato molto tra down e up) -> mostra pannello info generico
+  let clickStartPos = null;
+  cv.addEventListener('pointerdown', e => { clickStartPos = {x:e.clientX, y:e.clientY}; });
+  cv.addEventListener('pointerup', e => {
+    if (!clickStartPos) return;
+    const moved = Math.hypot(e.clientX-clickStartPos.x, e.clientY-clickStartPos.y);
+    clickStartPos = null;
+    if (moved > 6) return; // era un trascinamento, non un click
+    handlePartClick(e);
+  });
+
   (function loop(){ requestAnimationFrame(loop); renderer.render(scene,camera); })();
+}
+
+// ═══ PART INFO — click su un pezzo dell'assemblaggio (treppiede, telescopico) ═══
+// Info generiche, non tecniche: i dati precisi dipendono dal preventivo.
+const PART_INFO = {
+  leg: {
+    label: 'Gamba',
+    text: 'Un tubo in fibra di carbonio come questo alleggerisce la struttura mantenendo rigidita\' e resistenza: a parita\' di prestazioni il peso e\' molto inferiore rispetto ad alluminio o acciaio.'
+  },
+  head: {
+    label: 'Testa / Snodo',
+    text: 'I punti di giunzione possono essere realizzati in fibra di carbonio o in lega leggera, a seconda delle sollecitazioni richieste dall\'applicazione specifica.'
+  },
+  column: {
+    label: 'Colonna Centrale',
+    text: 'La sezione centrale e\' spesso quella piu\' sollecitata: qui l\'uso della fibra di carbonio riduce il peso complessivo senza perdere rigidita\' strutturale.'
+  },
+  'column-ext': {
+    label: 'Sezione Telescopica',
+    text: 'Anche le parti mobili/estraibili possono essere realizzate in fibra di carbonio, mantenendo leggerezza anche sulle sezioni a scorrimento.'
+  },
+  'telescopic-section': {
+    label: 'Sezione Telescopica',
+    text: 'Ogni sezione che scorre dentro la precedente puo\' essere realizzata in fibra di carbonio: riduce il peso complessivo del tubo mantenendo la rigidita\' necessaria durante l\'estensione.'
+  },
+};
+
+const raycaster = new THREE.Raycaster();
+const mouseNDC = new THREE.Vector2();
+let selectedMesh = null;
+let selectedOrigEmissive = 0x000000;
+
+function handlePartClick(e) {
+  if (!mesh) { hideInfoPanel(); return; }
+  const cv = document.getElementById('cv');
+  const rect = cv.getBoundingClientRect();
+  mouseNDC.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+  mouseNDC.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+  raycaster.setFromCamera(mouseNDC, camera);
+  const hits = raycaster.intersectObject(mesh, true);
+  const hit = hits.find(h => h.object.userData && h.object.userData.partType);
+  if (hit) selectPart(hit.object); else hideInfoPanel();
+}
+
+function selectPart(obj) {
+  clearSelectionHighlight();
+  selectedMesh = obj;
+  if (obj.material && obj.material.emissive) {
+    selectedOrigEmissive = obj.material.emissive.getHex();
+    obj.material.emissive.setHex(0xc8a96e);
+    obj.material.emissiveIntensity = 0.35;
+  }
+  const info = PART_INFO[obj.userData.partType];
+  if (info) showInfoPanel(info);
+}
+
+function clearSelectionHighlight() {
+  if (selectedMesh && selectedMesh.material && selectedMesh.material.emissive) {
+    selectedMesh.material.emissive.setHex(selectedOrigEmissive);
+    selectedMesh.material.emissiveIntensity = 1;
+  }
+  selectedMesh = null;
+}
+
+function showInfoPanel(info) {
+  document.getElementById('part-info-label').textContent = info.label;
+  document.getElementById('part-info-text').textContent = info.text;
+  document.getElementById('part-info-panel').classList.add('visible');
+}
+function hideInfoPanel() {
+  clearSelectionHighlight();
+  document.getElementById('part-info-panel').classList.remove('visible');
 }
 
 function camPos() {
@@ -853,6 +1046,11 @@ function selectShape(s, btn) {
   document.querySelectorAll('.prod-card').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
   renderParams();
+  hideInfoPanel();
+  const hint = document.getElementById('vp-hint');
+  if (hint) hint.textContent = (s === 'tripod' || s === 'telescopic')
+    ? 'TRASCINA · RUOTA | SCROLL · ZOOM | CLICK · INFO PEZZO'
+    : 'TRASCINA · RUOTA | SCROLL · ZOOM';
 }
 
 // Dynamic sections state
@@ -1156,6 +1354,7 @@ function buildTripod(p) {
     const legGeo = hollowCyl(p.legOD/2, p.legID/2, p.legLen);
     const legMesh = new THREE.Mesh(legGeo, makeMat());
     legMesh.quaternion.setFromUnitVectors(Z_AXIS, dir);
+    legMesh.userData.partType = 'leg';
     group.add(legMesh);
     const legWire = new THREE.Mesh(legGeo, makeWire());
     legWire.quaternion.copy(legMesh.quaternion);
@@ -1167,12 +1366,14 @@ function buildTripod(p) {
   const headMesh = new THREE.Mesh(headGeo, makeMat());
   headMesh.quaternion.setFromUnitVectors(Z_AXIS, UP);
   headMesh.position.y = -p.headLen;
+  headMesh.userData.partType = 'head';
   group.add(headMesh);
 
   // Colonna centrale fissa, sopra l'apice
   const colGeo = hollowCyl(p.colOD/2, p.colID/2, p.colLen);
   const colMesh = new THREE.Mesh(colGeo, makeMat());
   colMesh.quaternion.setFromUnitVectors(Z_AXIS, UP);
+  colMesh.userData.partType = 'column';
   group.add(colMesh);
   const colWire = new THREE.Mesh(colGeo, makeWire());
   colWire.quaternion.copy(colMesh.quaternion);
@@ -1188,6 +1389,7 @@ function buildTripod(p) {
     const extMesh = new THREE.Mesh(extGeo, makeMat());
     extMesh.quaternion.setFromUnitVectors(Z_AXIS, UP);
     extMesh.position.y = Math.max(0, p.colLen - overlap);
+    extMesh.userData.partType = 'column-ext';
     group.add(extMesh);
     const extWire = new THREE.Mesh(extGeo, makeWire());
     extWire.quaternion.copy(extMesh.quaternion);
@@ -1309,6 +1511,46 @@ function plateRound(od, t, id, nPH, phd, phr) {
   return g;
 }
 
+// Tubo telescopico — 4 sezioni via via piu' piccole, ognuna inserita nella
+// precedente (Ø esterno < Ø interno di quella prima). "ext" (0-100%) controlla
+// quanto ogni sezione sporge fuori da quella che la contiene: a 0% resta
+// visibile solo il tratto minimo di sovrapposizione (aspetto chiuso), a 100%
+// sporge per l'intera sua lunghezza (aspetto completamente aperto).
+function buildTelescopic(p) {
+  const group = new THREE.Group();
+  const sections = [
+    {od:p.od1, id:p.id1, len:p.len1},
+    {od:p.od2, id:p.id2, len:p.len2},
+    {od:p.od3, id:p.id3, len:p.len3},
+    {od:p.od4, id:p.id4, len:p.len4},
+  ];
+  const extFrac = Math.max(0, Math.min(100, p.ext)) / 100;
+  let prevEnd = 0;
+
+  sections.forEach((s, i) => {
+    const overlap = Math.min(50, s.len*0.15);
+    let start, visLen;
+    if (i === 0) {
+      start = 0; visLen = s.len;
+    } else {
+      start = prevEnd - overlap;
+      visLen = overlap + extFrac * (s.len - overlap);
+    }
+    const geo = hollowCyl(s.od/2, s.id/2, visLen);
+    const posArr = geo.attributes.position.array;
+    for (let j=2; j<posArr.length; j+=3) posArr[j] += start;
+    geo.attributes.position.needsUpdate = true;
+
+    const solidMesh = new THREE.Mesh(geo, makeMat());
+    solidMesh.userData.partType = 'telescopic-section';
+    group.add(solidMesh);
+    group.add(new THREE.Mesh(geo, makeWire()));
+
+    prevEnd = start + visLen;
+  });
+
+  return group;
+}
 
 function showError(msg) {
   const el = document.getElementById('error-msg');
@@ -1330,9 +1572,21 @@ function validateInputs(p) {
     pairs.push({od:p.legOD, id:p.legID, label:'gamba'});
     pairs.push({od:p.colOD, id:p.colID, label:'colonna'});
   }
+  if (curShape === 'telescopic') {
+    pairs.push({od:p.od1, id:p.id1, label:'sezione 1'});
+    pairs.push({od:p.od2, id:p.id2, label:'sezione 2'});
+    pairs.push({od:p.od3, id:p.id3, label:'sezione 3'});
+    pairs.push({od:p.od4, id:p.id4, label:'sezione 4'});
+  }
   for (const {od, id, label} of pairs) {
     if (id > 0 && id >= od) return `Ø interno (${id}mm) ≥ Ø esterno (${od}mm) — ${label}`;
     if (id > 0 && (od-id)/2 < 0.4) return `Parete troppo sottile (${((od-id)/2).toFixed(1)}mm) — ${label}`;
+  }
+  if (curShape === 'telescopic') {
+    const nest = [[p.od2,p.id1,2],[p.od3,p.id2,3],[p.od4,p.id3,4]];
+    for (const [odIn, idOut, n] of nest) {
+      if (idOut > 0 && odIn >= idOut) return `Sezione ${n} non entra nella sezione precedente (Ø esterno ${odIn}mm ≥ Ø interno ${idOut}mm)`;
+    }
   }
   return null;
 }
@@ -1349,6 +1603,7 @@ function validateDynSections(sections) {
 // ═══ GENERATE ═══
 function generate() {
   showError(null);
+  hideInfoPanel(); // il mesh vecchio sta per essere disposato, evita riferimenti stale
   const p = getP();
   let geo;
   let preBuiltGroup = null;
@@ -1389,6 +1644,9 @@ function generate() {
       break;
     case 'tripod':
       preBuiltGroup = buildTripod(p);
+      break;
+    case 'telescopic':
+      preBuiltGroup = buildTelescopic(p);
       break;
     case 'plate-rect':
       geo = plateRect(p.w,p.h,p.t,p.holes,p.hd,p.hm);
