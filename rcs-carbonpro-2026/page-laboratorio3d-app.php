@@ -810,7 +810,7 @@ const SHAPES = {
         { k:'legOD', l:'Ø Esterno Gambe', u:'mm', v:25, min:5 },
         { k:'legID', l:'Ø Interno Gambe', u:'mm', v:20, min:0 },
         { k:'legLen', l:'Lunghezza Gambe', u:'mm', v:500, min:50 },
-        { k:'spread', l:'Apertura dalla Verticale', u:'°', v:20, min:5 },
+        { k:'spread', l:'Apertura dalla Verticale', u:'°', v:20, min:5, max:80 },
       ]},
       { label: 'TESTA', params: [
         { k:'headOD', l:'Ø Testa', u:'mm', v:60, min:20 },
@@ -899,6 +899,17 @@ function initThree() {
   renderer = new THREE.WebGLRenderer({canvas:cv, antialias:true, alpha:true});
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(0x0d0d14, 1);
+
+  // Perdita di contesto WebGL (tab in background a lungo, driver GPU
+  // resettato, ecc.): senza gestirla il canvas resta bloccato/nero senza
+  // nessun messaggio per l'utente.
+  cv.addEventListener('webglcontextlost', e => {
+    e.preventDefault();
+    showError('Il rendering 3D si e\' interrotto (memoria video persa). Ricarica la pagina per continuare.');
+  });
+  cv.addEventListener('webglcontextrestored', () => {
+    showError(null);
+  });
 
   scene = new THREE.Scene();
   camera = new THREE.PerspectiveCamera(40, 1, 0.1, 20000);
@@ -1041,6 +1052,7 @@ function camPos() {
 function onResize() {
   const vp = document.querySelector('.viewport');
   const w=vp.clientWidth, h=vp.clientHeight;
+  if (w === 0 || h === 0) return; // layout non ancora pronto, evita aspect=Infinity/NaN
   renderer.setSize(w,h);
   camera.aspect=w/h;
   camera.updateProjectionMatrix();
@@ -1079,7 +1091,7 @@ function renderParams() {
     ${g.params.map(p => `
       <div class="param-row">
         <label>${p.l.toUpperCase()}<span class="unit">${p.u}</span></label>
-        <input type="number" id="p_${p.k}" value="${p.v}" min="${p.min}" step="0.1">
+        <input type="number" id="p_${p.k}" value="${p.v}" min="${p.min}"${p.max!==undefined?` max="${p.max}"`:''} step="0.1">
       </div>
     `).join('')}
   `).join('');
@@ -1408,6 +1420,7 @@ function buildTripod(p) {
 
 // Rectangular plate with holes
 function plateRect(w, h, t, nHoles, hd, margin) {
+  if (!w||w<=0||!h||h<=0||!t||t<=0||isNaN(w)||isNaN(h)||isNaN(t)) throw new Error('Parametri piastra non validi');
   const pos=[],nor=[];
   function pushTri(v0,v1,v2){
     const ax=v1[0]-v0[0],ay=v1[1]-v0[1],az=v1[2]-v0[2];
@@ -1465,6 +1478,7 @@ function plateRect(w, h, t, nHoles, hd, margin) {
 
 // Round plate
 function plateRound(od, t, id, nPH, phd, phr) {
+  if (!od||od<=0||!t||t<=0||isNaN(od)||isNaN(t)) throw new Error('Parametri piastra non validi');
   const ro=od/2, ri=id/2, hollow=ri>0.5&&ri<ro;
   const pos=[],nor=[];
   function pushTri(v0,v1,v2){
@@ -1594,6 +1608,15 @@ function validateInputs(p) {
       if (idOut > 0 && odIn >= idOut) return `Sezione ${n} non entra nella sezione precedente (Ø esterno ${odIn}mm ≥ Ø interno ${idOut}mm)`;
     }
   }
+  if (curShape === 'tripod' && p.spread > 85) {
+    return `Apertura dalla verticale troppo ampia (${p.spread}°) — sopra 85° le gambe puntano verso l'alto invece che verso il basso`;
+  }
+  if (curShape === 'plate-rect' && p.holes > 0) {
+    if (p.hm*2 >= Math.min(p.w, p.h)) return `Margine dai bordi (${p.hm}mm) troppo grande per le dimensioni della piastra`;
+  }
+  if (curShape === 'plate-round' && p.ph > 0) {
+    if (p.phr + p.phd/2 > p.od/2) return `I fori periferici (raggio cerchio ${p.phr}mm + Ø/2 ${(p.phd/2).toFixed(1)}mm) escono dal bordo della piastra (Ø esterno/2 = ${(p.od/2).toFixed(1)}mm)`;
+  }
   return null;
 }
 
@@ -1620,51 +1643,55 @@ function generate() {
     if (err) { showError(err); return; }
   }
 
-  switch(curShape) {
-    case 'tube':
-      geo = hollowCyl(p.od/2, p.id/2, p.len);
-      break;
-    case 'tapered':
-      geo = frustumTube(p.od1/2, p.id1/2, p.od2/2, p.id2/2, p.len);
-      break;
-    case 'tapered2': {
-      saveDynState();
-      const secs = getDynSections();
-      const dynErr = validateDynSections(secs);
-      if (dynErr) { showError(dynErr); return; }
-      const geos = [];
-      let zOff = 0;
-      for (let i=0; i<secs.length-1; i++) {
-        const g = frustumTube(secs[i].od/2,secs[i].id/2,secs[i+1].od/2,secs[i+1].id/2,secs[i].len);
-        const arr = g.attributes.position.array;
-        for(let j=2;j<arr.length;j+=3) arr[j]+=zOff;
-        g.attributes.position.needsUpdate=true;
-        geos.push(g);
-        zOff += secs[i].len;
-      }
-      geo = mergeGeos(geos);
-      break;
-    }
-    case 'bent':
-      geo = bentTube(p.od, p.id, p.br, p.ang);
-      break;
-    case 'tripod':
-      preBuiltGroup = buildTripod(p);
-      break;
-    case 'telescopic':
-      preBuiltGroup = buildTelescopic(p);
-      break;
-    case 'plate-rect':
-      geo = plateRect(p.w,p.h,p.t,p.holes,p.hd,p.hm);
-      break;
-    case 'plate-round':
-      geo = plateRound(p.od,p.t,p.id,p.ph,p.phd,p.phr);
-      break;
-  }
-
-  if (!geo && !preBuiltGroup) { showError('Geometria non generata — controlla i parametri.'); return; }
-
   try {
+    // Tutta la generazione geometria e' dentro il try: qualunque builder
+    // lanci un'eccezione (parametri assurdi digitati a mano, non sempre
+    // coperti da validateInputs) viene gestito qui in modo uniforme invece
+    // di propagare fino al listener globale window.onerror.
+    switch(curShape) {
+      case 'tube':
+        geo = hollowCyl(p.od/2, p.id/2, p.len);
+        break;
+      case 'tapered':
+        geo = frustumTube(p.od1/2, p.id1/2, p.od2/2, p.id2/2, p.len);
+        break;
+      case 'tapered2': {
+        saveDynState();
+        const secs = getDynSections();
+        const dynErr = validateDynSections(secs);
+        if (dynErr) { showError(dynErr); return; }
+        const geos = [];
+        let zOff = 0;
+        for (let i=0; i<secs.length-1; i++) {
+          const g = frustumTube(secs[i].od/2,secs[i].id/2,secs[i+1].od/2,secs[i+1].id/2,secs[i].len);
+          const arr = g.attributes.position.array;
+          for(let j=2;j<arr.length;j+=3) arr[j]+=zOff;
+          g.attributes.position.needsUpdate=true;
+          geos.push(g);
+          zOff += secs[i].len;
+        }
+        geo = mergeGeos(geos);
+        break;
+      }
+      case 'bent':
+        geo = bentTube(p.od, p.id, p.br, p.ang);
+        break;
+      case 'tripod':
+        preBuiltGroup = buildTripod(p);
+        break;
+      case 'telescopic':
+        preBuiltGroup = buildTelescopic(p);
+        break;
+      case 'plate-rect':
+        geo = plateRect(p.w,p.h,p.t,p.holes,p.hd,p.hm);
+        break;
+      case 'plate-round':
+        geo = plateRound(p.od,p.t,p.id,p.ph,p.phd,p.phr);
+        break;
+    }
+
+    if (!geo && !preBuiltGroup) throw new Error('Geometria non generata — controlla i parametri.');
+
     // Remove old mesh (dispose geometria+materiali per evitare memory leak GPU)
     if(mesh){
       scene.remove(mesh);
