@@ -1,21 +1,17 @@
 <?php
 /*
-Template Name: Laboratorio 3D Fullscreen
-Description: Configuratore 3D standalone (tubi + piastre). Bypassa header/footer del tema di proposito: e' un tool fullscreen con la sua UI, non una pagina di contenuto.
+Template Name: Laboratorio 3D
+Description: Configuratore 3D (tubi, piastre, treppiede, tubo telescopico) integrato nel layout del sito, con navbar e footer come le altre pagine.
 */
+get_header();
 ?>
-<!DOCTYPE html>
-<html lang="it">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RCS Carbonio — Configuratore 3D</title>
 <script src="<?php echo esc_url(get_template_directory_uri()); ?>/assets/js/three.min.js"></script>
-<link rel="stylesheet" href="<?php echo esc_url(get_template_directory_uri()); ?>/assets/fonts/fonts.css">
 <style>
-/* Font Teko gia' locale (assets/fonts/fonts.css), nessuna dipendenza esterna */
+/* Font Teko/Inter gia' locali (assets/fonts/fonts.css, caricati dal tema), nessuna dipendenza esterna.
+   Variabili scoped a .rcs-lab3d-shell (non su :root) per non toccare il resto del sito, che ora
+   condivide la stessa pagina con navbar e footer. */
 
-:root {
+.rcs-lab3d-shell {
   --bg:       #080809;
   --surface:  #0f0f12;
   --panel:    #141418;
@@ -30,7 +26,7 @@ Description: Configuratore 3D standalone (tubi + piastre). Bypassa header/footer
   --mono:     'Inter', sans-serif;
 }
 
-body.light-mode {
+body.light-mode .rcs-lab3d-shell {
   --bg:       #f8f9fa;
   --surface:  #ffffff;
   --panel:    #f1f1f3;
@@ -41,108 +37,32 @@ body.light-mode {
   --muted:    #58585d;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; overflow: hidden; }
-
-body {
+.rcs-lab3d-shell, .rcs-lab3d-shell * { box-sizing: border-box; }
+.rcs-lab3d-shell {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font);
-  display: flex;
-  flex-direction: column;
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 40px 40px 60px;
 }
-
-/* ═══ HEADER ═══ */
-header {
-  height: 56px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  padding: 0 28px;
-  gap: 24px;
-  flex-shrink: 0;
-  position: relative;
-}
-.logo-mark {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.logo-diamond {
-  width: 22px; height: 22px;
-  background: var(--accent);
-  transform: rotate(45deg);
-  flex-shrink: 0;
-}
-.logo-text {
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: 4px;
+.rcs-lab3d-title {
+  font-family: var(--font);
+  font-size: clamp(2rem, 5vw, 3rem);
   text-transform: uppercase;
-  color: var(--text);
-}
-.logo-text span { color: var(--accent); }
-.header-sep { width: 1px; height: 24px; background: var(--border2); }
-.header-sub {
-  font-family: var(--mono);
-  font-size: 10px;
   letter-spacing: 2px;
-  color: var(--muted);
-  text-transform: uppercase;
-}
-.header-right {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-.status-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--accent2);
-  box-shadow: 0 0 8px var(--accent2);
-  animation: pulse 2s infinite;
-}
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
-.status-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: 1.5px;
-}
-.header-home {
-  color: var(--muted);
-  text-decoration: none;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  border: 1px solid var(--border2);
-  border-radius: 50px;
-  padding: 6px 12px;
-  transition: all .15s;
-}
-.header-home:hover { color: var(--accent); border-color: var(--accent); }
-
-.theme-toggle {
-  width: 34px; height: 34px;
-  border: 1px solid var(--border2);
-  border-radius: 50%;
-  background: transparent;
   color: var(--text);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all .15s;
+  margin-bottom: 20px;
 }
-.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
-.theme-toggle svg { width: 17px; height: 17px; }
+.rcs-lab3d-title span { color: var(--accent); }
 
 /* ═══ LAYOUT ═══ */
 .layout {
-  flex: 1;
+  height: 78vh;
+  min-height: 560px;
+  max-height: 900px;
   display: flex;
+  border: 1px solid var(--border2);
   overflow: hidden;
 }
 
@@ -553,43 +473,9 @@ header {
 }
 .part-info-panel .pi-cta:hover { filter: brightness(1.12); }
 </style>
-</head>
-<body>
-<script>
-// Applica subito il tema salvato, prima del render, per evitare il flash
-// del tema sbagliato (stessa chiave 'theme' usata dal resto del sito).
-if (localStorage.getItem('theme') === 'light') { document.body.classList.add('light-mode'); }
-</script>
 
-<header>
-  <div class="logo-mark">
-    <div class="logo-diamond"></div>
-    <div class="logo-text">RCS <span>Carbonio</span></div>
-  </div>
-  <div class="header-sep"></div>
-  <div class="header-sub">Configuratore Prodotti — Fase I</div>
-  <div class="header-right">
-    <div class="status-dot"></div>
-    <div class="status-label">Rendering Engine Attivo</div>
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Cambia tema">
-      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="display:none;">
-        <circle cx="12" cy="12" r="5"/>
-        <line x1="12" y1="1" x2="12" y2="3" stroke-width="2" stroke-linecap="round"/>
-        <line x1="12" y1="21" x2="12" y2="23" stroke-width="2" stroke-linecap="round"/>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" stroke-width="2" stroke-linecap="round"/>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" stroke-width="2" stroke-linecap="round"/>
-        <line x1="1" y1="12" x2="3" y2="12" stroke-width="2" stroke-linecap="round"/>
-        <line x1="21" y1="12" x2="23" y2="12" stroke-width="2" stroke-linecap="round"/>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" stroke-width="2" stroke-linecap="round"/>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-    <a class="header-home" href="<?php echo esc_url(home_url('/')); ?>">← TORNA AL SITO</a>
-  </div>
-</header>
+<div class="rcs-lab3d-shell">
+<h1 class="rcs-lab3d-title">Configuratore <span>3D</span></h1>
 
 <div class="layout">
 
@@ -810,6 +696,7 @@ if (localStorage.getItem('theme') === 'light') { document.body.classList.add('li
     </div>
 
 </div>
+</div><!-- /.rcs-lab3d-shell -->
 
 <script>
 // ═══ CONFIGS ═══
@@ -1121,19 +1008,16 @@ function hideInfoPanel() {
   document.getElementById('part-info-panel').classList.remove('visible');
 }
 
-// ═══ TEMA CHIARO/SCURO (stessa chiave localStorage 'theme' del resto del sito) ═══
-function toggleTheme() {
-  document.body.classList.toggle('light-mode');
-  localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
-  syncThemeIcon();
-  applyViewportTheme();
-}
-function syncThemeIcon() {
-  const isLight = document.body.classList.contains('light-mode');
-  const sun = document.querySelector('.icon-sun');
-  const moon = document.querySelector('.icon-moon');
-  if (sun) sun.style.display = isLight ? 'block' : 'none';
-  if (moon) moon.style.display = isLight ? 'none' : 'block';
+// ═══ TEMA CHIARO/SCURO ═══
+// Il pulsante di cambio tema e' quello del sito (navbar), non uno proprio
+// di questa pagina. Il colore dell'interfaccia (sidebar, pannelli) segue
+// gia' via CSS puro (body.light-mode .rcs-lab3d-shell {...}); qui serve
+// solo aggiornare i pixel del canvas 3D (sfondo/griglia), che il CSS non
+// puo' toccare. Un MutationObserver osserva la classe su <body> e reagisce
+// a qualunque cosa la cambi, incluso il toggle del sito in header.php.
+function watchThemeChanges() {
+  const obs = new MutationObserver(() => applyViewportTheme());
+  obs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 }
 
 function camPos() {
@@ -1925,14 +1809,13 @@ window.addEventListener('error', e => {
 });
 
 // ═══ BOOT ═══
-syncThemeIcon();
 renderParams();
 try {
   initThree();
+  watchThemeChanges();
 } catch(e) {
   document.querySelector('.vp-empty-text').textContent = 'Errore inizializzazione 3D: ' + e.message;
   console.error(e);
 }
 </script>
-</body>
-</html>
+<?php get_footer(); ?>
